@@ -1,0 +1,11 @@
+>>>> MUI Package
+npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+
+>>>> React Router DOM
+npm install react-router-dom@6
+
+>>>> MUI/Joy/material
+npm i @mui/joy
+
+
+

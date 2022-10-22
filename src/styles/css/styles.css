@@ -1,0 +1,27 @@
+.hero {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.heroImg {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+}
+
+.topNav {
+  padding: 0 2rem;
+}
+.topNav .logo {
+  max-width: 5rem;
+  margin-left: 1rem;
+}
+
+.logoDrawer {
+  max-width: 5rem;
+  margin: 1rem;
+}
+
+.drawer {
+  width: 300px;
+}/*# sourceMappingURL=styles.css.map */
