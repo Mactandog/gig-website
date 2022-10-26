@@ -3,8 +3,8 @@ import { createTheme } from "@mui/material";
 
 //Custom Colors
 const primaryColor = '#0F3057';
-// const secondaryColor = '#008891';
-const secondaryColor = '#8FE3CF';
+const secondaryColor = '#008891';
+// const secondaryColor = '#8FE3CF';
 const errorColor = '#b71c1c';
 // const whiteColor = 'ffffff';
 

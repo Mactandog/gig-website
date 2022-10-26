@@ -9,6 +9,19 @@
   width: 100%;
 }
 
+.searchCompanies {
+  background-image: url("https://www.pexels.com/photo/a-man-teaching-the-team-using-his-laptop-7988208/");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 10rem;
+  background-color: aquamarine;
+}
+
+.infoCard {
+  background-color: rgb(56, 50, 110);
+  background: linear-gradient(274deg, rgb(16, 12, 54) 0%, rgb(13, 18, 74) 46%, rgb(45, 26, 165) 100%);
+}
+
 .topNav {
   padding: 0 2rem;
 }
@@ -24,4 +37,20 @@
 
 .drawer {
   width: 300px;
+}
+
+.footerLinks {
+  text-decoration: none;
+  color: #ffffff;
+}
+.footerLinks:hover {
+  text-decoration: underline;
+}
+
+.companyNameCard {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: peru;
 }/*# sourceMappingURL=styles.css.map */

@@ -3,6 +3,7 @@ import { Box, Button, Drawer, IconButton, List, ListItemButton, ListItemIcon, Li
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import logoWhite from '../../assets/media/logo/gig-white-icon.svg';
 import Logo from '../../assets/media/logo/gig-white-icon.svg'
+import { Link } from 'react-router-dom';
 
 
 const DrawerComp = ({links}) => {
@@ -14,10 +15,10 @@ const DrawerComp = ({links}) => {
             <img src={Logo} className='logoDrawer' alt='Gig Logo'/>
         </Box>
         <List>
-            {links.map((link, index) => (
-                <ListItemButton onClick={() => setOpen(false)} key={index} divider >
+            {links.map((link) => (
+                <ListItemButton label={link.page} value={link.path} to={link.path} component={Link} onClick={() => setOpen(false)} key={link.id} divider >
                 <ListItemIcon>
-                    <ListItemText sx={{color: 'secondary.main'}}>{link}</ListItemText>
+                    <ListItemText sx={{color: 'secondary.main'}}>{link.page}</ListItemText>
                 </ListItemIcon>
             </ListItemButton>))}
         </List>

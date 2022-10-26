@@ -1,4 +1,4 @@
-const jobCategories = [
+const jobCategoriesList = [
     {id: 1,
         category: "Category 1",
         activeTalents: 5000,
@@ -37,4 +37,4 @@ const jobCategories = [
         alt: "Icon 6"},
 ];
 
-export default jobCategories;
+export default jobCategoriesList;

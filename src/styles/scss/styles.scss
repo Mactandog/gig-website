@@ -1,6 +1,11 @@
+@use 'customTheme';
+
 // Import Pages
 @use './pages/landingPage';
+@use './pages/companyProfiles';
 
 
 // Import Components
 @use './components/headers';
+@use './components/links';
+@use  './components/cards';

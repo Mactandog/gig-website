@@ -6,8 +6,7 @@ import { Button, Grid, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 import logoWhite from '../../assets/media/logo/gig-white-icon.svg';
 import { useState } from 'react';
 import DrawerComp from '../drawers/Drawer';
-import navLinks from './navLinksLandingPage';
-
+import { Link } from 'react-router-dom';
 
 
 function PrimaryNavbar({links}) {
@@ -15,7 +14,7 @@ function PrimaryNavbar({links}) {
   const [value, setValue] = useState();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
-  console.log(isMatch)
+  // console.log(isMatch)
 
   return (
     <Box>
@@ -33,8 +32,9 @@ function PrimaryNavbar({links}) {
               {/* Nav links */}
               <Grid item xs={7} >
                 <Tabs indicatorColor='secondary' textColor='inherit' value={value} onChange={(e, value) => setValue(value)} >
-                  {navLinks.map((link, index) => (
-                     <Tab key={index} label={link}/>
+                  {links.map((link) => (
+                    <Tab key={link.id} label={link.page} value={link.id} to={link.path} component={Link} />
+
                   ))}
                 </Tabs>
               </Grid>
