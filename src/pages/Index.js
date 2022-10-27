@@ -11,8 +11,24 @@ import WhyGig from "./whyGig";
 import ForEmployer from "./forEmployer";
 import CompanyProfiles from "./companyProfiles";
 import Company from "./company";
+import TalentLogin from "./talentLogin";
+import EmployerLogin from "./employerLogin";
 
 const Index = () => {
+  const Layout = ({ renderHeaderAndFooter, children }) => (
+    <div>
+      {renderHeaderAndFooter && <PrimaryNavbar />}
+      {children}
+      {renderHeaderAndFooter && <FooterMain />}
+    </div>
+  );
+
+  const Invoices = () => (
+    <Layout renderHeaderAndFooter={false}>
+      <Route path="/talent/login" element={<TalentLogin />} />
+    </Layout>
+  );
+
   return (
     <ThemeProvider theme={customTheme}>
       <Router>
@@ -20,16 +36,18 @@ const Index = () => {
           <header>
             <PrimaryNavbar links={navLinks} />
           </header>
-
-          <Routes>
-            <Route exact path="/" element={<LandingPageHome />} />
-            <Route path="/companies" element={<CompanyProfiles />} />
-            <Route path="/search-jobs" element={<SearchJob />} />
-            <Route path="/about-us" element={<WhyGig />} />
-            <Route path="/for-employer" element={<ForEmployer />} />
-            <Route path="/companies/company" element={<Company />} />
-          </Routes>
-
+          <Box sx={{ mt: 8 }}>
+            <Routes>
+              <Route exact path="/" element={<LandingPageHome />} />
+              <Route path="/companies" element={<CompanyProfiles />} />
+              <Route path="/search-jobs" element={<SearchJob />} />
+              <Route path="/about-us" element={<WhyGig />} />
+              <Route path="/for-employer" element={<ForEmployer />} />
+              <Route path="/companies/company" element={<Company />} />
+              <Route path="/talent/login" element={<TalentLogin />} />
+              <Route path="/business/login" element={<EmployerLogin />} />
+            </Routes>
+          </Box>
           <footer>
             <Box sx={{ p: 2 }}>
               <FooterMain />

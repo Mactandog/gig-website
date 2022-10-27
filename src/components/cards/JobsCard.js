@@ -10,8 +10,26 @@ import { red } from "@mui/material/colors";
 import companyAvatar from "../../assets/media/images/img2.jpg";
 import BookmarkAddRoundedIcon from "@mui/icons-material/BookmarkAddRounded";
 import { Link } from "react-router-dom";
+import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
+import { Chip } from "@mui/material";
 
 export default function JobsCard() {
+  // const CardLink = styled.a `
+  //   text-decoration: none;
+  // `;
+  // const StyledLink = styled(Link)`
+  //   padding-left: 1rem;
+  //   color: white;
+  //   text-decoration: none;
+  //   &:hover,
+  //   &:focus {
+  //     color: yellow;
+  //   }
+  //   &:active {
+  //     color: red;
+  //   }
+  // `;
+
   return (
     <Card sx={{ width: 500, m: 1 }}>
       <CardHeader
@@ -62,6 +80,7 @@ export default function JobsCard() {
           >
             National Capital region, Philippines
           </Typography>
+          <Chip icon={<LocalAtmRoundedIcon />} label="15k" color="secondary" variant="outlined" />
         </CardContent>
         <CardContent>
           <Typography variant="caption" color="textSecondary" fontWeight={500}>
