@@ -1,11 +1,12 @@
-@use 'customTheme';
+@use "customTheme";
 
 // Import Pages
-@use './pages/landingPage';
-@use './pages/companyProfiles';
-
+@use "./pages/landingPage";
+@use "./pages/companyProfiles";
+@use "./pages/talentDashboard";
 
 // Import Components
-@use './components/headers';
-@use './components/links';
-@use  './components/cards';
+@use "./components/headers";
+@use "./components/links";
+@use "./components/cards";
+@use "./components/sidebars";

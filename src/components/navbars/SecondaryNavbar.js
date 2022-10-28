@@ -17,7 +17,7 @@ import { Link, Outlet } from "react-router-dom";
 import LoginButton from "../buttons/loginButton";
 import SignUpButton from "../buttons/signupButton";
 
-function PrimaryNavbar({ links }) {
+function SecondaryNavbar({ links }) {
   const [value, setValue] = useState();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -61,33 +61,6 @@ function PrimaryNavbar({ links }) {
                     ))}
                   </Tabs>
                 </Grid>
-
-                {/* Buttons */}
-                <Grid item xs={3}>
-                  <Box display="flex">
-                    <Box sx={{ ml: "auto" }}>
-                      <LoginButton />
-                    </Box>
-                    <Box sx={{ ml: 1 }}>
-                      <SignUpButton />
-                    </Box>
-
-                    {/* <Button
-                      color="secondary"
-                      variant="outlined"
-                      sx={{ ml: "auto" }}
-                    >
-                      Login
-                    </Button>
-                    <Button
-                      color="secondary"
-                      variant="contained"
-                      sx={{ ml: 1 }}
-                    >
-                      Sign Up
-                    </Button> */}
-                  </Box>
-                </Grid>
               </Grid>
             </Toolbar>
           )}
@@ -98,4 +71,4 @@ function PrimaryNavbar({ links }) {
   );
 }
 
-export default PrimaryNavbar;
+export default SecondaryNavbar;

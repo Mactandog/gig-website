@@ -1,0 +1,10 @@
+@use "../customTheme" as *;
+
+.sidebarLink {
+  text-decoration: none;
+  color: $custom-primary;
+
+  &:active {
+    border-right: 0.5rem solid $custom-primary;
+  }
+}

@@ -22,7 +22,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         Gig
       </Link>{" "}
       {new Date().getFullYear()}
@@ -122,7 +122,7 @@ export default function EmployerLogin() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/business/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
