@@ -39,7 +39,7 @@ import TalentMyAccount from "../../components/pages-comp/talentDashboard/TalentM
 import TalentProfile from "../../components/pages-comp/talentDashboard/TalentProfile";
 import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
 import TalentHome from "../../components/pages-comp/talentDashboard/TalentHome";
-import TemporaryDrawer from "../../components/pages-comp/talentDashboard/Anchor";
+import TalentMyJobs from "../../components/pages-comp/talentDashboard/TalentMyJobs";
 
 const drawerWidth = 240;
 
@@ -240,7 +240,6 @@ function ResponsiveDrawer(props) {
 
         <Box
           sx={{
-            height: "100vh",
             overflowX: "hidden",
           }}
         >
@@ -256,7 +255,7 @@ function ResponsiveDrawer(props) {
             <Route path="education" element={<TalentEducation />} />
             <Route path="upload-resume" element={<TalentUploadResume />} />
             <Route path="account-settings" element={<TalentMyAccount />} />
-            <Route path="anchor" element={<TemporaryDrawer />} />
+            <Route path="my-jobs" element={<TalentMyJobs />} />
           </Routes>
         </Box>
       </Box>
