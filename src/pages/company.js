@@ -1,4 +1,3 @@
-import { LocationCityRounded } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -16,6 +15,7 @@ import React from "react";
 import companyPicture from "../assets/media/images/img2.jpg";
 import JobsCard from "../components/cards/JobsCard";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import { LocationCityRounded } from "@mui/icons-material";
 import FooterMain from "../components/footers/FooterMain";
 
 const Company = () => {
