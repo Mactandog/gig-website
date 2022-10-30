@@ -24,6 +24,7 @@ import WysiwygRoundedIcon from "@mui/icons-material/WysiwygRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import AttachmentRoundedIcon from "@mui/icons-material/AttachmentRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import {
   Link,
   Route,
@@ -38,6 +39,7 @@ import TalentEducation from "../../components/pages-comp/talentDashboard/TalentE
 import TalentMyAccount from "../../components/pages-comp/talentDashboard/TalentMyAccount";
 import TalentProfile from "../../components/pages-comp/talentDashboard/TalentProfile";
 import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
+import TalentHome from "../../components/pages-comp/talentDashboard/TalentHome";
 
 const drawerWidth = 240;
 
@@ -79,6 +81,11 @@ function ResponsiveDrawer(props) {
         </Link>
         {/* //// */}
         {[
+          {
+            icon: <HomeRoundedIcon />,
+            name: "Home",
+            path: "/",
+          },
           {
             icon: <AccountBoxRoundedIcon />,
             name: "Personal Information",
@@ -230,23 +237,27 @@ function ResponsiveDrawer(props) {
       >
         {/* <Search1 /> */}
         {/* <JobsCard /> */}
-        {/* <TalentUploadResume />
-        <TalentMyJobs />
-        <TalentProfile />
-        <TalentMyAccount />
-        <TalentEducation />
-        <TalentPersonalInformation />
-        <TalentExperience />
-        <TalentSkills /> */}
-        <Routes>
-          <Route path="my-profile" element={<TalentProfile />} />
-          <Route path="personal-info" element={<TalentPersonalInformation />} />
-          <Route path="work-experience" element={<TalentExperience />} />
-          <Route path="skills" element={<TalentSkills />} />
-          <Route path="education" element={<TalentEducation />} />
-          <Route path="upload-resume" element={<TalentUploadResume />} />
-          <Route path="account-settings" element={<TalentMyAccount />} />
-        </Routes>
+
+        <Box
+          sx={{
+            height: "100vh",
+            overflowX: "hidden",
+          }}
+        >
+          <Routes>
+            <Route index element={<TalentHome />} />
+            <Route path="my-profile" element={<TalentProfile />} />
+            <Route
+              path="personal-info"
+              element={<TalentPersonalInformation />}
+            />
+            <Route path="work-experience" element={<TalentExperience />} />
+            <Route path="skills" element={<TalentSkills />} />
+            <Route path="education" element={<TalentEducation />} />
+            <Route path="upload-resume" element={<TalentUploadResume />} />
+            <Route path="account-settings" element={<TalentMyAccount />} />
+          </Routes>
+        </Box>
       </Box>
     </Box>
   );
