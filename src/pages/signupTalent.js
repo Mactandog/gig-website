@@ -61,7 +61,7 @@ export default function TalentSignUp() {
             left: -470,
           }}
         >
-          <img src={signup3} width={350} />
+          <img src={signup3} width={350} alt="woman illustration" />
         </Box>
         <Box
           sx={{
@@ -70,7 +70,7 @@ export default function TalentSignUp() {
             left: 470,
           }}
         >
-          <img src={signup2} width={400} />
+          <img src={signup2} width={400} alt="man illustration" />
         </Box>
 
         <Avatar sx={{ m: 1, mt: 6, bgcolor: "secondary.main" }}>

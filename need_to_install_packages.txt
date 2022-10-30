@@ -7,5 +7,14 @@ npm install react-router-dom@6
 >>>> MUI/Joy/material
 npm i @mui/joy
 
+>>>> DATE PICKER
+// Install component (community version)
+npm install @mui/x-date-pickers
+// Install date library (if not already installed)
+npm install dayjs
+
+
+>>>> FILE UPLOAD
+npm install axios --save
 
 

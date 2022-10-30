@@ -5,6 +5,9 @@
   color: $custom-primary;
 
   &:active {
-    border-right: 0.5rem solid $custom-primary;
+    border-right: 1.5rem solid $custom-primary;
   }
+}
+.sidebar:active {
+  border-right: 1.5rem solid $custom-primary;
 }

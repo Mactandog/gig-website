@@ -2,26 +2,28 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import {
-  Button,
-  Grid,
-  Tab,
-  Tabs,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
 import logoWhite from "../../assets/media/logo/gig-white-icon.svg";
-import { useState } from "react";
 import DrawerComp from "../drawers/Drawer";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 import LoginButton from "../buttons/loginButton";
 import SignUpButton from "../buttons/signupButton";
 
+let CustomLink = ({ to, children, ...props }) => {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+  return (
+    <li className={isActive ? "active" : ""}>
+      <Link to={to} {...props}>
+        {children}
+      </Link>
+    </li>
+  );
+};
+
 function PrimaryNavbar({ links }) {
-  const [value, setValue] = useState();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  // console.log(isMatch)
 
   return (
     <>
@@ -30,7 +32,7 @@ function PrimaryNavbar({ links }) {
           {isMatch ? (
             <DrawerComp links={links} />
           ) : (
-            <Toolbar sx={{ justifyContent: "space-between" }}>
+            <Toolbar sx={{ justifyContent: "space-between" }} className="navs">
               <Grid container sx={{ alignItems: "center" }}>
                 {/* Logo */}
                 <Grid item xs={2}>
@@ -44,22 +46,27 @@ function PrimaryNavbar({ links }) {
 
                 {/* Nav links */}
                 <Grid item xs={7}>
-                  <Tabs
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    value={value}
-                    onChange={(e, value) => setValue(value)}
-                  >
-                    {links.map((link) => (
-                      <Tab
-                        key={link.id}
-                        label={link.page}
-                        value={link.id}
-                        to={link.path}
-                        component={Link}
-                      />
-                    ))}
-                  </Tabs>
+                  <nav>
+                    <ul>
+                      {[
+                        { path: "/", page: "HOME" },
+                        { path: "/search-jobs", page: "JOB SEARCH" },
+                        { path: "/companies", page: "COMPANY PROFILES" },
+                        { path: "/about-us", page: "WHY GIG?" },
+                        { path: "/for-employer", page: "FOR EMPLOYER" },
+                      ].map((link, index) => {
+                        return (
+                          <CustomLink
+                            key={index}
+                            to={link.path}
+                            className="navEffect"
+                          >
+                            {link.page}
+                          </CustomLink>
+                        );
+                      })}
+                    </ul>
+                  </nav>
                 </Grid>
 
                 {/* Buttons */}
@@ -71,21 +78,6 @@ function PrimaryNavbar({ links }) {
                     <Box sx={{ ml: 1 }}>
                       <SignUpButton />
                     </Box>
-
-                    {/* <Button
-                      color="secondary"
-                      variant="outlined"
-                      sx={{ ml: "auto" }}
-                    >
-                      Login
-                    </Button>
-                    <Button
-                      color="secondary"
-                      variant="contained"
-                      sx={{ ml: 1 }}
-                    >
-                      Sign Up
-                    </Button> */}
                   </Box>
                 </Grid>
               </Grid>

@@ -1,6 +1,5 @@
 import { Box, Grid, Link, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
-import { Outlet } from "react-router-dom";
 
 const FooterMain = () => {
   return (

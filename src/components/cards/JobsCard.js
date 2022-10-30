@@ -1,5 +1,4 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +9,7 @@ import { red } from "@mui/material/colors";
 import companyAvatar from "../../assets/media/images/img2.jpg";
 import BookmarkAddRoundedIcon from "@mui/icons-material/BookmarkAddRounded";
 import { Link } from "react-router-dom";
-import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
+import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import { Chip } from "@mui/material";
 
 export default function JobsCard() {
@@ -80,7 +79,12 @@ export default function JobsCard() {
           >
             National Capital region, Philippines
           </Typography>
-          <Chip icon={<LocalAtmRoundedIcon />} label="15k" color="secondary" variant="outlined" />
+          <Chip
+            icon={<LocalAtmRoundedIcon />}
+            label="15k"
+            color="secondary"
+            variant="outlined"
+          />
         </CardContent>
         <CardContent>
           <Typography variant="caption" color="textSecondary" fontWeight={500}>

@@ -13,7 +13,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import { Avatar, Button, Grid, ListItemAvatar } from "@mui/material";
 import logoWhite from "../../assets/media/logo/gig-white-icon.svg";
 import profilePic from "../../assets/media/images/login1.png";
@@ -25,8 +24,20 @@ import WysiwygRoundedIcon from "@mui/icons-material/WysiwygRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import AttachmentRoundedIcon from "@mui/icons-material/AttachmentRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
-import Search1 from "../../components/searchBars/Search1";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useResolvedPath,
+  useMatch,
+} from "react-router-dom";
+import TalentPersonalInformation from "../../components/pages-comp/talentDashboard/TalentPersonalInformation";
+import TalentExperience from "../../components/pages-comp/talentDashboard/TalentExperience";
+import TalentSkills from "../../components/pages-comp/talentDashboard/TalentSkills";
+import TalentEducation from "../../components/pages-comp/talentDashboard/TalentEducation";
+import TalentMyAccount from "../../components/pages-comp/talentDashboard/TalentMyAccount";
+import TalentProfile from "../../components/pages-comp/talentDashboard/TalentProfile";
+import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
 
 const drawerWidth = 240;
 
@@ -38,31 +49,45 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  // ACTIVE LINK
+  let CustomLink = ({ to, children, ...props }) => {
+    const resolvedPath = useResolvedPath(to);
+    const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+    return (
+      <li className={isActive ? "active" : ""}>
+        <Link to={to} {...props}>
+          {children}
+        </Link>
+      </li>
+    );
+  };
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
         {/* USER PROFILE */}
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemAvatar>
-              <Avatar alt="User Picture" variant="square" src={profilePic} />
-            </ListItemAvatar>
-            <ListItemText primary="User First Name" />
-          </ListItemButton>
-        </ListItem>
+        <Link className="sidebarLink" to="/talent/profile/my-profile">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemAvatar>
+                <Avatar alt="User Picture" variant="square" src={profilePic} />
+              </ListItemAvatar>
+              <ListItemText primary="Ryan Mark" secondary="View My Profile" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         {/* //// */}
         {[
           {
             icon: <AccountBoxRoundedIcon />,
             name: "Personal Information",
-            path: "/personal-information",
+            path: "/personal-info",
           },
           {
             icon: <WorkHistoryRoundedIcon />,
             name: "Experience",
-            path: "/experience",
+            path: "/work-experience",
           },
           { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/skills" },
           {
@@ -81,27 +106,33 @@ function ResponsiveDrawer(props) {
             path: "/upload-resume",
           },
         ].map((tab, index) => (
-          <Link className="sidebarLink">
+          <CustomLink
+            key={index}
+            className="sidebarLink"
+            to={`/talent/profile${tab.path}`}
+          >
             {/* <Link className="sidebarLink" to={`/talent/profile${tab.path}`}> */}
-            <ListItem key={index} disablePadding>
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>{tab.icon}</ListItemIcon>
                 <ListItemText primary={tab.name} />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </CustomLink>
         ))}
       </List>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <WorkRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Job Applications" />
-          </ListItemButton>
-        </ListItem>
+        <Link className="sidebarLink" to="/talent/profile/my-jobs">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <WorkRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="My Jobs" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
       <Divider />
     </div>
@@ -138,7 +169,7 @@ function ResponsiveDrawer(props) {
           <Grid item xs={2}>
             <Button
               component="a"
-              href="/talent/profile"
+              href="/"
               disableRipple
               sx={{ width: 5, display: "flex", alignItems: "center" }}
             >
@@ -147,7 +178,7 @@ function ResponsiveDrawer(props) {
           </Grid>
         </Toolbar>
         <Toolbar>
-          <UserMenu />
+          <UserMenu profilePic={profilePic} />
         </Toolbar>
         {/* </Container> */}
       </AppBar>
@@ -197,37 +228,25 @@ function ResponsiveDrawer(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Search1 />
+        {/* <Search1 /> */}
         {/* <JobsCard /> */}
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        {/* <TalentUploadResume />
+        <TalentMyJobs />
+        <TalentProfile />
+        <TalentMyAccount />
+        <TalentEducation />
+        <TalentPersonalInformation />
+        <TalentExperience />
+        <TalentSkills /> */}
+        <Routes>
+          <Route path="my-profile" element={<TalentProfile />} />
+          <Route path="personal-info" element={<TalentPersonalInformation />} />
+          <Route path="work-experience" element={<TalentExperience />} />
+          <Route path="skills" element={<TalentSkills />} />
+          <Route path="education" element={<TalentEducation />} />
+          <Route path="upload-resume" element={<TalentUploadResume />} />
+          <Route path="account-settings" element={<TalentMyAccount />} />
+        </Routes>
       </Box>
     </Box>
   );

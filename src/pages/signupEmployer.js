@@ -61,7 +61,7 @@ export default function EmployerSignUp() {
             right: -470,
           }}
         >
-          <img src={signup1} width={400} />
+          <img src={signup1} width={400} alt="Collab" />
         </Box>
         <Box
           sx={{
@@ -71,7 +71,7 @@ export default function EmployerSignUp() {
             transform: "rotate(40deg)",
           }}
         >
-          <img src={ribbon} width={350} height={1000} />
+          <img src={ribbon} width={350} height={1000} alt="Ribbon" />
         </Box>
 
         <Avatar sx={{ m: 1, mt: 6, bgcolor: "secondary.main" }}>

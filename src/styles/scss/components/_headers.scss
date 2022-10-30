@@ -1,24 +1,85 @@
+@use "../customTheme" as *;
+
 .topNav {
-    padding: 0 2rem;
+  padding: 0 2rem;
 
-    .logo {
-        max-width: 5rem;
-        margin-left: 1rem;
-      }
-  }
-
-  .logoDrawer {
+  .logo {
     max-width: 5rem;
-    margin: 1rem;
+    margin-left: 1rem;
+  }
+}
+
+.logoDrawer {
+  max-width: 5rem;
+  margin: 1rem;
+}
+
+.drawer {
+  width: 300px;
+}
+
+.navs {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    color: $custom-grey;
+    height: 100%;
   }
 
-  .drawer {
-    width: 300px;
+  li.active {
+    border-bottom: 2px solid $custom-secondary;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+  }
+}
 
+.navEffect {
+  font-size: 14px;
+  color: #e1e1e1;
+  font-family: "Poppins";
+  font-weight: 300;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
 
+.navEffect:focus,
+.navEffect:hover {
+  color: #fff;
+}
 
+.navEffect:focus:after,
+.navEffect:hover:after {
+  width: 100%;
+  left: 0%;
+}
 
-
-
+.navEffect:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: $custom-secondary;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}

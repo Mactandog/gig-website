@@ -14,8 +14,6 @@ import logoWhite from "../../assets/media/logo/gig-white-icon.svg";
 import { useState } from "react";
 import DrawerComp from "../drawers/Drawer";
 import { Link, Outlet } from "react-router-dom";
-import LoginButton from "../buttons/loginButton";
-import SignUpButton from "../buttons/signupButton";
 
 function SecondaryNavbar({ links }) {
   const [value, setValue] = useState();

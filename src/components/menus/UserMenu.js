@@ -6,13 +6,10 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
-export default function UserMenu() {
+export default function UserMenu({ profilePic }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -33,7 +30,9 @@ export default function UserMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar src={profilePic} sx={{ width: 32, height: 32 }}>
+              M
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -72,9 +71,10 @@ export default function UserMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem component="a" href="/talent/profile/account-settings">
           <Avatar /> My Account
         </MenuItem>
+
         <Divider />
         <MenuItem>
           <ListItemIcon>
