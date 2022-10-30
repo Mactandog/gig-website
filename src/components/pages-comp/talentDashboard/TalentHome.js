@@ -1,16 +1,10 @@
-import { Grid, Paper, Select, TextField, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Search1 from "../../searchBars/Search1";
 
 const TalentHome = () => {
-  //Age Picker
-  const [proficiency, setProficiency] = React.useState("");
-  const handleChange = (event) => {
-    setProficiency(event.target.value);
-  };
-
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
