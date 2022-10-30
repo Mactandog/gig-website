@@ -9,7 +9,7 @@ const TalentUploadResume = () => {
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
         <Typography variant="h4" fontWeight={500} color="textPrimary">
-          <AttachmentRoundedIcon /> Uplad Resume
+          <AttachmentRoundedIcon /> Upload Resume
         </Typography>
         <Box
           component="form"

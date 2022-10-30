@@ -18,3 +18,10 @@ npm install dayjs
 npm install axios --save
 
 
+
+
+
+/////// OTHER NOTES ////// 
+>>> ERROR WHEN TWO GIT COMMANDS WERE EXECUTED SIMULTANEOUSLY
+(fatal: Unable to create 'D:/Mac/Project/gig/gig-website/.git/index.lock': File exists.)
+rm -f .git/index.lock
