@@ -1,21 +1,16 @@
-import { Grid, Paper, Select, TextField, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Search1 from "../../searchBars/Search1";
+import JobsListCard from "./JobsListCard";
+import DynamicFeedRoundedIcon from "@mui/icons-material/DynamicFeedRounded";
 
 const TalentHome = () => {
-  //Age Picker
-  const [proficiency, setProficiency] = React.useState("");
-  const handleChange = (event) => {
-    setProficiency(event.target.value);
-  };
-
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
         <Typography variant="h4" fontWeight={500} color="textPrimary">
-          <HomeRoundedIcon /> My Home
+          <DynamicFeedRoundedIcon /> My Feed
         </Typography>
         {/* container */}
         <Box
@@ -34,16 +29,7 @@ const TalentHome = () => {
         {/* end of container */}
       </Paper>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ height: "100vh", backgroundColor: "primary" }}>
-            span 4
-          </Paper>
-        </Grid>
-        <Grid item xs="none" md={8}>
-          <Paper sx={{ height: "100vh", backgroundColor: "primary" }}>
-            span 8
-          </Paper>
-        </Grid>
+        <JobsListCard />
       </Grid>
     </>
   );
