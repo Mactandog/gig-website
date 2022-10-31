@@ -11,7 +11,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import loginImg2 from "../assets/media/images/login2.jpg";
+import loginImg2 from "../../assets/media/images/login2.jpg";
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -32,13 +34,23 @@ function Copyright(props) {
 }
 
 export default function EmployerLogin() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
+    companyEmail:"",
+    companyPassword:"",
+   
+  });
+  
+  let handleLogin = (e) => {
+      e.preventDefault();
+      const loggedCompany = JSON.parse(localStorage.getItem("companies"));
+      if(input.companyEmail === loggedCompany.email && 
+          input.companyPassword === loggedCompany.password) 
+          {
+              navigate("/employer/profile")
+      }else{
+          alert("wrong email or password")
+      }
   };
 
   return (
@@ -80,28 +92,36 @@ export default function EmployerLogin() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             sx={{ mt: 1 }}
           >
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="companyEmail"
+              label="Company Email Address"
+              name="companyEmail"
               autoComplete="email"
               autoFocus
+              onChange={(e)=>setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              })}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="companyPassword"
               label="Password"
               type="password"
-              id="password"
+              id="companyPassword"
               autoComplete="current-password"
+              onChange={(e)=>setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              })}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
