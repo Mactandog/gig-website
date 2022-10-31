@@ -1,0 +1,113 @@
+.fluid {
+    width:90%;
+    margin:50px auto;
+    background: rgba(15, 48, 87, 0.7) ;  /*  40% opacity */ 
+    border-radius: 10px;
+}
+.fluid-center{
+    text-align: center;
+}
+.display-banner{
+    background-image: url(../../assets/media/images/banner.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+    color:white;
+    height:100%;
+    margin-top:50px;
+  
+}
+.div-item-1{
+    background: rgba(15, 48, 87, 0.5) ;  /*  40% opaque green */ 
+    width:400px;
+    margin:20px auto;
+    border-radius: 10px;
+}
+.typo-h1{
+color:white;
+font-size:50px;
+letter-spacing: 5px;
+text-align: center;
+}
+/* .btn-contact{
+text-align: center;
+align-content: center;
+justify-content: center;
+margin: 0 auto;
+
+} */
+.typo-h2{
+    color:black;
+    font-size:50px;
+    letter-spacing: 5px;
+    text-align: center;
+    }
+.parag1{
+font-size:20px;
+font-family: Helvetica,Arial,sans-serif;
+
+line-height:30px;
+text-align: center;
+}
+.parag2{
+    font-size:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height:30px;
+    text-align: left;
+    padding: 10px 20px;
+    }
+.title-left{
+    text-align: left;
+    padding: 10px 20px;
+}    
+.avatar{
+    width:70%;
+    height:60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.work1{
+    height:100px;
+    height:300px;
+    border-radius:10px;
+   
+}
+
+.divider {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+}
+
+@media only screen and (max-width: 1000px) {
+    .divider {
+        width: 70%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .work1{
+        height:100px;
+        height:200px;
+        border-radius:10px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+    .parag2{
+        font-size:20px;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height:30px;
+        text-align: center;
+        }
+    .title-left{
+        text-align: center;
+    }
+  }
+
+
+
+
