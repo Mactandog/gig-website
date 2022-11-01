@@ -5,7 +5,7 @@ import Search1 from "../../searchBars/Search1";
 import JobsListCard from "./JobsListCard";
 import DynamicFeedRoundedIcon from "@mui/icons-material/DynamicFeedRounded";
 
-const TalentHome = () => {
+const EmployerHome = () => {
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -35,4 +35,4 @@ const TalentHome = () => {
   );
 };
 
-export default TalentHome;
+export default EmployerHome;

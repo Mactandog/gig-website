@@ -16,7 +16,7 @@ import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRou
 import PsychologyRoundedIcon from "@mui/icons-material/PsychologyRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
-const TalentSkills = () => {
+const EmployerSkills = () => {
   //Age Picker
   const [proficiency, setProficiency] = React.useState("");
   const handleChange = (event) => {
@@ -116,4 +116,4 @@ const TalentSkills = () => {
   );
 };
 
-export default TalentSkills;
+export default EmployerSkills;

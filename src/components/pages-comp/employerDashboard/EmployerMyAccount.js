@@ -15,7 +15,7 @@ const Root = styled("div")(({ theme }) => ({
   },
 }));
 
-const TalentMyAccount = () => {
+const EmployerMyAccount = () => {
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -189,4 +189,4 @@ const TalentMyAccount = () => {
   );
 };
 
-export default TalentMyAccount;
+export default EmployerMyAccount;

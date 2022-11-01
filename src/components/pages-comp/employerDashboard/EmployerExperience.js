@@ -20,7 +20,7 @@ import PositionLevelSelect from "../../forms/PositionLevelSelect";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import WorkHistoryRoundedIcon from "@mui/icons-material/WorkHistoryRounded";
 
-const TalentExperience = () => {
+const EmployerExperience = () => {
   //Checkbox Present
   const [checkedPresent, setcheckedPresent] = React.useState(false);
   const handleChangePresent = (event) => {
@@ -289,4 +289,4 @@ const TalentExperience = () => {
   );
 };
 
-export default TalentExperience;
+export default EmployerExperience;
