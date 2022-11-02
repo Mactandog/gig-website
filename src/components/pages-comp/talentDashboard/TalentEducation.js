@@ -19,19 +19,13 @@ import CountrySelect from "../../forms/CountrySelect";
 import YearMonthPicker from "../../forms/MonthPicker";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
+import { Link } from "react-router-dom";
 
 const TalentEducation = () => {
   //Qualification Picker
   const [qualification, setqualification] = React.useState("");
   const handleChange = (event) => {
     setqualification(event.target.value);
-  };
-
-  //Show Add Experience Form
-  const [showForm, setShowForm] = React.useState(false);
-  const formContainer = React.useRef(null);
-  const handleShowForm = () => {
-    setShowForm(!showForm);
   };
 
   return (
@@ -44,143 +38,19 @@ const TalentEducation = () => {
             </Typography>
           </Grid>
           <Grid item xs={4} md={4} textAlign="right">
-            <Tooltip title="Add Education">
-              <Button
-                type="button"
-                variant="outlined"
-                disabled={showForm}
-                startIcon={<AddCircleOutlineRoundedIcon />}
-                onClick={handleShowForm}
-              >
-                Add
-              </Button>
-            </Tooltip>
+            <Link to="add">
+              <Tooltip title="Add Education">
+                <Button
+                  type="button"
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineRoundedIcon />}
+                >
+                  Add
+                </Button>
+              </Tooltip>
+            </Link>
           </Grid>
         </Grid>
-        <Box>
-          {showForm ? (
-            <Portal container={formContainer.current}>
-              <Box
-                component="form"
-                noValidate
-                autoComplete="off"
-                sx={{ flexGrow: 1, mt: 4 }}
-              >
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Institute/University*"
-                      id="school"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <YearMonthPicker />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <CountrySelect />
-                  </Grid>
-                  <Grid item xs={12} md={8}>
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="demo-simple-select-label">
-                        Qualification*
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={qualification}
-                        label="Status"
-                        onChange={handleChange}
-                      >
-                        <MenuItem value="" disabled>
-                          Select Qualification
-                        </MenuItem>
-                        <MenuItem value={"Single"}>
-                          High School Diploma
-                        </MenuItem>
-                        <MenuItem value={"Married"}>
-                          Vocational Diploma / Short Course Certificated
-                        </MenuItem>
-                        <MenuItem value={"Widowed"}>
-                          Bachelor's Degree/College Degree
-                        </MenuItem>
-                        <MenuItem value={"Widower"}>
-                          Post graduate Diploma / Master's Degree
-                        </MenuItem>
-                        <MenuItem value={"Widower"}>
-                          Professional License {"("}Passed
-                          Board/Bar/Professional License Exam{")"}
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Course / Field of Study*"
-                      id="course"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Major (Optional)"
-                      id="major"
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2} alignItems="center" mt={2}>
-                  <Grid item xs={12} md={12}>
-                    <Typography variant="body1" color="primary">
-                      Additional Information {"(Optional)"}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <TextareaAutosize
-                      aria-label="minimum height"
-                      minRows={10}
-                      placeholder="Achievements / Certifications"
-                      style={{ width: "100%" }}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  spacing={2}
-                  mt={4}
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Grid item xs={12} md={2}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={handleShowForm}
-                    >
-                      Save
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      fullWidth
-                      onClick={handleShowForm}
-                    >
-                      Cancel
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Portal>
-          ) : null}
-        </Box>
-        <Box ref={formContainer} mb={8} />
 
         {/* ================ EDUCATION ============= */}
 

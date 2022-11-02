@@ -40,10 +40,13 @@ import TalentProfile from "../../components/pages-comp/talentDashboard/TalentPro
 import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
 import TalentHome from "../../components/pages-comp/talentDashboard/TalentHome";
 import TalentMyJobs from "../../components/pages-comp/talentDashboard/TalentMyJobs";
+import TalentEditPersonalInfo from "../../components/pages-comp/talentDashboard/talentEditPersonalInfo";
+import TalentEditWorkExp from "../../components/pages-comp/talentDashboard/talentEditWorkExp";
+import TalentEditEducation from "../../components/pages-comp/talentDashboard/talentEditEducation";
 
 const drawerWidth = 240;
 
-function ResponsiveDrawer(props) {
+function TalentDashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -256,6 +259,15 @@ function ResponsiveDrawer(props) {
             <Route path="upload-resume" element={<TalentUploadResume />} />
             <Route path="account-settings" element={<TalentMyAccount />} />
             <Route path="my-jobs" element={<TalentMyJobs />} />
+            <Route
+              path="personal-info/edit"
+              element={<TalentEditPersonalInfo />}
+            />{" "}
+            <Route
+              path="work-experience/edit"
+              element={<TalentEditWorkExp />}
+            />
+            <Route path="education/add" element={<TalentEditEducation />} />
           </Routes>
         </Box>
       </Box>
@@ -263,4 +275,4 @@ function ResponsiveDrawer(props) {
   );
 }
 
-export default ResponsiveDrawer;
+export default TalentDashboard;

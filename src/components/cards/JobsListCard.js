@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import JobPost from "./jobpost";
+import JobPost from "../pages-comp/talentDashboard/jobpost";
 import {
   Card,
   CardContent,
@@ -11,20 +11,16 @@ import {
   Typography,
   Grid,
   Avatar,
+  Container,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
-import JobsList from "../../data/jobs/jobsList";
+import JobsList from "../data/jobs/jobsList";
 import KeyboardReturnRoundedIcon from "@mui/icons-material/KeyboardReturnRounded";
 
 export default function JobsListCard() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [state, setState] = React.useState({ right: false });
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -49,14 +45,17 @@ export default function JobsListCard() {
       role="presentation"
       onKeyDown={toggleDrawer("right", false)}
     >
-      <Button
-        onClick={toggleDrawer("right", false)}
-        startIcon={<KeyboardReturnRoundedIcon />}
-        variant="text"
-        size="large"
-      >
-        Back
-      </Button>
+      <Box sx={{ pl: 10 }}>
+        <Button
+          onClick={toggleDrawer("right", false)}
+          startIcon={<KeyboardReturnRoundedIcon />}
+          variant="text"
+          size="large"
+        >
+          Back
+        </Button>
+      </Box>
+
       <JobPost />
     </Box>
     // ========================= End of Layout
@@ -65,14 +64,12 @@ export default function JobsListCard() {
   // =================== Jobs List ==================
   const jobsCard = () => {
     return (
-      <Box>
+      <Container>
         <Grid container alignItems="center">
+          {/* ======== START MAPPING HERE ============= */}
           {JobsList.map((job) => (
-            <Grid item xs={12} md={12} key={job.id} my={1}>
-              <Card
-                sx={{ width: "100%", height: "282px", pl: 2 }}
-                variant="outlined"
-              >
+            <Grid item xs={12} key={job.id} my={1}>
+              <Card sx={{ width: "100%", height: "282px" }} variant="outlined">
                 <CardActionArea
                   onClick={toggleDrawer("right", true)}
                   sx={{ display: "flex" }}
@@ -158,7 +155,7 @@ export default function JobsListCard() {
             </Grid>
           ))}
         </Grid>
-      </Box>
+      </Container>
 
       // =================== End of Jobs List ==================
     );

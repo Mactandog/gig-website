@@ -18,7 +18,8 @@ npm install dayjs
 npm install axios --save
 
 
-
+>>>>> BOOTSTRAP
+npm install react-bootstrap bootstrap
 
 
 /////// OTHER NOTES ////// 
