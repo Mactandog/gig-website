@@ -2,7 +2,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import Search1 from "../../searchBars/Search1";
-import JobsListCard from "./JobsListCard";
+import JobsListCard from "../../cards/JobsListCard";
 import DynamicFeedRoundedIcon from "@mui/icons-material/DynamicFeedRounded";
 
 const TalentHome = () => {
@@ -25,11 +25,12 @@ const TalentHome = () => {
             </Grid>
           </Grid>
         </Box>
-
         {/* end of container */}
       </Paper>
-      <Grid container spacing={2} alignItems="center">
-        <JobsListCard />
+      <Grid container>
+        <Grid item xs={12} md={12}>
+          <JobsListCard />
+        </Grid>
       </Grid>
     </>
   );

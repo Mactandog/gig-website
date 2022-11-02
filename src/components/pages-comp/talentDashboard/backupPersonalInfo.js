@@ -27,8 +27,7 @@ import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import Countries from "../../data/Countries";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import { useRef } from "react";
-import TalentEditPersonalInfo from "./talentEditPersonalInfo";
-import { Link } from "react-router-dom";
+import TalentEditPersonalInfo from "../talentEditPersonalInfo";
 // let form = document.querySelector("#personalInfo");
 
 let talentPersonalInfo = localStorage.getItem("personalInfoDetails")
@@ -155,8 +154,7 @@ const TalentPersonalInformation = () => {
   };
 
   const checkBirthDate = () => {
-    const birthDate = document.getElementById("birthDate").value;
-    if (isRequired(birthDate)) {
+    if (isNull(birthDateValue)) {
       document.getElementById("birthDateHelper").innerHTML = "Required";
       return false;
     } else {
@@ -375,7 +373,7 @@ const TalentPersonalInformation = () => {
       firstName: document.getElementById("firstName").value.trim(),
       middleName: document.getElementById("middleName").value.trim(),
       lastName: document.getElementById("lastName").value.trim(),
-      birthDate: document.getElementById("birthDate").value,
+      birthDate: birthDateValue,
       age: document.getElementById("age").value.trim(),
       status: civilStatus,
       gender: gender,
@@ -496,19 +494,17 @@ const TalentPersonalInformation = () => {
           </Grid>
           <Grid item xs={4} md={4} textAlign="right">
             <Tooltip title="Edit Personal Information">
-              <Link to="edit">
-                <Button
-                  id="1667290249787"
-                  type="button"
-                  variant="outlined"
-                  // disabled={showForm}
-                  startIcon={<EditRoundedIcon />}
-                  // onClick={handleShowForm}
-                  // onClick={editPersonalInfo}
-                >
-                  Edit
-                </Button>
-              </Link>
+              <Button
+                id="1667290249787"
+                type="button"
+                variant="outlined"
+                // disabled={showForm}
+                startIcon={<EditRoundedIcon />}
+                // onClick={handleShowForm}
+                onClick={editPersonalInfo}
+              >
+                Edit
+              </Button>
             </Tooltip>
           </Grid>
         </Grid>
@@ -562,16 +558,19 @@ const TalentPersonalInformation = () => {
               </small>
             </Grid>
             <Grid item xs={6} md={4}>
-              {/* ///////////// DATE */}
-              <input
-                type="date"
-                name="birthdate"
-                id="birthDate"
-                style={{ fontSize: "1rem" }}
-              />
-              <small id="birthDateHelper" className="textHelper">
-                &nbsp;
-              </small>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  id="birthDate"
+                  label="Date of Birth"
+                  value={birthDateValue}
+                  onChange={selectDate}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <br></br>
+                <small id="birthDateHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </LocalizationProvider>
             </Grid>
             <Grid item xs={6} md={4}>
               <TextField

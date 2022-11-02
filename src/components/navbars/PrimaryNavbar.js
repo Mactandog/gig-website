@@ -28,7 +28,7 @@ function PrimaryNavbar({ links }) {
   return (
     <>
       <Box>
-        <AppBar component="nav" className="topNav">
+        <AppBar component="nav" className="topNav" sx={{ zIndex: 50000 }}>
           {isMatch ? (
             <DrawerComp links={links} />
           ) : (
