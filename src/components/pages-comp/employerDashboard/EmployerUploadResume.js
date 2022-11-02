@@ -4,7 +4,7 @@ import React from "react";
 import AttachmentRoundedIcon from "@mui/icons-material/AttachmentRounded";
 import FileUpload from "../../forms/FIleUpload";
 
-const TalentUploadResume = () => {
+const EmployerUploadResume = () => {
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -33,4 +33,4 @@ const TalentUploadResume = () => {
   );
 };
 
-export default TalentUploadResume;
+export default EmployerUploadResume;

@@ -3,14 +3,11 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
   Grid,
   InputLabel,
   MenuItem,
-  Modal,
   Paper,
-  Portal,
   Radio,
   RadioGroup,
   Select,
@@ -25,22 +22,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import Countries from "../../data/Countries";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import { useRef } from "react";
-import TalentEditPersonalInfo from "./talentEditPersonalInfo";
 import { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
 // let form = document.querySelector("#personalInfo");
 
 let talentPersonalInfo = localStorage.getItem("personalInfoDetails")
   ? JSON.parse(localStorage.getItem("personalInfoDetails"))
   : [];
 
-const TalentPersonalInformation = () => {
+const TalentEditPersonalInfo = ({}) => {
   //////////////////////////////////////////////////
   //Date Picker
   let [birthDateValue, setBirthDateValue] = React.useState(null);
   let selectDate = (newValue) => {
-    // setBirthDateValue(newValue.$d);
     setBirthDateValue(newValue);
   };
 
@@ -86,7 +80,7 @@ const TalentPersonalInformation = () => {
 
   // Add Personal Info
   const [talentInfo, setTalentInfo] = useState(talentPersonalInfo);
-  const [talentId, setTalentId] = useState(Date.now());
+  const [talentId, setTalentId] = useState();
   //////////////////////////////////////////////////////////
 
   // =================================================== //
@@ -187,6 +181,7 @@ const TalentPersonalInformation = () => {
   };
 
   const checkStatus = () => {
+    const civilStatus = document.getElementById("civilStatus").value;
     if (isRequired(civilStatus)) {
       document.getElementById("statusHelper").innerHTML = "Required";
       return false;
@@ -368,7 +363,7 @@ const TalentPersonalInformation = () => {
 
   let addPersonalInfo = () => {
     // e.preventDefault();
-    setTalentId(Date.now);
+    // setTalentId(Date.now);
 
     let personalInfoDetails = {
       talentId: talentId,
@@ -393,13 +388,62 @@ const TalentPersonalInformation = () => {
         .value.trim(),
     };
 
-    setTalentInfo([...talentInfo, personalInfoDetails]);
+    talentInfo.map((talent, index) => {
+      console.log(talent.talentId === personalInfoDetails.talentId);
+      if (talent.talentId === personalInfoDetails.talentId) {
+        talentInfo.splice(index, 1, personalInfoDetails);
+        let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
+        localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
+      }
+      return setTalentInfo(talentInfo);
+    });
+  };
 
-    talentPersonalInfo.push(personalInfoDetails);
-    let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
-    localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
-    console.log(talentPersonalInfo);
-    document.forms[0].reset();
+  // =================================================== //
+  // ============ END OF ADD PERSONAL INFO ============= //
+  // =================================================== //
+
+  // =================================================== //
+  // =============== POPULATE PERSONAL INO ============= //
+  // =================================================== //
+
+  useEffect(() => {
+    localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
+  }, [talentInfo]);
+
+  let editPersonalInfo = (e) => {
+    e.preventDefault();
+    let num = parseInt(e.target.id);
+    num = 1667368619504;
+
+    talentInfo
+      .filter((talent) => {
+        return talent.talentId === num;
+      })
+      .map((talent) => {
+        document.getElementById("talentId").innerHTML = talent.talentId;
+        document.getElementById("firstName").value = talent.firstName;
+        document.getElementById("middleName").value = talent.middleName;
+        document.getElementById("lastName").value = talent.lastName;
+        document.getElementById("birthDate").value = talent.birthDate;
+        document.getElementById("age").value = talent.age;
+        document.getElementById("civilStatus").value = talent.status;
+        // (document.formInfo("gender").value = talent.gender),
+        // console.log(selectedGender(talent.gender)),
+        document.getElementById("email").value = talent.email;
+        document.getElementById("phoneNo").value = talent.phoneNo;
+        document.getElementById("nationality").value = talent.nationality;
+        document.getElementById("country").value = talent.country;
+        document.getElementById("stateRegion").value = talent.state;
+        document.getElementById("address").value = talent.address;
+        document.getElementById("city").value = talent.city;
+        document.getElementById("postalCode").value = talent.postal;
+        document.getElementById("identification").value = talent.identification;
+        document.getElementById("identificationNo").value =
+          talent.identificationNo;
+        console.log("Fetch Id of logged in user " + talent.talentId);
+        return setTalentId(talent.talentId);
+      });
   };
 
   let submitPersonalInfo = (event) => {
@@ -427,64 +471,6 @@ const TalentPersonalInformation = () => {
       alert("success");
     }
   };
-
-  // =================================================== //
-  // ============ END OF ADD PERSONAL INFO ============= //
-  // =================================================== //
-
-  // =================================================== //
-  // =============== POPULATE PERSONAL INO ============= //
-  // =================================================== //
-
-  useEffect(() => {
-    localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
-  }, [talentInfo]);
-
-  let editPersonalInfo = (e) => {
-    e.preventDefault();
-    // let num = parseInt(e.target.id);
-    let num = 1667309736925;
-
-    talentInfo
-      .filter((talent) => {
-        console.log(talent.talentId === num ? true : false);
-        console.log(num);
-        return talent.talentId === num;
-      })
-      .map((talent) => {
-        console.log(talent.birthDate);
-
-        // setTalentId(talent.talentId);
-        // console.log(talent.firstName);
-        // console.log(talent.lastName);
-        // console.log(firstNameRef.current);
-        // console.log((firstNameRef.current.value = " khsdjakhdkajh"));
-        // return (fname.current.value = talent.firstName);
-        // return (firstNameRef.current.value = talent.firstName);
-        return (
-          (document.getElementById("firstName").value = talent.firstName),
-          (document.getElementById("middleName").value = talent.middleName),
-          (document.getElementById("lastName").value = talent.lastName),
-          (document.getElementById("birthDate").value = talent.birthDate),
-          (document.getElementById("age").value = talent.age),
-          (document.getElementById("civilStatus").value = talent.status),
-          (document.getElementById("gender").value = talent.gender),
-          (document.getElementById("email").value = talent.email),
-          (document.getElementById("phoneNo").value = talent.phoneNo),
-          (document.getElementById("nationality").value = talent.nationality),
-          (document.getElementById("country").value = talent.country),
-          (document.getElementById("stateRegion").value = talent.state),
-          (document.getElementById("address").value = talent.address),
-          (document.getElementById("city").value = talent.city),
-          (document.getElementById("postalCode").value = talent.postal),
-          (document.getElementById("identification").value =
-            talent.identification),
-          (document.getElementById("identificationNo").value =
-            talent.identificationNo)
-        );
-      });
-  };
-
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -494,24 +480,23 @@ const TalentPersonalInformation = () => {
               <AccountBoxRoundedIcon /> Personal Information
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4} textAlign="right">
-            <Tooltip title="Edit Personal Information">
-              <Link to="edit">
-                <Button
-                  id="1667290249787"
-                  type="button"
-                  variant="outlined"
-                  // disabled={showForm}
-                  startIcon={<EditRoundedIcon />}
-                  // onClick={handleShowForm}
-                  // onClick={editPersonalInfo}
-                >
-                  Edit
-                </Button>
-              </Link>
-            </Tooltip>
-          </Grid>
         </Grid>
+        <Grid item xs={4} md={4} textAlign="right">
+          <Tooltip title="Edit Personal Information">
+            <Button
+              id="1667290249787"
+              type="button"
+              variant="outlined"
+              // disabled={showForm}
+              startIcon={<EditRoundedIcon />}
+              // onClick={handleShowForm}
+              onClick={editPersonalInfo}
+            >
+              Edit
+            </Button>
+          </Tooltip>
+        </Grid>
+        <h4 id="talentId">id</h4>
 
         {/* ====================== FORM ======================*/}
         <Box
@@ -520,6 +505,7 @@ const TalentPersonalInformation = () => {
           autoComplete="off"
           sx={{ flexGrow: 1, mt: 4 }}
           id="personalInfo"
+          name="formInfo"
           onSubmit={submitPersonalInfo}
         >
           <Grid container spacing={2} alignItems="center">
@@ -586,23 +572,21 @@ const TalentPersonalInformation = () => {
               </small>
             </Grid>
             <Grid item xs={6} md={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="status" shrink>
-                  Status*
-                </InputLabel>
-                <Select
-                  labelId="status"
-                  id="civilStatus"
-                  value={civilStatus}
-                  label="Status*"
-                  onChange={handleSelectStatus}
-                >
-                  <MenuItem value={"Single"}>Single</MenuItem>
-                  <MenuItem value={"Married"}>Married</MenuItem>
-                  <MenuItem value={"Widowed"}>Widowed</MenuItem>
-                  <MenuItem value={"Widower"}>Widower</MenuItem>
-                </Select>
-              </FormControl>
+              {/* ///////////////////// STATUS /////////// */}
+
+              <Form.Select
+                aria-label="Select Status"
+                id="civilStatus"
+                className="form-select"
+                onChange={handleSelectStatus}
+                value={civilStatus}
+              >
+                <option disabled>Select Civil Status</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Widowed">Widowed</option>
+                <option value="Widower">Widower</option>
+              </Form.Select>
               <small id="statusHelper" className="textHelper">
                 &nbsp;
               </small>
@@ -618,20 +602,26 @@ const TalentPersonalInformation = () => {
                   onChange={handleSelectGender}
                   name="radio-buttons-group"
                 >
-                  <FormControlLabel
-                    value="Female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                  <FormControlLabel
+                  <input
+                    type="radio"
+                    name="gender"
                     value="Male"
-                    control={<Radio />}
-                    label="Male"
+                    onChange={handleSelectGender}
                   />
+                  <label htmlFor="male">Male</label>
+
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Female"
+                    onChange={handleSelectGender}
+                  />
+                  <label htmlFor="female">Female</label>
+
+                  <small id="genderHelper" className="textHelper">
+                    &nbsp;
+                  </small>
                 </RadioGroup>
-                <small id="genderHelper" className="textHelper">
-                  &nbsp;
-                </small>
               </FormControl>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -762,30 +752,22 @@ const TalentPersonalInformation = () => {
               </small>
             </Grid>
             <Grid item xs={12} md={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="Identification" shrink>
-                  Identification*
-                </InputLabel>
-                <Select
-                  labelId="Identification"
-                  id="idNo"
-                  value={identification}
-                  label="Identification*"
-                  onChange={selectIdentification}
-                  InputLabelProps={{ shrink: true }}
-                >
-                  <MenuItem value="" disabled>
-                    Select Identification
-                  </MenuItem>
-                  <MenuItem value="Social Card">Social Card</MenuItem>
-                  <MenuItem value="Tax Card">Tax Card</MenuItem>
-                  <MenuItem value="Driver's License">Driver's License</MenuItem>
-                  <MenuItem value="Passport">Passport</MenuItem>
-                  <MenuItem value="Professional License">
-                    Professional License
-                  </MenuItem>
-                </Select>
-              </FormControl>
+              <Form.Select
+                aria-label="Select Identification"
+                id="identification"
+                className="form-select"
+                onChange={selectIdentification}
+                value={identification}
+              >
+                <option disabled>Select Identification</option>
+                <option value="Social Card">Social Card</option>
+                <option value="Tax Card">Tax Card</option>
+                <option value="Driver's License">Driver's License</option>
+                <option value="Passport">Passport</option>
+                <option value="Professional License">
+                  Professional License
+                </option>
+              </Form.Select>
               <small id="identificationHelper" className="textHelper">
                 &nbsp;
               </small>
@@ -818,179 +800,28 @@ const TalentPersonalInformation = () => {
                 fullWidth
                 // onClick={handleShowForm}
                 // onClick={submitForm}
-                onClick={submitPersonalInfo}
+                // onClick={submitPersonalInfo}
               >
                 Save
               </Button>
             </Grid>
             <Grid item xs={12} md={2}>
-              <Button
-                variant="contained"
-                color="error"
-                fullWidth
-                // onClick={handleShowForm}
-              >
-                Cancel
-              </Button>
+              <Link to="/talent/profile/personal-info">
+                <Button
+                  variant="contained"
+                  color="error"
+                  fullWidth
+                  // onClick={handleShowForm}
+                >
+                  Cancel
+                </Button>
+              </Link>
             </Grid>
           </Grid>
         </Box>
-
-        {/* <Box ref={formContainer} /> */}
-        {/* START MAPPING HERE */}
-        {talentPersonalInfo
-          .filter((talent) => {
-            return talent.talentId === 1667311277563;
-          })
-          .map((talent) => (
-            <Grid container my={2} alignItems="center" key={talent.talentId}>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Full Name
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.firstName} {talent.middleName} {talent.lastName}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Date of Birth
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.birthDate}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Age
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.age}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Status
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.status}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Gender
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.gender}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Email
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.email}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Phone Number
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.phoneNo}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Nationality
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.nationality}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Country
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.country}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  State/Region
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.state}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Address
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.address}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  City/Municipality
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.city}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Postal Code
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.postal}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  {talent.identification}
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.identificationNo}
-                </Typography>
-              </Grid>
-            </Grid>
-          ))}
-        {/* <TalentEditPersonalInfo /> */}
       </Paper>
     </>
   );
 };
 
-export default TalentPersonalInformation;
+export default TalentEditPersonalInfo;

@@ -31,28 +31,29 @@ import {
   useResolvedPath,
   useMatch,
 } from "react-router-dom";
-import TalentPersonalInformation from "../../components/pages-comp/talentDashboard/TalentPersonalInformation";
-import TalentExperience from "../../components/pages-comp/talentDashboard/TalentExperience";
-import TalentSkills from "../../components/pages-comp/talentDashboard/TalentSkills";
-import TalentEducation from "../../components/pages-comp/talentDashboard/TalentEducation";
-import TalentMyAccount from "../../components/pages-comp/talentDashboard/TalentMyAccount";
-import TalentProfile from "../../components/pages-comp/talentDashboard/TalentProfile";
-import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
-import TalentHome from "../../components/pages-comp/talentDashboard/TalentHome";
-import TalentMyJobs from "../../components/pages-comp/talentDashboard/TalentMyJobs";
-import TalentEditPersonalInfo from "../../components/pages-comp/talentDashboard/talentEditPersonalInfo";
-import TalentEditWorkExp from "../../components/pages-comp/talentDashboard/talentEditWorkExp";
-import TalentEditEducation from "../../components/pages-comp/talentDashboard/talentEditEducation";
+import EmployerPersonalInformation from "../../components/pages-comp/employerDashboard/EmployerPersonalInformation";
+import EmployerExperience from "../../components/pages-comp/employerDashboard/EmployerExperience";
+import EmployerSkills from "../../components/pages-comp/employerDashboard/EmployerSkills";
+import EmployerEducation from "../../components/pages-comp/employerDashboard/EmployerEducation";
+import EmployerMyAccount from "../../components/pages-comp/employerDashboard/EmployerMyAccount";
+import EmployerProfile from "../../components/pages-comp/employerDashboard/EmployerProfile";
+import EmployerUploadResume from "../../components/pages-comp/employerDashboard/EmployerUploadResume";
+import EmployerHome from "../../components/pages-comp/employerDashboard/EmployerHome";
+import EmployerMyJobs from "../../components/pages-comp/employerDashboard/EmployerMyJobs";
 
 const drawerWidth = 240;
 
-function TalentDashboard(props) {
+function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  let dbName = JSON.parse(localStorage.getItem("companies"));
+
+
 
   // ACTIVE LINK
   let CustomLink = ({ to, children, ...props }) => {
@@ -72,13 +73,13 @@ function TalentDashboard(props) {
       <Divider />
       <List>
         {/* USER PROFILE */}
-        <Link className="sidebarLink" to="/talent/profile/my-profile">
+        <Link className="sidebarLink" to="/employer/profile/employer-profile">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemAvatar>
                 <Avatar alt="User Picture" variant="square" src={profilePic} />
               </ListItemAvatar>
-              <ListItemText primary="Ryan Mark" secondary="View My Profile" />
+              <ListItemText primary={dbName.name} secondary="View Profile" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -91,15 +92,15 @@ function TalentDashboard(props) {
           },
           {
             icon: <AccountBoxRoundedIcon />,
-            name: "Personal Information",
-            path: "/personal-info",
+            name: "Company Information",
+            path: "/employer-info",
           },
           {
             icon: <WorkHistoryRoundedIcon />,
             name: "Experience",
-            path: "/work-experience",
+            path: "/employer-experience",
           },
-          { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/skills" },
+          { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/employer-skills" },
           {
             icon: <WysiwygRoundedIcon />,
             name: "Portfolio",
@@ -108,20 +109,20 @@ function TalentDashboard(props) {
           {
             icon: <SchoolRoundedIcon />,
             name: "Education",
-            path: "/education",
+            path: "/employer-education",
           },
           {
             icon: <AttachmentRoundedIcon />,
             name: "Upload Resume",
-            path: "/upload-resume",
+            path: "/employer-upload-resume",
           },
         ].map((tab, index) => (
           <CustomLink
             key={index}
             className="sidebarLink"
-            to={`/talent/profile${tab.path}`}
+            to={`/Employer/profile${tab.path}`}
           >
-            {/* <Link className="sidebarLink" to={`/talent/profile${tab.path}`}> */}
+            {/* <Link className="sidebarLink" to={`/Employer/profile${tab.path}`}> */}
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>{tab.icon}</ListItemIcon>
@@ -133,13 +134,13 @@ function TalentDashboard(props) {
       </List>
       <Divider />
       <List>
-        <Link className="sidebarLink" to="/talent/profile/my-jobs">
+        <Link className="sidebarLink" to="/employer/profile/employer-my-jobs">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <WorkRoundedIcon />
               </ListItemIcon>
-              <ListItemText primary="My Jobs" />
+              <ListItemText primary="Delete Account" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -150,6 +151,10 @@ function TalentDashboard(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+   
+
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -247,27 +252,15 @@ function TalentDashboard(props) {
           }}
         >
           <Routes>
-            <Route index element={<TalentHome />} />
-            <Route path="my-profile" element={<TalentProfile />} />
-            <Route
-              path="personal-info"
-              element={<TalentPersonalInformation />}
-            />
-            <Route path="work-experience" element={<TalentExperience />} />
-            <Route path="skills" element={<TalentSkills />} />
-            <Route path="education" element={<TalentEducation />} />
-            <Route path="upload-resume" element={<TalentUploadResume />} />
-            <Route path="account-settings" element={<TalentMyAccount />} />
-            <Route path="my-jobs" element={<TalentMyJobs />} />
-            <Route
-              path="personal-info/edit"
-              element={<TalentEditPersonalInfo />}
-            />{" "}
-            <Route
-              path="work-experience/edit"
-              element={<TalentEditWorkExp />}
-            />
-            <Route path="education/add" element={<TalentEditEducation />} />
+            <Route index element={<EmployerHome />} />
+            <Route path="employer-profile" element={<EmployerProfile />} />
+            <Route path="employer-info" element={<EmployerPersonalInformation />}/>
+            <Route path="employer-experience" element={<EmployerExperience />} />
+            <Route path="employer-skills" element={<EmployerSkills />} />
+            <Route path="employer-education" element={<EmployerEducation />} />
+            <Route path="employer-upload-resume" element={<EmployerUploadResume />} />
+            <Route path="employer-account-settings" element={<EmployerMyAccount />} />
+            <Route path="employer-my-jobs" element={<EmployerMyJobs />} />
           </Routes>
         </Box>
       </Box>
@@ -275,4 +268,4 @@ function TalentDashboard(props) {
   );
 }
 
-export default TalentDashboard;
+export default ResponsiveDrawer;
