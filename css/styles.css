@@ -135,19 +135,10 @@
   border-right: 1.5rem solid #0f3057;
 }
 
-
 .search {
+  color: red;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.search textarea {
-  resize: none;
-}
-
-.textHelper {
-  color: red;
-  margin-left: 0.5rem;
-}/*# sourceMappingURL=styles.css.map */
-
