@@ -24,7 +24,7 @@ import IdSelect from "../../forms/IdSelect";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 
-const TalentPersonalInformation = () => {
+const EmployerPersonalInformation = () => {
   //Date Picker
   const [value, setValue] = React.useState(null);
 
@@ -41,13 +41,15 @@ const TalentPersonalInformation = () => {
     setShowForm(!showForm);
   };
 
+  let dbName = JSON.parse(localStorage.getItem("companies"));
+
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
         <Grid container>
           <Grid item xs={8} md={8}>
             <Typography variant="h4" fontWeight={500} color="textPrimary">
-              <AccountBoxRoundedIcon /> Personal Information
+              <AccountBoxRoundedIcon /> Company Information
             </Typography>
           </Grid>
           <Grid item xs={4} md={4} textAlign="right">
@@ -267,152 +269,52 @@ const TalentPersonalInformation = () => {
           {/* START MAPPING HERE */}
           <Grid item xs={3} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Full Name
+              Company ID:
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Ryan Mark Tandog Eyana
+              {dbName.id}
             </Typography>
           </Grid>
           <Grid item xs={3} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Date of Birth
+              Company Name:
             </Typography>
           </Grid>
           <Grid item xs={9} md={9}>
             <Typography variant="h6" fontWeight={500} color="textPrimary">
-              March 22, 1996
+              {dbName.name}
             </Typography>
           </Grid>
           <Grid item xs={3} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Age
+            Email Address:
             </Typography>
           </Grid>
           <Grid item xs={9} md={9}>
             <Typography variant="h6" fontWeight={500} color="textPrimary">
-              26
+            {dbName.email}
             </Typography>
           </Grid>
           <Grid item xs={3} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Status
+              Company Contact Number:
             </Typography>
           </Grid>
           <Grid item xs={9} md={9}>
             <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Single
+            {dbName.number}
             </Typography>
           </Grid>
           <Grid item xs={3} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Gender
+              Company Description:
             </Typography>
           </Grid>
           <Grid item xs={9} md={9}>
             <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Male
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Age
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              26 years old
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Email
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              ryan123@gmail.com
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Phone Number
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              +63 912345678
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Nationality
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Filipino
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Country
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Philippines
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              State/Region
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              South Cotabato
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Address
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Causing Subd., Centrala
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              City/Municipality
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              Surallah
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Postal Code
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              9512
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              TIN
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              011118847
+            {dbName.description}
             </Typography>
           </Grid>
         </Grid>
@@ -421,4 +323,4 @@ const TalentPersonalInformation = () => {
   );
 };
 
-export default TalentPersonalInformation;
+export default EmployerPersonalInformation;

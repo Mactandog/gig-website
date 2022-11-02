@@ -20,7 +20,7 @@ import YearMonthPicker from "../../forms/MonthPicker";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 
-const TalentEducation = () => {
+const EmployerEducation = () => {
   //Qualification Picker
   const [qualification, setqualification] = React.useState("");
   const handleChange = (event) => {
@@ -33,6 +33,8 @@ const TalentEducation = () => {
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
+
+
 
   return (
     <>
@@ -217,4 +219,4 @@ const TalentEducation = () => {
   );
 };
 
-export default TalentEducation;
+export default EmployerEducation;

@@ -47,10 +47,13 @@ export default function EmployerLogin() {
       if(input.companyEmail === loggedCompany.email && 
           input.companyPassword === loggedCompany.password) 
           {
-              navigate("/employer/profile")
+              navigate("/companies")
       }else{
           alert("wrong email or password")
       }
+
+      console.log(loggedCompany)
+
   };
 
   return (

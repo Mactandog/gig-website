@@ -18,7 +18,11 @@ import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import PsychologyRoundedIcon from "@mui/icons-material/PsychologyRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 
-const TalentProfile = () => {
+const EmployerProfile = () => {
+
+
+  let dbName = JSON.parse(localStorage.getItem("companies"));
+
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -37,7 +41,7 @@ const TalentProfile = () => {
           </Grid>
           <Grid item xs={12} md={10}>
             <Typography variant="h4" fontWeight={500} color="textPrimary">
-              Ryan Mark T. Eyana
+              {dbName.name}
             </Typography>
             <Typography variant="body1" fontWeight={400} color="textPrimary">
               Human Capital Management Clerk {"("}2017-2019{")"}
@@ -377,4 +381,4 @@ const TalentProfile = () => {
   );
 };
 
-export default TalentProfile;
+export default EmployerProfile;
