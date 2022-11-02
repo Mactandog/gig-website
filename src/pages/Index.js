@@ -16,6 +16,7 @@ import EmployerSignUp from "./signupEmployer";
 import TalentSignUp from "./signupTalent";
 import TalentDashboard from "./talent/talentDashboard";
 import SecondaryNavbar from "../components/navbars/SecondaryNavbar";
+import Jobpostpage from "./jobpostpage";
 
 const Index = () => {
   return (
@@ -44,6 +45,7 @@ const Index = () => {
                 <Route path="/business/signup" element={<EmployerSignUp />} />
               </Route>
               <Route path="/talent/profile/*" element={<TalentDashboard />} />
+              <Route path="/jobpostpage" element={<Jobpostpage />} />
             </Routes>
           </Box>
         </Box>
