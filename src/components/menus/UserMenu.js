@@ -18,6 +18,11 @@ export default function UserMenu({ profilePic }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logout = () => {
+    alert("You have logged out");
+    localStorage.removeItem("userInfoSession");
+  };
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -76,7 +81,7 @@ export default function UserMenu({ profilePic }) {
         </MenuItem>
 
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={logout} component="a" href="/">
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

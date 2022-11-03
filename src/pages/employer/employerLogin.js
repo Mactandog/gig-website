@@ -12,8 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import loginImg2 from "../../assets/media/images/login2.jpg";
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,24 +36,23 @@ function Copyright(props) {
 export default function EmployerLogin() {
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    companyEmail:"",
-    companyPassword:"",
-   
+    companyEmail: "",
+    companyPassword: "",
   });
-  
+
   let handleLogin = (e) => {
-      e.preventDefault();
-      const loggedCompany = JSON.parse(localStorage.getItem("companies"));
-      if(input.companyEmail === loggedCompany.email && 
-          input.companyPassword === loggedCompany.password) 
-          {
-              navigate("/companies")
-      }else{
-          alert("wrong email or password")
-      }
+    e.preventDefault();
+    const loggedCompany = JSON.parse(localStorage.getItem("companies"));
+    if (
+      input.companyEmail === loggedCompany.email &&
+      input.companyPassword === loggedCompany.password
+    ) {
+      navigate("/employer/profile");
+    } else {
+      alert("wrong email or password");
+    }
 
-      console.log(loggedCompany)
-
+    console.log(loggedCompany);
   };
 
   return (
@@ -107,10 +106,12 @@ export default function EmployerLogin() {
               name="companyEmail"
               autoComplete="email"
               autoFocus
-              onChange={(e)=>setInput({
-                ...input,
-                [e.target.name]: e.target.value,
-              })}
+              onChange={(e) =>
+                setInput({
+                  ...input,
+                  [e.target.name]: e.target.value,
+                })
+              }
             />
             <TextField
               margin="normal"
@@ -121,10 +122,12 @@ export default function EmployerLogin() {
               type="password"
               id="companyPassword"
               autoComplete="current-password"
-              onChange={(e)=>setInput({
-                ...input,
-                [e.target.name]: e.target.value,
-              })}
+              onChange={(e) =>
+                setInput({
+                  ...input,
+                  [e.target.name]: e.target.value,
+                })
+              }
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

@@ -20,6 +20,15 @@ import YearMonthPicker from "../../forms/MonthPicker";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+let educationList = localStorage.getItem("EducationData")
+  ? JSON.parse(localStorage.getItem("EducationData"))
+  : [];
+
+let userLoginSession = localStorage.getItem("userInfoSession")
+  ? JSON.parse(localStorage.getItem("userInfoSession"))
+  : [];
 
 const TalentEducation = () => {
   //Qualification Picker
@@ -27,6 +36,16 @@ const TalentEducation = () => {
   const handleChange = (event) => {
     setqualification(event.target.value);
   };
+
+  const [userSession, setUserSession] = useState(userLoginSession);
+  const currentSessionId = userLoginSession.map((user) => user.id);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfoSession"));
+    if (userSession) {
+      setUserSession(user);
+    }
+  }, []);
 
   return (
     <>
@@ -54,32 +73,43 @@ const TalentEducation = () => {
 
         {/* ================ EDUCATION ============= */}
 
-        <Grid container my={2}>
-          {/* START MAPPING HERE */}
-          <Grid item xs={12} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              2017
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" color="textPrimary">
-              Holy Child College of Information Technology, Inc.
-            </Typography>
-            <Typography variant="body1" fontWeight={500} color="textPrimary">
-              Bachelor's Degree in Information Technology
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              Major in Website Development
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              Philippines
-            </Typography>
-            <Typography variant="body2" color="textPrimary">
-              PSITE-PSITS Awardee of the year, Best in Capstone, Graphic Artist
-              of the Year, Programmer of the year,
-            </Typography>
-          </Grid>
-        </Grid>
+        {/* START MAPPING HERE */}
+        {educationList
+          .filter((education) => {
+            console.log(education.talentId);
+            return education.talentId == currentSessionId;
+          })
+          .map((education, index) => (
+            <Grid container my={2} key={index}>
+              <Grid item xs={12} md={3}>
+                <Typography variant="subtitle2" color="textPrimary">
+                  {education.date}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={9}>
+                <Typography variant="h6" color="textPrimary">
+                  {education.school}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  fontWeight={500}
+                  color="textPrimary"
+                >
+                  {education.course}
+                </Typography>
+                <Typography variant="body1" color="textPrimary">
+                  {education.major}
+                </Typography>
+                <Typography variant="body1" color="textPrimary">
+                  {education.country}
+                </Typography>
+                <Typography variant="body2" color="textPrimary">
+                  {education.description}
+                </Typography>
+              </Grid>
+            </Grid>
+          ))}
+
         {/* END OF EDUCATION */}
         <Divider />
       </Paper>

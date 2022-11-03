@@ -22,7 +22,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import Countries from "../../data/Countries";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 // let form = document.querySelector("#personalInfo");
 
@@ -81,6 +81,8 @@ const TalentEditPersonalInfo = ({}) => {
   // Add Personal Info
   const [talentInfo, setTalentInfo] = useState(talentPersonalInfo);
   const [talentId, setTalentId] = useState();
+
+  const navigate = useNavigate();
   //////////////////////////////////////////////////////////
 
   // =================================================== //
@@ -388,15 +390,32 @@ const TalentEditPersonalInfo = ({}) => {
         .value.trim(),
     };
 
-    talentInfo.map((talent, index) => {
-      console.log(talent.talentId === personalInfoDetails.talentId);
-      if (talent.talentId === personalInfoDetails.talentId) {
-        talentInfo.splice(index, 1, personalInfoDetails);
-        let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
-        localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
-      }
-      return setTalentInfo(talentInfo);
+    let matchId = talentInfo.filter((talent) => {
+      return talent.talentId === personalInfoDetails.talentId;
     });
+
+    if (matchId.length == 0) {
+      setTalentInfo([...talentInfo, personalInfoDetails]);
+      document.forms[0].reset();
+    } else {
+      talentInfo.map((talent, index) => {
+        if (talent.talentId === personalInfoDetails.talentId) {
+          talentInfo.splice(index, 1, talent);
+          setTalentInfo(talentInfo);
+          document.forms[0].reset();
+        }
+      });
+    }
+
+    // talentInfo.map((talent, index) => {
+    //   console.log(talent.talentId === personalInfoDetails.talentId);
+    //   if (talent.talentId === personalInfoDetails.talentId) {
+    //     talentInfo.splice(index, 1, personalInfoDetails);
+    //     let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
+    //     localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
+    //   }
+    //   return setTalentInfo(talentInfo);
+    // });
   };
 
   // =================================================== //
@@ -412,9 +431,9 @@ const TalentEditPersonalInfo = ({}) => {
   }, [talentInfo]);
 
   let editPersonalInfo = (e) => {
-    e.preventDefault();
-    let num = parseInt(e.target.id);
-    num = 1667368619504;
+    // e.preventDefault();
+    let num = parseInt(e.target.talentId);
+    // let num = 1667372736746;
 
     talentInfo
       .filter((talent) => {
@@ -428,7 +447,7 @@ const TalentEditPersonalInfo = ({}) => {
         document.getElementById("birthDate").value = talent.birthDate;
         document.getElementById("age").value = talent.age;
         document.getElementById("civilStatus").value = talent.status;
-        // (document.formInfo("gender").value = talent.gender),
+        document.getElementById("gender").value = talent.gender;
         // console.log(selectedGender(talent.gender)),
         document.getElementById("email").value = talent.email;
         document.getElementById("phoneNo").value = talent.phoneNo;
@@ -469,6 +488,7 @@ const TalentEditPersonalInfo = ({}) => {
     ) {
       addPersonalInfo();
       alert("success");
+      navigate("/talent/profile/personal-info");
     }
   };
   return (
@@ -548,16 +568,18 @@ const TalentEditPersonalInfo = ({}) => {
               </small>
             </Grid>
             <Grid item xs={6} md={4}>
-              {/* ///////////// DATE */}
-              <input
-                type="date"
-                name="birthdate"
-                id="birthDate"
-                style={{ fontSize: "1rem" }}
-              />
-              <small id="birthDateHelper" className="textHelper">
-                &nbsp;
-              </small>
+              <FormControl>
+                <FormLabel>Date of Birth*</FormLabel>
+                <input
+                  type="date"
+                  name="birthdate"
+                  id="birthDate"
+                  style={{ fontSize: "1rem" }}
+                />
+                <small id="birthDateHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
             </Grid>
             <Grid item xs={6} md={4}>
               <TextField
@@ -572,56 +594,47 @@ const TalentEditPersonalInfo = ({}) => {
               </small>
             </Grid>
             <Grid item xs={6} md={4}>
-              {/* ///////////////////// STATUS /////////// */}
-
-              <Form.Select
-                aria-label="Select Status"
-                id="civilStatus"
-                className="form-select"
-                onChange={handleSelectStatus}
-                value={civilStatus}
-              >
-                <option disabled>Select Civil Status</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Widowed">Widowed</option>
-                <option value="Widower">Widower</option>
-              </Form.Select>
-              <small id="statusHelper" className="textHelper">
-                &nbsp;
-              </small>
+              <FormControl>
+                <FormLabel>Civil Status*</FormLabel>
+                <Form.Select
+                  aria-label="Select Status"
+                  id="civilStatus"
+                  className="form-select"
+                  onChange={handleSelectStatus}
+                  value={civilStatus}
+                >
+                  <option disabled value="">
+                    Select Civil Status
+                  </option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Widower">Widower</option>
+                </Form.Select>
+                <small id="statusHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
             </Grid>
             <Grid item xs={6} md={4}>
               <FormControl>
-                <FormLabel id="gender">Gender*</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="gender"
+                <FormLabel>Gender*</FormLabel>
+                <Form.Select
+                  aria-label="Select Gender"
                   id="gender"
-                  value={gender}
+                  className="form-select"
                   onChange={handleSelectGender}
-                  name="radio-buttons-group"
+                  value={gender}
                 >
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Male"
-                    onChange={handleSelectGender}
-                  />
-                  <label htmlFor="male">Male</label>
-
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Female"
-                    onChange={handleSelectGender}
-                  />
-                  <label htmlFor="female">Female</label>
-
-                  <small id="genderHelper" className="textHelper">
-                    &nbsp;
-                  </small>
-                </RadioGroup>
+                  <option disabled value="">
+                    Select Gender
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </Form.Select>
+                <small id="genderHelper" className="textHelper">
+                  &nbsp;
+                </small>
               </FormControl>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -752,25 +765,30 @@ const TalentEditPersonalInfo = ({}) => {
               </small>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Form.Select
-                aria-label="Select Identification"
-                id="identification"
-                className="form-select"
-                onChange={selectIdentification}
-                value={identification}
-              >
-                <option disabled>Select Identification</option>
-                <option value="Social Card">Social Card</option>
-                <option value="Tax Card">Tax Card</option>
-                <option value="Driver's License">Driver's License</option>
-                <option value="Passport">Passport</option>
-                <option value="Professional License">
-                  Professional License
-                </option>
-              </Form.Select>
-              <small id="identificationHelper" className="textHelper">
-                &nbsp;
-              </small>
+              <FormControl>
+                <FormLabel>Identification*</FormLabel>
+                <Form.Select
+                  aria-label="Select Identification"
+                  id="identification"
+                  className="form-select"
+                  onChange={selectIdentification}
+                  value={identification}
+                >
+                  <option disabled value="">
+                    Select Identification
+                  </option>
+                  <option value="Social Card">Social Card</option>
+                  <option value="Tax Card">Tax Card</option>
+                  <option value="Driver's License">Driver's License</option>
+                  <option value="Passport">Passport</option>
+                  <option value="Professional License">
+                    Professional License
+                  </option>
+                </Form.Select>
+                <small id="identificationHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
             </Grid>
             <Grid item xs={12} md={4}>
               <TextField

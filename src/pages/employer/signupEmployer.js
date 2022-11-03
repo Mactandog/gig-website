@@ -8,14 +8,14 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TextareaAutosize from '@mui/base/TextareaAutosize';
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signup1 from "../../assets/media/images/signup1.png";
 import ribbon from "../../assets/media/images/ribbon.png";
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dataset } from "@mui/icons-material";
 
 function Copyright(props) {
@@ -38,124 +38,131 @@ function Copyright(props) {
 
 export default function EmployerSignUp() {
   const navigate = useNavigate();
-const [input, setInput] = useState({
-  companyName:"",
-  companyEmail:"",
-  companyPassword:"",
-  companyNumber:"",
-  companyDescription:"",
-});
+  const [input, setInput] = useState({
+    companyName: "",
+    companyEmail: "",
+    companyPassword: "",
+    companyNumber: "",
+    companyDescription: "",
+  });
 
-//created functions for validation
+  //created functions for validation
 
-let isEmpty = (element) => element == "" ? true : false;
-function containsNumbers(str) { return /\d/.test(str);}
+  let isEmpty = (element) => (element == "" ? true : false);
+  function containsNumbers(str) {
+    return /\d/.test(str);
+  }
 
-
-let companyNameValidation = () => {
-  if(isEmpty(input.companyName)) {
-    document.getElementById("CompanyMessage").innerHTML = "Company name cannot be empty"
-    document.getElementById("CompanyMessage").style.color = "red";
-    return false;
-  }else {
-    document.getElementById("CompanyMessage").innerHTML = "Accepted"
-    document.getElementById("CompanyMessage").style.color = "green";
-    return input.companyName; 
-}
-}
-let companyEmailValidation = () => {
-  if(isEmpty(input.companyEmail)) {
-    document.getElementById("CompanyEmail").innerHTML = "Company email cannot be empty"
-    document.getElementById("CompanyEmail").style.color = "red";
-    return false;
-  } else if(!input.companyEmail.includes("@")){
-    document.getElementById("CompanyEmail").innerHTML = "Input a valid email address"
-    document.getElementById("CompanyEmail").style.color = "red";
-    return false;
-  }else{
-    document.getElementById("CompanyEmail").innerHTML = "Accepted"
-    document.getElementById("CompanyEmail").style.color = "green";
-    return input.companyEmail;
+  let companyNameValidation = () => {
+    if (isEmpty(input.companyName)) {
+      document.getElementById("CompanyMessage").innerHTML =
+        "Company name cannot be empty";
+      document.getElementById("CompanyMessage").style.color = "red";
+      return false;
+    } else {
+      document.getElementById("CompanyMessage").innerHTML = "Accepted";
+      document.getElementById("CompanyMessage").style.color = "green";
+      return input.companyName;
     }
-}
+  };
+  let companyEmailValidation = () => {
+    if (isEmpty(input.companyEmail)) {
+      document.getElementById("CompanyEmail").innerHTML =
+        "Company email cannot be empty";
+      document.getElementById("CompanyEmail").style.color = "red";
+      return false;
+    } else if (!input.companyEmail.includes("@")) {
+      document.getElementById("CompanyEmail").innerHTML =
+        "Input a valid email address";
+      document.getElementById("CompanyEmail").style.color = "red";
+      return false;
+    } else {
+      document.getElementById("CompanyEmail").innerHTML = "Accepted";
+      document.getElementById("CompanyEmail").style.color = "green";
+      return input.companyEmail;
+    }
+  };
 
-let companyPasswordValidation = () => {
-  
-  if(isEmpty(input.companyPassword)) {
-    document.getElementById("CompanyPassword").innerHTML = "Password cannot be empty"
-    document.getElementById("CompanyPassword").style.color = "red";
-    return false;
-  }
-  else if (input.companyPassword.length < 7 || input.companyPassword.length >= 20)  {
-    document.getElementById("CompanyPassword").innerHTML = "Password must between 7 and 20 characters"
-    document.getElementById("CompanyPassword").style.color = "red";
-    return false;
-  }else {
-    document.getElementById("CompanyPassword").innerHTML = "Accepted"
-    document.getElementById("CompanyPassword").style.color = "green";
-    return input.companyPassword;
-  }
-}
+  let companyPasswordValidation = () => {
+    if (isEmpty(input.companyPassword)) {
+      document.getElementById("CompanyPassword").innerHTML =
+        "Password cannot be empty";
+      document.getElementById("CompanyPassword").style.color = "red";
+      return false;
+    } else if (
+      input.companyPassword.length < 7 ||
+      input.companyPassword.length >= 20
+    ) {
+      document.getElementById("CompanyPassword").innerHTML =
+        "Password must between 7 and 20 characters";
+      document.getElementById("CompanyPassword").style.color = "red";
+      return false;
+    } else {
+      document.getElementById("CompanyPassword").innerHTML = "Accepted";
+      document.getElementById("CompanyPassword").style.color = "green";
+      return input.companyPassword;
+    }
+  };
 
-let companyNumberValidation = () => {
-  if(isEmpty(input.companyNumber)) {
-    document.getElementById("CompanyNumber").innerHTML = "Number cannot be empty"
-    document.getElementById("CompanyNumber").style.color = "red";
-    return false;
-  }else if (!containsNumbers(input.companyNumber)) {
-    document.getElementById("CompanyNumber").innerHTML = "Cannot be associated with letters"
-    document.getElementById("CompanyNumber").style.color = "red";
-    return false;
-  }
-  else {
-    document.getElementById("CompanyNumber").innerHTML = "Accepted"
-    document.getElementById("CompanyNumber").style.color = "green";
-    return input.companyNumber;
-  }
-}
+  let companyNumberValidation = () => {
+    if (isEmpty(input.companyNumber)) {
+      document.getElementById("CompanyNumber").innerHTML =
+        "Number cannot be empty";
+      document.getElementById("CompanyNumber").style.color = "red";
+      return false;
+    } else if (!containsNumbers(input.companyNumber)) {
+      document.getElementById("CompanyNumber").innerHTML =
+        "Cannot be associated with letters";
+      document.getElementById("CompanyNumber").style.color = "red";
+      return false;
+    } else {
+      document.getElementById("CompanyNumber").innerHTML = "Accepted";
+      document.getElementById("CompanyNumber").style.color = "green";
+      return input.companyNumber;
+    }
+  };
 
+  // let datas = {
+  //   name:companyNameValidation(),
+  //   email: companyEmailValidation(),
+  //   password: companyPasswordValidation(),
+  //   number:companyNumberValidation(),
+  //   description:input.companyDescription,
+  // }
 
-// let datas = {
-//   name:companyNameValidation(),
-//   email: companyEmailValidation(),
-//   password: companyPasswordValidation(),
-//   number:companyNumberValidation(),
-//   description:input.companyDescription,
-// }
-
-// console.log(datas)
+  // console.log(datas)
   // storing to localStorage
-let handleSubmit = (e) => {
-  e.preventDefault();
+  let handleSubmit = (e) => {
+    e.preventDefault();
 
-companyNameValidation()
-companyEmailValidation()
-companyPasswordValidation()
-companyNumberValidation()
+    companyNameValidation();
+    companyEmailValidation();
+    companyPasswordValidation();
+    companyNumberValidation();
 
-  let datas = {
-  id: Date.now(),
-  name:companyNameValidation(),
-  email: companyEmailValidation(),
-  password: companyPasswordValidation(),
-  number:companyNumberValidation(),
-  description:input.companyDescription,
-}
+    let datas = {
+      id: Date.now(),
+      name: companyNameValidation(),
+      email: companyEmailValidation(),
+      password: companyPasswordValidation(),
+      number: companyNumberValidation(),
+      description: input.companyDescription,
+    };
 
-localStorage.setItem("companies", JSON.stringify(datas))
+    localStorage.setItem("companies", JSON.stringify(datas));
 
-if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordValidation() || !companyNumberValidation()){
-  alert(`complete fields`)
- 
-}else {
-  alert(`account created`)
-  navigate("/business/login");
-}
-
-  
-
-  }
-
+    if (
+      !companyNameValidation() ||
+      !companyEmailValidation() ||
+      !companyPasswordValidation() ||
+      !companyNumberValidation()
+    ) {
+      alert(`complete fields`);
+    } else {
+      alert(`account created`);
+      navigate("/business/login");
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -207,12 +214,14 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 label="Company Name"
                 autoFocus
                 value={input.companyName}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
+                onChange={(e) =>
+                  setInput({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
-                 <small id="CompanyMessage"></small>
+              <small id="CompanyMessage"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -223,12 +232,14 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 name="companyEmail"
                 autoComplete="email"
                 value={input.companyEmail}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
+                onChange={(e) =>
+                  setInput({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
-                <small id="CompanyEmail"></small>
+              <small id="CompanyEmail"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -240,12 +251,14 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 id="companyPassword"
                 autoComplete="new-password"
                 value={input.companyPassword}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
+                onChange={(e) =>
+                  setInput({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
-            <small id="CompanyPassword"></small>
+              <small id="CompanyPassword"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -256,15 +269,17 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 name="companyNumber"
                 autoComplete="number"
                 value={input.companyNumber}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
+                onChange={(e) =>
+                  setInput({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
-                <small id="CompanyNumber"></small>
+              <small id="CompanyNumber"></small>
             </Grid>
             <Grid item xs={12}>
-            <TextField
+              <TextField
                 required
                 fullWidth
                 id="companyDescription"
@@ -274,10 +289,12 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 multiline
                 rows={8}
                 value={input.companyDescription}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
+                onChange={(e) =>
+                  setInput({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
             </Grid>
             {/* <Grid item xs={12}>
