@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signup1 from "../../assets/media/images/signup1.png";
 import ribbon from "../../assets/media/images/ribbon.png";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dataset } from "@mui/icons-material";
 
@@ -36,125 +36,126 @@ function Copyright(props) {
   );
 }
 
+let companyList = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
+
 export default function EmployerSignUp() {
+
   const navigate = useNavigate();
-const [input, setInput] = useState({
-  companyName:"",
-  companyEmail:"",
-  companyPassword:"",
-  companyNumber:"",
-  companyDescription:"",
-});
 
-//created functions for validation
+  let [id, setId] = useState(Date.now);
+  let [employerList, setEmployerList] = useState(companyList);
 
-let isEmpty = (element) => element == "" ? true : false;
-function containsNumbers(str) { return /\d/.test(str);}
-
-
-let companyNameValidation = () => {
-  if(isEmpty(input.companyName)) {
-    document.getElementById("CompanyMessage").innerHTML = "Company name cannot be empty"
-    document.getElementById("CompanyMessage").style.color = "red";
-    return false;
-  }else {
-    document.getElementById("CompanyMessage").innerHTML = "Accepted"
-    document.getElementById("CompanyMessage").style.color = "green";
-    return input.companyName; 
-}
-}
-let companyEmailValidation = () => {
-  if(isEmpty(input.companyEmail)) {
-    document.getElementById("CompanyEmail").innerHTML = "Company email cannot be empty"
-    document.getElementById("CompanyEmail").style.color = "red";
-    return false;
-  } else if(!input.companyEmail.includes("@")){
-    document.getElementById("CompanyEmail").innerHTML = "Input a valid email address"
-    document.getElementById("CompanyEmail").style.color = "red";
-    return false;
-  }else{
-    document.getElementById("CompanyEmail").innerHTML = "Accepted"
-    document.getElementById("CompanyEmail").style.color = "green";
-    return input.companyEmail;
-    }
-}
-
-let companyPasswordValidation = () => {
+  let isEmpty = (element) => element == "" ? true : false;
+  function containsNumbers(str) { return /\d/.test(str);}
   
-  if(isEmpty(input.companyPassword)) {
-    document.getElementById("CompanyPassword").innerHTML = "Password cannot be empty"
-    document.getElementById("CompanyPassword").style.color = "red";
-    return false;
+  
+  let companyNameValidation = () => {
+    const comName = document.getElementById("companyName").value.trim();
+    if(isEmpty(comName)) {
+      document.getElementById("errorName").innerHTML = "Company name cannot be empty"
+      document.getElementById("errorName").style.color = "red";
+      return false;
+    }else {
+      document.getElementById("errorName").innerHTML = "Accepted"
+      document.getElementById("errorName").style.color = "green";
+      return comName; 
   }
-  else if (input.companyPassword.length < 7 || input.companyPassword.length >= 20)  {
-    document.getElementById("CompanyPassword").innerHTML = "Password must between 7 and 20 characters"
-    document.getElementById("CompanyPassword").style.color = "red";
-    return false;
-  }else {
-    document.getElementById("CompanyPassword").innerHTML = "Accepted"
-    document.getElementById("CompanyPassword").style.color = "green";
-    return input.companyPassword;
   }
-}
-
-let companyNumberValidation = () => {
-  if(isEmpty(input.companyNumber)) {
-    document.getElementById("CompanyNumber").innerHTML = "Number cannot be empty"
-    document.getElementById("CompanyNumber").style.color = "red";
-    return false;
-  }else if (!containsNumbers(input.companyNumber)) {
-    document.getElementById("CompanyNumber").innerHTML = "Cannot be associated with letters"
-    document.getElementById("CompanyNumber").style.color = "red";
-    return false;
+  let companyEmailValidation = () => {
+    const comEmail = document.getElementById("companyEmail").value.trim();
+    if(isEmpty(comEmail)) {
+      document.getElementById("errorEmail").innerHTML = "Company email cannot be empty"
+      document.getElementById("errorEmail").style.color = "red";
+      return false;
+    } else if(!comEmail.includes("@")){
+      document.getElementById("errorEmail").innerHTML = "Input a valid email address"
+      document.getElementById("errorEmail").style.color = "red";
+      return false;
+    }else{
+      document.getElementById("errorEmail").innerHTML = "Accepted"
+      document.getElementById("errorEmail").style.color = "green";
+      return comEmail;
+      }
   }
-  else {
-    document.getElementById("CompanyNumber").innerHTML = "Accepted"
-    document.getElementById("CompanyNumber").style.color = "green";
-    return input.companyNumber;
+
+  let companyPasswordValidation = () => {
+    const comPass = document.getElementById("companyPassword").value.trim();
+    if(isEmpty(comPass)) {
+      document.getElementById("errorPassword").innerHTML = "Password cannot be empty"
+      document.getElementById("errorPassword").style.color = "red";
+      return false;
+    }
+    else if (comPass.length < 7 || comPass.length >= 20)  {
+      document.getElementById("errorPassword").innerHTML = "Password must between 7 and 20 characters"
+      document.getElementById("errorPassword").style.color = "red";
+      return false;
+    }else {
+      document.getElementById("errorPassword").innerHTML = "Accepted"
+      document.getElementById("errorPassword").style.color = "green";
+      return comPass;
+    }
   }
-}
+  
+  let companyNumberValidation = () => {
+    const compNumber = document.getElementById("companyNumber").value.trim();
+    if(isEmpty(compNumber)) {
+      document.getElementById("errorNumber").innerHTML = "Number cannot be empty"
+      document.getElementById("errorNumber").style.color = "red";
+      return false;
+    }else if (!containsNumbers(compNumber)) {
+      document.getElementById("errorNumber").innerHTML = "Cannot be associated with letters"
+      document.getElementById("errorNumber").style.color = "red";
+      return false;
+    }
+    else {
+      document.getElementById("errorNumber").innerHTML = "Accepted"
+      document.getElementById("errorNumber").style.color = "green";
+      return compNumber;
+    }
+  }
 
+  let addCompanyInfo = () => {
+    let company = {
+      id: id,
+      companyName: companyNameValidation(), 
+      companyEmail: companyEmailValidation(), 
+      companyPassword: companyPasswordValidation(), 
+      companyNumber: companyNumberValidation(), 
+      companyDescription: document.getElementById("companyDescription").value.trim(), 
+    };
+  
+    setEmployerList([...employerList, company]);
+  
+    companyList.push(company);
+      let CompanyInfoList = JSON.stringify(companyList);
+      localStorage.setItem("company", CompanyInfoList);
+      console.log(companyList);
+      document.forms[0].reset();
+    
+  }
 
-// let datas = {
-//   name:companyNameValidation(),
-//   email: companyEmailValidation(),
-//   password: companyPasswordValidation(),
-//   number:companyNumberValidation(),
-//   description:input.companyDescription,
-// }
-
-// console.log(datas)
-  // storing to localStorage
 let handleSubmit = (e) => {
   e.preventDefault();
 
-companyNameValidation()
-companyEmailValidation()
-companyPasswordValidation()
-companyNumberValidation()
+  companyNameValidation()  
+  companyEmailValidation() 
+  companyPasswordValidation() 
+  companyNumberValidation()
 
-  let datas = {
-  id: Date.now(),
-  name:companyNameValidation(),
-  email: companyEmailValidation(),
-  password: companyPasswordValidation(),
-  number:companyNumberValidation(),
-  description:input.companyDescription,
-}
-
-localStorage.setItem("companies", JSON.stringify(datas))
-
-if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordValidation() || !companyNumberValidation()){
-  alert(`complete fields`)
- 
-}else {
-  alert(`account created`)
-  navigate("/business/login");
-}
-
-  
-
+   if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordValidation() || !companyNumberValidation()){
+    navigate("/business/signup");
+  } else {
+    alert(`Success the account has been created!`)
+    addCompanyInfo()
+    navigate("/business/login");
   }
+
+}
+
+useEffect(() => {
+ localStorage.setItem("company", JSON.stringify(employerList))},
+  [employerList]);
+
 
 
   return (
@@ -167,6 +168,7 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
           flexDirection: "column",
           alignItems: "center",
           position: "relative",
+          
         }}
       >
         <Box
@@ -206,13 +208,8 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 id="companyName"
                 label="Company Name"
                 autoFocus
-                value={input.companyName}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
               />
-                 <small id="CompanyMessage"></small>
+                 <small id="errorName"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -222,13 +219,8 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 label="Company Email Address"
                 name="companyEmail"
                 autoComplete="email"
-                value={input.companyEmail}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
               />
-                <small id="CompanyEmail"></small>
+                <small id="errorEmail"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -239,13 +231,8 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 type="password"
                 id="companyPassword"
                 autoComplete="new-password"
-                value={input.companyPassword}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
               />
-            <small id="CompanyPassword"></small>
+            <small id="errorPassword"></small>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -255,13 +242,8 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 label="Company Contact Number"
                 name="companyNumber"
                 autoComplete="number"
-                value={input.companyNumber}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
               />
-                <small id="CompanyNumber"></small>
+                <small id="errorNumber"></small>
             </Grid>
             <Grid item xs={12}>
             <TextField
@@ -273,13 +255,9 @@ if(!companyNameValidation() || !companyEmailValidation() || !companyPasswordVali
                 autoComplete="companyDescription"
                 multiline
                 rows={8}
-                value={input.companyDescription}
-                onChange={(e)=>setInput({
-                  ...input,
-                  [e.target.name]: e.target.value,
-                })}
               />
             </Grid>
+  
             {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowTerms" color="primary" />}

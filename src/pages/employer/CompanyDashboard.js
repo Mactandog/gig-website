@@ -40,7 +40,7 @@ import EmployerProfile from "../../components/pages-comp/employerDashboard/Emplo
 import EmployerUploadResume from "../../components/pages-comp/employerDashboard/EmployerUploadResume";
 import EmployerHome from "../../components/pages-comp/employerDashboard/EmployerHome";
 import EmployerMyJobs from "../../components/pages-comp/employerDashboard/EmployerMyJobs";
-
+import { useState } from "react";
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
@@ -51,9 +51,23 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  let dbName = JSON.parse(localStorage.getItem("companies"));
+  const companySession = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
+  const userLoginSession = JSON.parse(localStorage.getItem("userInfoSession"));
+
+  const loginSession  = userLoginSession.map((session) => {
+    return session.id
+  })
 
 
+ 
+
+  // console.log( typeof currentSessionID)
+//   const compani = currentCompany.map((log) => {
+//     return log.id
+// })
+
+// console.log(compani)
+  // console.log(currentSessionID)
 
   // ACTIVE LINK
   let CustomLink = ({ to, children, ...props }) => {
@@ -79,7 +93,14 @@ function ResponsiveDrawer(props) {
               <ListItemAvatar>
                 <Avatar alt="User Picture" variant="square" src={profilePic} />
               </ListItemAvatar>
-              <ListItemText primary={dbName.name} secondary="View Profile" />
+              {/* matching the current session and company */}
+              {companySession.filter((pas) => {
+                console.log(pas.id == loginSession)
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return <ListItemText primary={pas.companyName} secondary="View Profile" />
+              })}
+             
             </ListItemButton>
           </ListItem>
         </Link>
@@ -97,24 +118,15 @@ function ResponsiveDrawer(props) {
           },
           {
             icon: <WorkHistoryRoundedIcon />,
-            name: "Experience",
+            name: "Add Job Post",
             path: "/employer-experience",
           },
           { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/employer-skills" },
-          {
-            icon: <WysiwygRoundedIcon />,
-            name: "Portfolio",
-            path: "/my-portfolio",
-          },
+        
           {
             icon: <SchoolRoundedIcon />,
             name: "Education",
             path: "/employer-education",
-          },
-          {
-            icon: <AttachmentRoundedIcon />,
-            name: "Upload Resume",
-            path: "/employer-upload-resume",
           },
         ].map((tab, index) => (
           <CustomLink
@@ -151,10 +163,6 @@ function ResponsiveDrawer(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-   
-
-
 
   return (
     <Box sx={{ display: "flex" }}>
