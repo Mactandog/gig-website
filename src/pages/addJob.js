@@ -1,6 +1,6 @@
 import React , { useState , useEffect } from "react";
 
-
+const x = "Company-ABC";
 function Addjob() {
     const [jobData, setJobData] = useState((localStorage.getItem("jobpost")) 
     ? JSON.parse(localStorage.getItem("jobpost")) 
@@ -14,6 +14,8 @@ function Addjob() {
     const btext = ".00$/hr";
     const [datePosted, setDatePosted] = useState(d.toDateString())
     const [id,setId] = useState(Date.now())
+    const [logo,setLogo] = useState("https://source.unsplash.com/random/500x500?sig=1")
+    // const [company,setCompany] = (x);
     // const checker = false;
     
    
@@ -25,7 +27,7 @@ function Addjob() {
     const postjobHandler = (e) => {
         e.preventDefault();
    
-        setJobData(prevData =>  { return[...jobData,{id: id ,title: jobTitle,desc: jobDesc,skill: jobSkill, loc: jobLoc ,budget:jobBudget,date: datePosted}]});
+        setJobData(prevData =>  { return[...jobData,{id: id ,title: jobTitle,desc: jobDesc,skill: jobSkill ,salary:jobBudget,date: datePosted,company:x,logo:logo}]});
         setJobTitle("");
         setJobDesc("");
         setJobSkill("");
@@ -77,8 +79,8 @@ function Addjob() {
         </option>
 
         </select>  <br/> <br/>
-      Location <br/>
-      <input value={jobLoc} type="text" name="name" id="name" onChange={e => setJobLoc(e.target.value)}/> <br/>
+      {/* Location <br/>
+      <input value={jobLoc} type="text" name="name" id="name" onChange={e => setJobLoc(e.target.value)}/> <br/> */}
       Budget <br/>
       <input value={jobBudget} type="number" name="budget" id="budget" onChange={e => setJobBudget(e.target.value)}/> <br/>
       <button id={id} type="submit" >Post Job</button>
@@ -90,7 +92,7 @@ function Addjob() {
               <form>
                <div className="jobdisplayformat" key={val.id}>
 
-              <p ><h3>{val.title}</h3><br/> {val.desc} <br/> {val.skill} <br /> {val.budget}{btext} </p>
+              <p ><h3>{val.title}</h3><br/> {val.desc} <br/> {val.skill} <br /> {val.salary}{btext} </p>
               <p>post date: {val.date}</p>
               <button id={val.id} onClick={(e) => {
                 e.preventDefault();
