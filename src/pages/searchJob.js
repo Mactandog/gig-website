@@ -52,7 +52,7 @@ const SearchJob = () => {
                           A completely new kind of office experience
                         </Typography> */}
                         
-                        <Addjob />
+                        {/* <Addjob /> */}
                         {/* <TextField
                           id="outlined-search"
                           label="Search field"
@@ -75,37 +75,32 @@ const SearchJob = () => {
                             alert(searchTerm);
                           }}>search</button>
                         </form> */}
-                        {/*  */}
-                        
-
-                        
-                      
-
-                 
-                      {/*  */}
-                      </Card>
-                      <Typography variant="body1" color="primary" mb={2}>
+                       <Typography variant="h2" color="primary" mb={2}>
                           Search for a Job
                         </Typography>
-                      <form className="search">
-                        <h1>Search jobs</h1>
+                      <form >
+                        
                           <div>
+                          <Grid item xs={12}>
+                         
                           <input type="text" name="search" onChange={(event) => {
                             event.preventDefault();
                             
                             setSearchTerm(event.target.value);
                           }} />
+                          
+                          </Grid>
                           </div>
                       </form>
 
-          </Grid>
+                     
+                      </Card>
+                      
           <Grid item xs={12}>
             <Paper variant="outlined">
               <Box p={2}>
-                <Typography variant="h5">Recent Jobs</Typography>
-                <Typography>
-                  Category Product Design, React Developer
-                </Typography>
+                <Typography variant="h5">Search Result/s</Typography>
+                
               </Box>
               <Grid
                 container
@@ -130,6 +125,7 @@ const SearchJob = () => {
               </Box>
             </Paper>
           </Grid>
+        </Grid>
         </Grid>
       </Container>
 

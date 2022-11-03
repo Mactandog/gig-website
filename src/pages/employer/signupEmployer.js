@@ -170,7 +170,7 @@ useEffect(() => {
       alert(`account created`);
       navigate("/business/login");
     }
-  };
+  
 
   return (
     <Container component="main" maxWidth="xs">
