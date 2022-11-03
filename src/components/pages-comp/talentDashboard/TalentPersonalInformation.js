@@ -28,11 +28,16 @@ import Countries from "../../data/Countries";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import { useRef } from "react";
 import TalentEditPersonalInfo from "./talentEditPersonalInfo";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
 // let form = document.querySelector("#personalInfo");
 
 let talentPersonalInfo = localStorage.getItem("personalInfoDetails")
   ? JSON.parse(localStorage.getItem("personalInfoDetails"))
+  : [];
+
+let userLoginSession = localStorage.getItem("userInfoSession")
+  ? JSON.parse(localStorage.getItem("userInfoSession"))
   : [];
 
 const TalentPersonalInformation = () => {
@@ -44,15 +49,15 @@ const TalentPersonalInformation = () => {
     setBirthDateValue(newValue);
   };
 
-  let formatDateDay = () => {
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    console.log(birthDateValue);
-    return new Date(birthDateValue).toLocaleDateString("en-us", options);
-  };
+  // let formatDateDay = () => {
+  //   const options = {
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //   };
+  //   console.log(birthDateValue);
+  //   return new Date(birthDateValue).toLocaleDateString("en-us", options);
+  // };
 
   //Status Picker
   const [civilStatus, setCivilStatus] = React.useState("");
@@ -76,17 +81,21 @@ const TalentPersonalInformation = () => {
   const [country, setCountry] = useState(null);
   const selectCountry = (event, value) => setCountry(value.label);
 
-  //Show Edit Personal Info Form
-  const [showForm, setShowForm] = React.useState(false);
-  const formContainer = React.useRef(null);
-  const handleShowForm = () => {
-    // setShowForm(!showForm);
-    editPersonalInfo();
-  };
+  // //Show Edit Personal Info Form
+  // const [showForm, setShowForm] = React.useState(false);
+  // const formContainer = React.useRef(null);
+  // const handleShowForm = () => {
+  //   // setShowForm(!showForm);
+  //   editPersonalInfo();
+  // };
 
   // Add Personal Info
   const [talentInfo, setTalentInfo] = useState(talentPersonalInfo);
-  const [talentId, setTalentId] = useState(Date.now());
+  const [userSession, setUserSession] = useState(userLoginSession);
+
+  const [talentId, setTalentId] = useState(Date.now);
+  const navigate = useNavigate();
+
   //////////////////////////////////////////////////////////
 
   // =================================================== //
@@ -366,9 +375,10 @@ const TalentPersonalInformation = () => {
   // ========== START OF  ADD PERSONAL INFO ============ //
   // =================================================== //
 
+  const currentSessionId = userLoginSession.map((user) => user.id);
+
   let addPersonalInfo = () => {
-    // e.preventDefault();
-    setTalentId(Date.now);
+    // setTalentId(Date.now);
 
     let personalInfoDetails = {
       talentId: talentId,
@@ -391,40 +401,66 @@ const TalentPersonalInformation = () => {
       identificationNo: document
         .getElementById("identificationNo")
         .value.trim(),
+      password: document.getElementById("password").innerHTML,
+      userType: document.getElementById("userType").innerHTML,
     };
 
-    setTalentInfo([...talentInfo, personalInfoDetails]);
+    //   let matchId = talentInfo.filter((talent) => {
+    //     return talent.talentId === personalInfoDetails.talentId;
+    //   });
 
-    talentPersonalInfo.push(personalInfoDetails);
-    let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
-    localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
-    console.log(talentPersonalInfo);
-    document.forms[0].reset();
+    //   if (matchId.length == 0) {
+    //     setTalentInfo([...talentInfo, personalInfoDetails]);
+    //     document.forms[0].reset();
+    //   } else {
+    //     talentInfo.map((talent, index) => {
+    //       if (talent.talentId === personalInfoDetails.talentId) {
+    //         talentInfo.splice(index, 1, talent);
+    //         setTalentInfo(talentInfo);
+    //         document.forms[0].reset();
+    //       }
+    //     });
+    //   }
+    // };
+
+    const newInfo = () =>
+      talentInfo.map((talent, index) => {
+        if (talent.talentId == personalInfoDetails.talentId) {
+          talentInfo.splice(index, 1, personalInfoDetails);
+          // let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
+          // localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
+          document.forms[0].reset();
+        }
+        return setTalentInfo(talentInfo);
+      });
+
+    return newInfo();
   };
 
   let submitPersonalInfo = (event) => {
     event.preventDefault();
     if (
-      checkFirstName() === true &&
-      checkMiddleName() === true &&
-      checkLastName() === true &&
-      checkBirthDate() === true &&
-      checkAge() === true &&
-      checkStatus() === true &&
-      checkGender() === true &&
-      checkEmail() === true &&
-      checkPhoneNo() === true &&
-      checkNationality() === true &&
-      checkCountry() === true &&
-      checkState() === true &&
-      checkAddress() === true &&
-      checkCity() === true &&
-      checkPostal() === true &&
-      checkIdentification() === true &&
+      checkFirstName() == true &&
+      checkMiddleName() == true &&
+      checkLastName() == true &&
+      checkBirthDate() == true &&
+      checkAge() == true &&
+      checkStatus() == true &&
+      checkGender() == true &&
+      checkEmail() == true &&
+      checkPhoneNo() == true &&
+      checkNationality() == true &&
+      checkCountry() == true &&
+      checkState() == true &&
+      checkAddress() == true &&
+      checkCity() == true &&
+      checkPostal() == true &&
+      checkIdentification() == true &&
       checkIdentificationNo()
     ) {
-      addPersonalInfo();
       alert("success");
+      navigate("/talent/profile");
+      addPersonalInfo();
     }
   };
 
@@ -440,11 +476,20 @@ const TalentPersonalInformation = () => {
     localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
   }, [talentInfo]);
 
-  let editPersonalInfo = (e) => {
-    e.preventDefault();
-    // let num = parseInt(e.target.id);
-    let num = 1667309736925;
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfoSession"));
+    if (userSession) {
+      setUserSession(user);
+    }
+  }, []);
 
+  let editPersonalInfo = (e) => {
+    // e.preventDefault();
+
+    // let sessionId = parseInt(e.target.value);
+    // console.log(sessionId);
+    let num = parseInt(currentSessionId);
+    console.log(num);
     talentInfo
       .filter((talent) => {
         console.log(talent.talentId === num ? true : false);
@@ -452,36 +497,28 @@ const TalentPersonalInformation = () => {
         return talent.talentId === num;
       })
       .map((talent) => {
-        console.log(talent.birthDate);
-
-        // setTalentId(talent.talentId);
-        // console.log(talent.firstName);
-        // console.log(talent.lastName);
-        // console.log(firstNameRef.current);
-        // console.log((firstNameRef.current.value = " khsdjakhdkajh"));
-        // return (fname.current.value = talent.firstName);
-        // return (firstNameRef.current.value = talent.firstName);
-        return (
-          (document.getElementById("firstName").value = talent.firstName),
-          (document.getElementById("middleName").value = talent.middleName),
-          (document.getElementById("lastName").value = talent.lastName),
-          (document.getElementById("birthDate").value = talent.birthDate),
-          (document.getElementById("age").value = talent.age),
-          (document.getElementById("civilStatus").value = talent.status),
-          (document.getElementById("gender").value = talent.gender),
-          (document.getElementById("email").value = talent.email),
-          (document.getElementById("phoneNo").value = talent.phoneNo),
-          (document.getElementById("nationality").value = talent.nationality),
-          (document.getElementById("country").value = talent.country),
-          (document.getElementById("stateRegion").value = talent.state),
-          (document.getElementById("address").value = talent.address),
-          (document.getElementById("city").value = talent.city),
-          (document.getElementById("postalCode").value = talent.postal),
-          (document.getElementById("identification").value =
-            talent.identification),
-          (document.getElementById("identificationNo").value =
-            talent.identificationNo)
-        );
+        document.getElementById("firstName").value = talent.firstName;
+        document.getElementById("middleName").value = talent.middleName;
+        document.getElementById("lastName").value = talent.lastName;
+        document.getElementById("birthDate").value = talent.birthDate;
+        document.getElementById("age").value = talent.age;
+        document.getElementById("civilStatus").value = talent.status;
+        document.getElementById("gender").value = talent.gender;
+        document.getElementById("email").value = talent.email;
+        document.getElementById("phoneNo").value = talent.phoneNo;
+        document.getElementById("nationality").value = talent.nationality;
+        document.getElementById("country").value = talent.country;
+        document.getElementById("stateRegion").value = talent.state;
+        document.getElementById("address").value = talent.address;
+        document.getElementById("city").value = talent.city;
+        document.getElementById("postalCode").value = talent.postal;
+        document.getElementById("identification").value = talent.identification;
+        document.getElementById("identificationNo").value =
+          talent.identificationNo;
+        document.getElementById("userType").innerHTML = talent.userType;
+        document.getElementById("password").innerHTML = talent.password;
+        console.log(talent.talentId);
+        return setTalentId(num);
       });
   };
 
@@ -496,355 +533,39 @@ const TalentPersonalInformation = () => {
           </Grid>
           <Grid item xs={4} md={4} textAlign="right">
             <Tooltip title="Edit Personal Information">
-              <Link to="edit">
-                <Button
-                  id="1667290249787"
-                  type="button"
-                  variant="outlined"
-                  // disabled={showForm}
-                  startIcon={<EditRoundedIcon />}
-                  // onClick={handleShowForm}
-                  // onClick={editPersonalInfo}
-                >
-                  Edit
-                </Button>
-              </Link>
+              {/* <Link to="edit"> */}
+              <Button
+                id="1667290249787"
+                type="button"
+                variant="outlined"
+                // disabled={showForm}
+                startIcon={<EditRoundedIcon />}
+                // onClick={handleShowForm}
+                onClick={editPersonalInfo}
+              >
+                Edit
+              </Button>
+              {/* </Link> */}
             </Tooltip>
           </Grid>
         </Grid>
-
-        {/* ====================== FORM ======================*/}
-        <Box
-          component="form"
-          // noValidate
-          autoComplete="off"
-          sx={{ flexGrow: 1, mt: 4 }}
-          id="personalInfo"
-          onSubmit={submitPersonalInfo}
-        >
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="First Name*"
-                id="firstName"
-                size="small"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="firstNameHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                name="middleName"
-                label="Middle Name"
-                id="middleName"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="middleNameHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Last Name*"
-                id="lastName"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="lastNameHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              {/* ///////////// DATE */}
-              <input
-                type="date"
-                name="birthdate"
-                id="birthDate"
-                style={{ fontSize: "1rem" }}
-              />
-              <small id="birthDateHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <TextField
-                fullWidth
-                label="Age*"
-                id="age"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="ageHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="status" shrink>
-                  Status*
-                </InputLabel>
-                <Select
-                  labelId="status"
-                  id="civilStatus"
-                  value={civilStatus}
-                  label="Status*"
-                  onChange={handleSelectStatus}
-                >
-                  <MenuItem value={"Single"}>Single</MenuItem>
-                  <MenuItem value={"Married"}>Married</MenuItem>
-                  <MenuItem value={"Widowed"}>Widowed</MenuItem>
-                  <MenuItem value={"Widower"}>Widower</MenuItem>
-                </Select>
-              </FormControl>
-              <small id="statusHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <FormControl>
-                <FormLabel id="gender">Gender*</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="gender"
-                  id="gender"
-                  value={gender}
-                  onChange={handleSelectGender}
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="Female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                  <FormControlLabel
-                    value="Male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                </RadioGroup>
-                <small id="genderHelper" className="textHelper">
-                  &nbsp;
-                </small>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Email*"
-                id="email"
-                placeholder="johndoe123@gmail.com"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="emailHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Phone Number*"
-                id="phoneNo"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="phoneNoHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} mt={4} alignItems="center">
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Nationality*"
-                id="nationality"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="nationalityHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Autocomplete
-                id="country"
-                sx={{ width: "100%" }}
-                options={Countries}
-                autoHighlight
-                onChange={selectCountry}
-                getOptionLabel={(option) => option.label}
-                renderOption={(props, option) => (
-                  <Box
-                    component="li"
-                    sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                    {...props}
-                  >
-                    <img
-                      loading="lazy"
-                      width="20"
-                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                      alt=""
-                    />
-                    {option.label} ({option.code}) +{option.phone}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Choose a country*"
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: "new-password", // disable autocomplete and autofill
-                    }}
-                    InputLabelProps={{ shrink: true }}
-                  />
-                )}
-              />
-              <small id="countryHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="State/Region*"
-                id="stateRegion"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="stateHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                label="Address*"
-                id="address"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="addressHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="City*"
-                id="city"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="cityHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={2}>
-              <TextField
-                fullWidth
-                label="Postal Code*"
-                id="postalCode"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="postalHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="Identification" shrink>
-                  Identification*
-                </InputLabel>
-                <Select
-                  labelId="Identification"
-                  id="idNo"
-                  value={identification}
-                  label="Identification*"
-                  onChange={selectIdentification}
-                  InputLabelProps={{ shrink: true }}
-                >
-                  <MenuItem value="" disabled>
-                    Select Identification
-                  </MenuItem>
-                  <MenuItem value="Social Card">Social Card</MenuItem>
-                  <MenuItem value="Tax Card">Tax Card</MenuItem>
-                  <MenuItem value="Driver's License">Driver's License</MenuItem>
-                  <MenuItem value="Passport">Passport</MenuItem>
-                  <MenuItem value="Professional License">
-                    Professional License
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <small id="identificationHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Identification No.*"
-                id="identificationNo"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-              <small id="identificationNoHelper" className="textHelper">
-                &nbsp;
-              </small>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            spacing={2}
-            mt={4}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Grid item xs={12} md={2}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                // onClick={handleShowForm}
-                // onClick={submitForm}
-                onClick={submitPersonalInfo}
-              >
-                Save
-              </Button>
-            </Grid>
-            <Grid item xs={12} md={2}>
-              <Button
-                variant="contained"
-                color="error"
-                fullWidth
-                // onClick={handleShowForm}
-              >
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
 
         {/* <Box ref={formContainer} /> */}
         {/* START MAPPING HERE */}
         {talentPersonalInfo
           .filter((talent) => {
-            return talent.talentId === 1667311277563;
+            return talent.talentId == currentSessionId;
           })
           .map((talent) => (
             <Grid container my={2} alignItems="center" key={talent.talentId}>
               <Grid item xs={3} md={3}>
+                <Typography
+                  variant="subtitle2"
+                  color="textPrimary"
+                  id="talentId"
+                >
+                  {talent.talentId}
+                </Typography>
                 <Typography variant="subtitle2" color="textPrimary">
                   Full Name
                 </Typography>
@@ -988,6 +709,325 @@ const TalentPersonalInformation = () => {
             </Grid>
           ))}
         {/* <TalentEditPersonalInfo /> */}
+        {/* ====================== FORM ======================*/}
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          sx={{ flexGrow: 1, mt: 20 }}
+          id="personalInfo"
+          name="formInfo"
+          onSubmit={submitPersonalInfo}
+        >
+          <Grid container spacing={2} alignItems="center">
+            <small id="userType" hidden></small>
+            <small id="password" hidden></small>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="First Name*"
+                id="firstName"
+                size="small"
+                type="text"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="firstNameHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                name="middleName"
+                label="Middle Name"
+                id="middleName"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="middleNameHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Last Name*"
+                id="lastName"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="lastNameHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <FormControl>
+                <FormLabel>Date of Birth*</FormLabel>
+                <input
+                  type="date"
+                  name="birthdate"
+                  id="birthDate"
+                  style={{ fontSize: "1rem" }}
+                />
+                <small id="birthDateHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <TextField
+                fullWidth
+                label="Age*"
+                id="age"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="ageHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <FormControl>
+                <FormLabel>Civil Status*</FormLabel>
+                <Form.Select
+                  aria-label="Select Status"
+                  id="civilStatus"
+                  className="form-select"
+                  onChange={handleSelectStatus}
+                  value={civilStatus}
+                >
+                  <option disabled value="">
+                    Select Civil Status
+                  </option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Widower">Widower</option>
+                </Form.Select>
+                <small id="statusHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <FormControl>
+                <FormLabel>Gender*</FormLabel>
+                <Form.Select
+                  aria-label="Select Gender"
+                  id="gender"
+                  className="form-select"
+                  onChange={handleSelectGender}
+                  value={gender}
+                >
+                  <option disabled value="">
+                    Select Gender
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </Form.Select>
+                <small id="genderHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Email*"
+                id="email"
+                placeholder="johndoe123@gmail.com"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="emailHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Phone Number*"
+                id="phoneNo"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="phoneNoHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} mt={4} alignItems="center">
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Nationality*"
+                id="nationality"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="nationalityHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Autocomplete
+                id="country"
+                sx={{ width: "100%" }}
+                options={Countries}
+                autoHighlight
+                onChange={selectCountry}
+                getOptionLabel={(option) => option.label}
+                renderOption={(props, option) => (
+                  <Box
+                    component="li"
+                    sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                  >
+                    <img
+                      loading="lazy"
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label} ({option.code}) +{option.phone}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Choose a country*"
+                    inputProps={{
+                      ...params.inputProps,
+                      autoComplete: "new-password", // disable autocomplete and autofill
+                    }}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                )}
+              />
+              <small id="countryHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="State/Region*"
+                id="stateRegion"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="stateHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Address*"
+                id="address"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="addressHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="City*"
+                id="city"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="cityHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <TextField
+                fullWidth
+                label="Postal Code*"
+                id="postalCode"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="postalHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <FormControl>
+                <FormLabel>Identification*</FormLabel>
+                <Form.Select
+                  aria-label="Select Identification"
+                  id="identification"
+                  className="form-select"
+                  onChange={selectIdentification}
+                  value={identification}
+                >
+                  <option disabled value="">
+                    Select Identification
+                  </option>
+                  <option value="Social Card">Social Card</option>
+                  <option value="Tax Card">Tax Card</option>
+                  <option value="Driver's License">Driver's License</option>
+                  <option value="Passport">Passport</option>
+                  <option value="Professional License">
+                    Professional License
+                  </option>
+                </Form.Select>
+                <small id="identificationHelper" className="textHelper">
+                  &nbsp;
+                </small>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Identification No.*"
+                id="identificationNo"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+              <small id="identificationNoHelper" className="textHelper">
+                &nbsp;
+              </small>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={2}
+            mt={4}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item xs={12} md={2}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
+                Save
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Button
+                type="button"
+                component="a"
+                href="/talent/profile/"
+                variant="contained"
+                color="error"
+                fullWidth
+                // onClick={handleShowForm}
+              >
+                Cancel
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </Paper>
     </>
   );

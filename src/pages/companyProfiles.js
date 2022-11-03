@@ -121,7 +121,13 @@ const CompanyProfiles = () => {
                   Put your skills and passions to work.
                 </Typography>
                 <ThemeProvider theme={theme}>
-                  <Button variant="outlined" color="primary" size="large">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="large"
+                    component="a"
+                    href="/talent/login"
+                  >
                     Start Your Journey today
                   </Button>
                 </ThemeProvider>

@@ -46,8 +46,10 @@ const Index = () => {
                 <Route path="/business/signup" element={<EmployerSignUp />} />
               </Route>
               <Route path="/talent/profile/*" element={<TalentDashboard />} />
+
               <Route path="/jobpostpage" element={<Jobpostpage />} />
               <Route path="/employer/profile/*" element={<CompanyDashboard />} />
+
             </Routes>
           </Box>
         </Box>

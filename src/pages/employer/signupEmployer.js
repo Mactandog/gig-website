@@ -8,12 +8,13 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TextareaAutosize from '@mui/base/TextareaAutosize';
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signup1 from "../../assets/media/images/signup1.png";
 import ribbon from "../../assets/media/images/ribbon.png";
+
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dataset } from "@mui/icons-material";
@@ -35,6 +36,7 @@ function Copyright(props) {
     </Typography>
   );
 }
+
 
 let companyList = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
 
@@ -157,6 +159,18 @@ useEffect(() => {
   [employerList]);
 
 
+    if (
+      !companyNameValidation() ||
+      !companyEmailValidation() ||
+      !companyPasswordValidation() ||
+      !companyNumberValidation()
+    ) {
+      alert(`complete fields`);
+    } else {
+      alert(`account created`);
+      navigate("/business/login");
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -208,6 +222,7 @@ useEffect(() => {
                 id="companyName"
                 label="Company Name"
                 autoFocus
+
               />
                  <small id="errorName"></small>
             </Grid>
@@ -219,6 +234,7 @@ useEffect(() => {
                 label="Company Email Address"
                 name="companyEmail"
                 autoComplete="email"
+
               />
                 <small id="errorEmail"></small>
             </Grid>
@@ -231,8 +247,10 @@ useEffect(() => {
                 type="password"
                 id="companyPassword"
                 autoComplete="new-password"
+
               />
             <small id="errorPassword"></small>
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -242,11 +260,13 @@ useEffect(() => {
                 label="Company Contact Number"
                 name="companyNumber"
                 autoComplete="number"
+
               />
                 <small id="errorNumber"></small>
+
             </Grid>
             <Grid item xs={12}>
-            <TextField
+              <TextField
                 required
                 fullWidth
                 id="companyDescription"
@@ -255,6 +275,7 @@ useEffect(() => {
                 autoComplete="companyDescription"
                 multiline
                 rows={8}
+
               />
             </Grid>
   

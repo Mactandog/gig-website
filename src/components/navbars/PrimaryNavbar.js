@@ -53,7 +53,9 @@ function PrimaryNavbar({ links }) {
                         { path: "/search-jobs", page: "JOB SEARCH" },
                         { path: "/companies", page: "COMPANY PROFILES" },
                         { path: "/about-us", page: "WHY GIG?" },
-                        { path: "/for-employer", page: "FOR EMPLOYER" },
+                        {
+                          /* { path: "/for-employer", page: "FOR EMPLOYER" }, */
+                        },
                       ].map((link, index) => {
                         return (
                           <CustomLink

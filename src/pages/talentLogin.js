@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import loginImg from "../assets/media/images/login1.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -31,15 +33,48 @@ function Copyright(props) {
   );
 }
 
+let userLoginSession = localStorage.getItem("userInfoSession")
+  ? JSON.parse(localStorage.getItem("userInfoSession"))
+  : [];
+
 export default function TalentLogin() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [userSession, setUserSession] = useState(userLoginSession);
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const isRequired = (value) => (value == "" ? true : false);
+
+  let handleLogin = (e) => {
+    e.preventDefault();
+    const accountInfo = JSON.parse(localStorage.getItem("personalInfoDetails"));
+
+    for (let i = 0; i < accountInfo.length; i++) {
+      if (
+        input.email === accountInfo[i].email &&
+        input.password === accountInfo[i].password
+      ) {
+        let session = { id: accountInfo[i].talentId };
+        setUserSession(session);
+        userLoginSession.push(session);
+        let userLogin = JSON.stringify(userLoginSession);
+        localStorage.setItem("userInfoSession", userLogin);
+        alert("Logged in successful!");
+        navigate("/talent/profile");
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 500);
+        return;
+      }
+    }
+
+    document.getElementById("errorMessage").innerHTML =
+      "Wrong Email or Password!";
   };
+
+  // sessionStorage.setItem("1");
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -79,9 +114,14 @@ export default function TalentLogin() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             sx={{ mt: 1 }}
           >
+            <Typography
+              id="errorMessage"
+              variant="caption"
+              color="error"
+            ></Typography>
             <TextField
               margin="normal"
               required
@@ -91,7 +131,17 @@ export default function TalentLogin() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) =>
+                setInput({
+                  ...input,
+                  [e.target.name]: e.target.value,
+                })
+              }
             />
+
+            <small id="emailHelper" className="textHelper">
+              &nbsp;
+            </small>
             <TextField
               margin="normal"
               required
@@ -100,12 +150,21 @@ export default function TalentLogin() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              onChange={(e) =>
+                setInput({
+                  ...input,
+                  [e.target.name]: e.target.value,
+                })
+              }
             />
-            <FormControlLabel
+            <small id="passwordHelper" className="textHelper">
+              &nbsp;
+            </small>
+            <br></br>
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -116,9 +175,9 @@ export default function TalentLogin() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link href="/talent/signup" variant="body2">

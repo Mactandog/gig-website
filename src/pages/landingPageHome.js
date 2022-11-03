@@ -3,7 +3,7 @@ import { Box, Button, Grid, Paper, styled, Typography } from "@mui/material";
 import jobImg from "../assets/media/images/jobsearch.png";
 import EmployersCard from "../components/cards/EmployersCard";
 import JobCategories from "../components/cards/JobCategories";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import FooterMain from "../components/footers/FooterMain";
 
 const LandingPageHome = () => {
@@ -16,6 +16,10 @@ const LandingPageHome = () => {
       color: primary;
     }
   `;
+  const navigate = useNavigate();
+  const signUp = () => {
+    navigate("/business/signup");
+  };
   return (
     <>
       <Grid container sx={{ p: 8, mt: 8 }}>
@@ -33,7 +37,12 @@ const LandingPageHome = () => {
                   <Typography variant="h5">
                     You're one good hire away from getting it all done.
                   </Typography>
-                  <Button variant="contained" color="secondary" sx={{ my: 3 }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{ my: 3 }}
+                    onClick={signUp}
+                  >
                     Get Started
                   </Button>
                 </Box>
@@ -93,9 +102,9 @@ const LandingPageHome = () => {
               </Button>
             </Box>
           </Paper>
-          <Typography variant="h3" color="primary">
+          {/* <Typography variant="h3" color="primary">
             Testimonial
-          </Typography>
+          </Typography> */}
         </Grid>
       </Grid>
       <footer>

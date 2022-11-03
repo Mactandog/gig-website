@@ -12,20 +12,45 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
-import CountrySelect from "../../forms/CountrySelect";
-import YearMonthPicker from "../../forms/MonthPicker";
-import PositionLevelSelect from "../../forms/PositionLevelSelect";
+import React, { useState } from "react";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import WorkHistoryRoundedIcon from "@mui/icons-material/WorkHistoryRounded";
 import { Link } from "react-router-dom";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+
+let workExperienceList = localStorage.getItem("WorkExperienceDetails")
+  ? JSON.parse(localStorage.getItem("WorkExperienceDetails"))
+  : [];
+
+let userLoginSession = localStorage.getItem("userInfoSession")
+  ? JSON.parse(localStorage.getItem("userInfoSession"))
+  : [];
 
 const TalentExperience = () => {
   //Checkbox Present
   const [checkedPresent, setcheckedPresent] = React.useState(false);
   const handleChangePresent = (event) => {
     setcheckedPresent(event.target.checked);
+  };
+
+  const [work, setWork] = useState(workExperienceList);
+  const currentSessionId = userLoginSession.map((user) => user.id);
+
+  let deleteWork = (e) => {
+    e.preventDefault();
+    let num = parseInt(e.target.id);
+    // console.log(num);
+    const remove = workExperienceList.filter((work) => {
+      return work.workId !== num;
+    });
+
+    setWork(remove);
+    alert("Skill deleted");
+    console.log(remove);
+
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 500);
   };
 
   return (
@@ -54,98 +79,119 @@ const TalentExperience = () => {
         </Grid>
 
         {/* WORK EXPERIENCE */}
-        <Grid container my={2}>
-          {/* Start mapping here */}
-          <Grid item xs={12} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              April 2022 - Present
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" color="textPrimary">
-              Amazon Virtual Assistant
-            </Typography>
-            <Typography variant="body1" color="textPrimary">
-              Ecomm Partners Group
-            </Typography>
-          </Grid>
-          <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Specialization:
-                </Typography>
+
+        {/* Start mapping here */}
+        {workExperienceList
+          .filter((work) => {
+            console.log(work.talentId);
+            return work.talentId == currentSessionId;
+          })
+          .map((work) => (
+            <>
+              <Grid container my={2} key={work.workId}>
+                <Grid item xs={12} md={12} textAlign="right">
+                  <Button
+                    id={work.workId}
+                    type="button"
+                    onClick={deleteWork}
+                    variant="text"
+                    color="secondary"
+                    startIcon={<EditRoundedIcon />}
+                    disableRipple
+                  ></Button>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <Typography variant="subtitle2" color="textPrimary">
+                    {work.startDate} - {work.endDate}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={9}>
+                  <Typography variant="h6" color="textPrimary">
+                    {work.position}
+                  </Typography>
+                  <Typography variant="body1" color="textPrimary">
+                    {work.company}
+                  </Typography>
+                </Grid>
+                <Grid item xs={0} md={3}></Grid>
+                <Grid item xs={12} md={9} sx={{ display: "flex" }}>
+                  <Grid container>
+                    <Grid item md={3}>
+                      <Typography variant="body2" color="textPrimary" mr={2}>
+                        Specialization:
+                      </Typography>
+                    </Grid>
+                    <Grid item md={9}>
+                      <Typography
+                        variant="body2"
+                        fontWeight={500}
+                        color="textPrimary"
+                      >
+                        {work.specialization}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={0} md={3}></Grid>
+                <Grid item xs={12} md={9} sx={{ display: "flex" }}>
+                  <Grid container>
+                    <Grid item md={3}>
+                      <Typography variant="body2" color="textPrimary" mr={2}>
+                        Role:
+                      </Typography>
+                    </Grid>
+                    <Grid item md={9}>
+                      <Typography
+                        variant="body2"
+                        fontWeight={500}
+                        color="textPrimary"
+                      >
+                        {work.role}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={0} md={3}></Grid>
+                <Grid item xs={12} md={9} sx={{ display: "flex" }}>
+                  <Grid container>
+                    <Grid item md={3}>
+                      <Typography variant="body2" color="textPrimary" mr={2}>
+                        Position Level:
+                      </Typography>
+                    </Grid>
+                    <Grid item md={9}>
+                      <Typography
+                        variant="body2"
+                        fontWeight={500}
+                        color="textPrimary"
+                      >
+                        {work.positionLevel}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={0} md={3}></Grid>
+                <Grid item xs={12} md={9} sx={{ display: "flex" }}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight={500}
+                        color="textPrimary"
+                        mr={2}
+                        mt={2}
+                      >
+                        {work.jobDescription}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Customer Service
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Role:
-                </Typography>
-              </Grid>
-              <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Customer Service- General
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Position Level:
-                </Typography>
-              </Grid>
-              <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Fresh Grad / {"<"} 1 Year Experienced Employee
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight={500}
-                  color="textPrimary"
-                  mr={2}
-                  mt={2}
-                >
-                  Responsible for managing and maintaining the Amazon Seller
-                  Central.
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+              <Divider />
+            </>
+          ))}
+
         {/* END OF WORK EXPERINCE  */}
-        <Divider />
       </Paper>
     </>
   );
