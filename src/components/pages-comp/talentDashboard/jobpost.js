@@ -10,7 +10,7 @@ import {
   Avatar,
   Chip,
 } from "@mui/material";
-import React from "react";
+import React , { useState } from "react";
 import companyImage from "../../../assets/media/images/pexels-mikhail-nilov-7988208.jpg";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import { LocationCityRounded } from "@mui/icons-material";
@@ -18,8 +18,23 @@ import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import { Stack } from "@mui/system";
 
+const JobsList2 =  localStorage.getItem("jobpost") ? JSON.parse(localStorage.getItem("jobpost")) : [];
+let id = localStorage.getItem("jobpostIDselected") ? JSON.parse(localStorage.getItem("jobpostIDselected")) : [];
 const JobPost = () => {
+  let idpost = id;
+  const [display2,setDisplay] = useState([]);
+  let companyName =[];
+  const display = JobsList2.filter((val) => {
+    
+    if(val.id === idpost){
+      return setDisplay(val)
+    } 
+    ;
+  }
+  
+)
   return (
+    
     <Box p={4}>
       <Grid container justifyContent="center">
         <Grid item xs={12} md={10}>
@@ -44,6 +59,7 @@ const JobPost = () => {
                 borderRadius: 4,
               }}
             />
+            
             <Box padding={4}>
               <CardContent>
                 <Typography
@@ -52,13 +68,13 @@ const JobPost = () => {
                   mt={8}
                   color="primary"
                 >
-                  Company Name
+                  
                 </Typography>
                 <Typography
                   variant="h6"
                   color="textPrimary"
                   alignItems="center"
-                >
+                > {companyName}
                   <LocationCityRounded /> Company Address
                 </Typography>
               </CardContent>
@@ -94,7 +110,7 @@ const JobPost = () => {
                   >
                     Skills:
                   </Typography>
-
+                  
                   <Stack direction="row" spacing={2}>
                     {/* ============ Map skills here ============== */}
                     <Chip
@@ -104,10 +120,13 @@ const JobPost = () => {
                     />
                     <Chip label="HTML" variant="outlined" color="primary" />
                     <Chip label="MySQL" variant="outlined" color="primary" />
+                    
                     {/* End of Map */}
                   </Stack>
                 </Stack>
               </CardContent>
+              {/*  */}
+               
               <CardActions>
                 <Button
                   aria-label="message"
@@ -162,6 +181,7 @@ const JobPost = () => {
       </Grid>
     </Box>
   );
+
 };
 
 export default JobPost;

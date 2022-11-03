@@ -20,6 +20,7 @@ import JobsList from "../data/jobs/jobsList";
 import KeyboardReturnRoundedIcon from "@mui/icons-material/KeyboardReturnRounded";
 
 export default function JobsListCard() {
+  
   const [state, setState] = React.useState({ right: false });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -64,12 +65,21 @@ export default function JobsListCard() {
   // =================== Jobs List ==================
   const jobsCard = () => {
     return (
-      <Container>
+      <Container >
         <Grid container alignItems="center">
           {/* ======== START MAPPING HERE ============= */}
           {JobsList.map((job) => (
+              
             <Grid item xs={12} key={job.id} my={1}>
-              <Card sx={{ width: "100%", height: "282px" }} variant="outlined">
+              <button  type="button" id={job.id} onClick={(e) => {
+                        e.preventDefault();
+                        
+                        
+                        
+                        localStorage.setItem("jobpostIDselected", JSON.stringify(job.id))
+                       
+                      }}>
+              <Card  sx={{ width: "100%", height: "282px" }} variant="outlined">
                 <CardActionArea
                   onClick={toggleDrawer("right", true)}
                   sx={{ display: "flex" }}
@@ -81,6 +91,7 @@ export default function JobsListCard() {
                       src={job.logo}
                       sx={{ width: 100, height: 100 }}
                     />
+                    
                     <CardContent>
                       <Typography
                         variant="h5"
@@ -92,6 +103,7 @@ export default function JobsListCard() {
                           textOverflow: "ellipsis",
                         }}
                       >
+                      {/* {alert(job.id)} */}
                         {job.title}
                       </Typography>
                       <Typography
@@ -130,11 +142,11 @@ export default function JobsListCard() {
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {job.description}
+                        {job.desc}
                       </Typography>
                       <Box mt={2}>
                         <Typography variant="caption" color="primary">
-                          Posted {job.date} days ago
+                          Posted {job.date}
                         </Typography>
                       </Box>
                     </CardContent>
@@ -152,8 +164,10 @@ export default function JobsListCard() {
                   </Button>
                 </CardActions>
               </Card>
+              </button>
             </Grid>
           ))}
+          
         </Grid>
       </Container>
 
@@ -163,6 +177,7 @@ export default function JobsListCard() {
   return (
     <div>
       <Drawer
+        
         anchor="right"
         open={state["right"]}
         onClose={toggleDrawer("right", false)}

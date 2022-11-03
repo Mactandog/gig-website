@@ -135,7 +135,6 @@
   border-right: 1.5rem solid #0f3057;
 }
 
-
 .search {
   display: flex;
   justify-content: center;
@@ -146,8 +145,11 @@
   resize: none;
 }
 
+.search2 {
+  border-radius: 5px;
+}
+
 .textHelper {
   color: red;
   margin-left: 0.5rem;
-}/*# sourceMappingURL=styles.css.map */
-
+}
