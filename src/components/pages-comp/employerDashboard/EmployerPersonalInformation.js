@@ -17,305 +17,200 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import React from "react";
+import React, { useState, useRef } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import CountrySelect from "../../forms/CountrySelect";
 import IdSelect from "../../forms/IdSelect";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
-
+import ListItemText from "@mui/material/ListItemText";
+import { TextareaAutosize} from '@mui/material'
 const EmployerPersonalInformation = () => {
-  //Date Picker
-  const [value, setValue] = React.useState(null);
 
-  //Status Picker
-  const [status, setStatus] = React.useState("");
-  const handleChange = (event) => {
-    setStatus(event.target.value);
+  <Typography variant="h4" fontWeight={500} color="textPrimary" mb={2}>
+  Delete Your Account
+</Typography>
+
+let companyNameRef = useRef("");
+let companyEmailRef = useRef("");
+let companyPasswordRef = useRef("");
+let companyDescriptionRef = useRef("");
+let companyNumberRef = useRef("");
+
+  const companySession = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
+  const userLoginSession = JSON.parse(localStorage.getItem("userInfoSession"));
+  const loginSession  = userLoginSession.map((session) => {
+    return session.id
+  })
+
+  let num = 1667490641233;
+
+  let editPersonalInfo = (e) => {
+    e.preventDefault();
+    let num = parseInt(e.target.id);
+
+    companySession
+      .filter((company) => {
+        console.log(company.id === num)
+        return company.id === num;
+      })
+      .map((company) => {
+        // return thoughtsRef.current.value = thought.thoughts;
+        return  companyNameRef.current.value = company.companyName,
+        companyEmailRef.current.value = company.companyEmail,
+        companyPasswordRef.current.value = company.companyPassword,
+        companyDescriptionRef.current.value = company.companyDescription,
+        companyNumberRef.current.value = company.companyNumber
+         
+          
+      });
   };
-
-  //Show Edit Personal Info Form
-  const [showForm, setShowForm] = React.useState(false);
-  const formContainer = React.useRef(null);
-  const handleShowForm = () => {
-    setShowForm(!showForm);
-  };
-
-  let dbName = JSON.parse(localStorage.getItem("companies"));
+  
 
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-        <Grid container>
-          <Grid item xs={8} md={8}>
-            <Typography variant="h4" fontWeight={500} color="textPrimary">
-              <AccountBoxRoundedIcon /> Company Information
-            </Typography>
+
+      <Typography variant="h4" fontWeight={500} color="textPrimary" mb={2}>
+         Edit your main account information here:
+       </Typography>
+
+      <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              Company Name
+              <input type='text' ref={companyNameRef} style={{width:'30%',height:'30px',marginLeft:'10px'}}></input>
+                
+            </Grid>
+            
+            <Grid item xs={12}>
+            Company Email Address
+            <input type='text' ref={companyEmailRef} style={{width:'30%',height:'30px',marginLeft:'10px'}}></input>
+                
+            </Grid>
+            <Grid item xs={12}>
+              Company Password
+              <input type='password' ref={companyPasswordRef} style={{width:'30%',height:'30px',marginLeft:'10px'}}></input>
+          
+            </Grid>
+            <Grid item xs={12}>
+              Company Contact Number: 
+              <input type='text' ref={companyNumberRef} style={{width:'30%',height:'30px',marginLeft:'10px'}}></input>
+                <small id="errorNumber"></small>
+            </Grid>
+            <Grid item xs={12}>
+            Company Description
+            <input type='text' ref={companyDescriptionRef} style={{width:'30%',height:'30px',marginLeft:'10px'}}></input>
+            </Grid>
           </Grid>
-          <Grid item xs={4} md={4} textAlign="right">
-            <Tooltip title="Edit Personal Information">
-              <Button
-                type="button"
-                variant="outlined"
-                disabled={showForm}
-                startIcon={<EditRoundedIcon />}
-                onClick={handleShowForm}
-              >
-                Edit
-              </Button>
-            </Tooltip>
-          </Grid>
-        </Grid>
-        <Box>
-          {showForm ? (
-            <Portal container={formContainer.current}>
-              <Box
-                component="form"
-                noValidate
-                autoComplete="off"
-                sx={{ flexGrow: 1, mt: 4 }}
-              >
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="First Name*"
-                      id="firstName"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      name="middleName"
-                      label="Middle Name"
-                      id="middleName"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="Last Name*"
-                      id="lastName"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        disableFuture
-                        name="MuiDatePicker"
-                        label="Date of Birth*"
-                        openTo="year"
-                        views={["year", "month", "day"]}
-                        value={value}
-                        onChange={(newValue) => {
-                          setValue(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <TextField fullWidth label="Age*" id="Age" size="small" />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="demo-simple-select-label">
-                        Status*
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={status}
-                        label="Status*"
-                        onChange={handleChange}
-                      >
-                        <MenuItem value={"Single"}>Single</MenuItem>
-                        <MenuItem value={"Married"}>Married</MenuItem>
-                        <MenuItem value={"Widowed"}>Widowed</MenuItem>
-                        <MenuItem value={"Widower"}>Widower</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <FormControl>
-                      <FormLabel id="demo-radio-buttons-group-label">
-                        Gender*
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue=""
-                        name="radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="female"
-                          control={<Radio />}
-                          label="Female"
-                        />
-                        <FormControlLabel
-                          value="male"
-                          control={<Radio />}
-                          label="Male"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="Email*"
-                      id="email"
-                      placeholder="johndoe123@gmail.com"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="Phone Number*"
-                      id="phone"
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2} mt={4} alignItems="center">
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="Nationality*"
-                      id="nationality"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <CountrySelect />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="State/Region*"
-                      id="stateRegion"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      fullWidth
-                      label="Address*"
-                      id="address"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField fullWidth label="City*" id="city" size="small" />
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <TextField
-                      fullWidth
-                      label="Postal Code*"
-                      id="postalCode"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <IdSelect />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      fullWidth
-                      label="Identification No.*"
-                      id="identificationNo"
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  spacing={2}
+
+      <Grid
+                container
                   mt={4}
-                  alignItems="center"
-                  justifyContent="center"
-                >
+                  >
                   <Grid item xs={12} md={2}>
                     <Button
                       variant="contained"
                       color="primary"
                       fullWidth
-                      onClick={handleShowForm}
+                     
                     >
                       Save
                     </Button>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      fullWidth
-                      onClick={handleShowForm}
-                    >
-                      Cancel
-                    </Button>
+                  <Grid item xs={12} md={2} style={{marginLeft:'20px'}}>
+               {companySession.map((element) => {
+                  return  <Button
+                  variant="contained"
+                  color="error"
+                  fullWidth
+                  onClick={editPersonalInfo}
+                  id={element.id}
+                >
+                  Edit
+                </Button>
+               })}     
+                   
                   </Grid>
                 </Grid>
-              </Box>
-            </Portal>
-          ) : null}
-        </Box>
-        <Box ref={formContainer} />
+      
         <Grid container my={2} alignItems="center">
           {/* START MAPPING HERE */}
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Company ID:
+          <Grid item xs={3} md={3} style={{padding:'20px,5px'}}>
+            <Typography variant="h6" color="textPrimary" fontWeight={500}>
+              Company ID
             </Typography>
           </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              {dbName.id}
+          <Grid item xs={12} md={9} style={{padding:'20px,5px'}}>
+          {companySession.filter((pas) => {
+          
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return   <Typography variant="h6" fontWeight={500} color="textPrimary">
+             {pas.id}
+                </Typography>
+              })}
+            
+          </Grid>
+          <Grid item xs={3} md={3} style={{padding:'20px,5px'}}>
+            <Typography variant="h6" color="textPrimary">
+              Company Name
             </Typography>
           </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Company Name:
+          <Grid item xs={9} md={9} style={{padding:'20px,5px'}}>
+          {companySession.filter((pas) => {
+             
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return   <Typography variant="h6" fontWeight={500} color="textPrimary">
+             {pas.companyName}
+                </Typography>
+              })}
+          </Grid>
+          <Grid item xs={3} md={3} style={{padding:'20px,5px'}}>
+            <Typography variant="h6" color="textPrimary">
+            Email Address
             </Typography>
           </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-              {dbName.name}
-            </Typography>
+          <Grid item xs={9} md={9} style={{padding:'20px,5px'}}>
+          {companySession.filter((pas) => {
+           
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return   <Typography variant="h6" fontWeight={500} color="textPrimary">
+             {pas.companyEmail}
+                </Typography>
+              })}
+          
           </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-            Email Address:
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-            {dbName.email}
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
+          <Grid item xs={3} md={3} style={{padding:'20px,5px'}}>
+            <Typography variant="h6" color="textPrimary">
               Company Contact Number:
             </Typography>
           </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-            {dbName.number}
-            </Typography>
+          <Grid item xs={9} md={9} style={{padding:'20px,5px'}}>
+          {companySession.filter((pas) => {
+               
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return   <Typography variant="h6" fontWeight={500} color="textPrimary">
+             {pas.companyNumber}
+                </Typography>
+              })}
           </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
+          <Grid item xs={3} md={3} style={{padding:'20px,5px'}}>
+            <Typography variant="h6" color="textPrimary">
               Company Description:
             </Typography>
           </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography variant="h6" fontWeight={500} color="textPrimary">
-            {dbName.description}
-            </Typography>
+          <Grid item xs={9} md={9} style={{padding:'20px,5px'}}>
+          {companySession.filter((pas) => {
+              
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return   <Typography variant="h6" fontWeight={500} color="textPrimary">
+             {pas.companyDescription}
+                </Typography>
+              })}
           </Grid>
         </Grid>
       </Paper>

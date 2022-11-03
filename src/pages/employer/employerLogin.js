@@ -33,26 +33,45 @@ function Copyright(props) {
   );
 }
 
+let userLoginSession = localStorage.getItem("userInfoSession") 
+? JSON.parse(localStorage.getItem("userInfoSession")) : [];
+console.log(userLoginSession)
+
 export default function EmployerLogin() {
+
   const navigate = useNavigate();
+  const [userSession, setUserSession] = useState(userLoginSession)
   const [input, setInput] = useState({
     companyEmail:"",
     companyPassword:"",
    
   });
+
+
   
   let handleLogin = (e) => {
       e.preventDefault();
-      const loggedCompany = JSON.parse(localStorage.getItem("companies"));
-      if(input.companyEmail === loggedCompany.email && 
-          input.companyPassword === loggedCompany.password) 
-          {
-              navigate("/companies")
-      }else{
-          alert("wrong email or password")
-      }
 
-      console.log(loggedCompany)
+      const loggedCompany = JSON.parse(localStorage.getItem("company"));
+      
+      for(let i = 0; i<loggedCompany.length;i++){
+        if(input.companyPassword == loggedCompany[i].companyPassword 
+          && input.companyEmail == loggedCompany[i].companyEmail )
+          {
+            let session = {id: loggedCompany[i].id};
+            setUserSession(session);
+            userSession.push(session);
+            let UserLogin = JSON.stringify(userLoginSession)
+            localStorage.setItem("userInfoSession",UserLogin)
+            alert(`You have login successfully!`)
+            navigate('/employer/profile/')
+            return;
+        }
+        
+      }
+      console.log(`Incorrect password or email`)
+    
+
 
   };
 
