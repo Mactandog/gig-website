@@ -474,7 +474,7 @@ const TalentPersonalInformation = () => {
 
   useEffect(() => {
     localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
-  }, [talentInfo]);
+  }, []);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfoSession"));

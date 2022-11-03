@@ -153,7 +153,7 @@ export default function JobsListCard() {
                   </Stack>
                 </CardActionArea>
                 <CardActions sx={{ ml: 1 }}>
-                  <Button
+                  {/* <Button
                     aria-label="message"
                     variant="outlined"
                     size="small"
@@ -161,7 +161,7 @@ export default function JobsListCard() {
                     startIcon={<TurnedInNotRoundedIcon />}
                   >
                     Save
-                  </Button>
+                  </Button> */}
                 </CardActions>
               </Card>
               </button>

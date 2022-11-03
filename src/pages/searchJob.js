@@ -83,7 +83,7 @@ const SearchJob = () => {
                           <div>
                           <Grid item xs={12}>
                          
-                          <input type="text" name="search" onChange={(event) => {
+                          <input className="search2" type="text" name="search" onChange={(event) => {
                             event.preventDefault();
                             
                             setSearchTerm(event.target.value);
@@ -108,6 +108,7 @@ const SearchJob = () => {
               >
                 <Grid item xs={12}>
                   {/*  */}
+                  {alert(searchTerm)}
                   <JobsListCard />
                   {/*  */}
                 </Grid>
