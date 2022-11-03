@@ -31,7 +31,7 @@ import {
   useResolvedPath,
   useMatch,
 } from "react-router-dom";
-import EmployerPersonalInformation from "../../components/pages-comp/employerDashboard/EmployerPersonalInformation";
+// import EmployerPersonalInformation from "../../components/pages-comp/employerDashboard/EmployerPersonalInformation";
 import EmployerExperience from "../../components/pages-comp/employerDashboard/EmployerExperience";
 import EmployerSkills from "../../components/pages-comp/employerDashboard/EmployerSkills";
 import EmployerEducation from "../../components/pages-comp/employerDashboard/EmployerEducation";
@@ -52,7 +52,7 @@ function ResponsiveDrawer(props) {
   };
 
   const companySession = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
-  const userLoginSession = JSON.parse(localStorage.getItem("userInfoSession"));
+  const userLoginSession = JSON.parse(localStorage.getItem("PHPsession"));
 
   const loginSession  = userLoginSession.map((session) => {
     return session.id
@@ -262,7 +262,7 @@ function ResponsiveDrawer(props) {
           <Routes>
             <Route index element={<EmployerHome />} />
             <Route path="employer-profile" element={<EmployerProfile />} />
-            <Route path="employer-info" element={<EmployerPersonalInformation />}/>
+            {/* <Route path="employer-info" element={<EmployerPersonalInformation />}/> */}
             <Route path="employer-experience" element={<EmployerExperience />} />
             <Route path="employer-skills" element={<EmployerSkills />} />
             <Route path="employer-education" element={<EmployerEducation />} />
