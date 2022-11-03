@@ -83,7 +83,7 @@ export default function UserMenu({ profilePic }) {
         </MenuItem>
 
         <Divider />
-        <MenuItem onClick={logout} component="a" href="/">
+        <MenuItem onClick={Logout} component="a" href="/">
 
           <ListItemIcon>
             <Logout fontSize="small" />

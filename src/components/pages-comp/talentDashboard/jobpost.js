@@ -22,17 +22,11 @@ const JobsList2 =  localStorage.getItem("jobpost") ? JSON.parse(localStorage.get
 let id = localStorage.getItem("jobpostIDselected") ? JSON.parse(localStorage.getItem("jobpostIDselected")) : [];
 const JobPost = () => {
   let idpost = id;
-  const [display2,setDisplay] = useState([]);
-  let companyName =[];
-  const display = JobsList2.filter((val) => {
-    
-    if(val.id === idpost){
-      return setDisplay(val)
-    } 
-    ;
-  }
   
-)
+ 
+ 
+  
+    
   return (
     
     <Box p={4}>
@@ -45,6 +39,9 @@ const JobPost = () => {
               image={companyImage}
               alt="Paella dish"
             />
+
+
+
             <Avatar
               variant="rounded"
               alt="Company Name"
@@ -62,26 +59,62 @@ const JobPost = () => {
             
             <Box padding={4}>
               <CardContent>
-                <Typography
-                  variant="h4"
-                  fontWeight={500}
-                  mt={8}
-                  color="primary"
+              <Typography
+                  variant="h2" color="textDark" fontWeight={500}
                 >
-                  
+                  {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
+                    
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      
+                      <div key={key}>
+                        <p>{val.company} </p>
+                      </div>
+
+                    )
+                    })}
                 </Typography>
+
+
                 <Typography
-                  variant="h6"
-                  color="textPrimary"
-                  alignItems="center"
-                > {companyName}
-                  <LocationCityRounded /> Company Address
+                  variant="h4" color="textSecondary" fontWeight={500}
+                >
+                  {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
+                    
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      
+                      <div key={key}>
+                        <p>{val.title} </p>
+                      </div>
+
+                    )
+                    })}
                 </Typography>
+
+                
+
+
+               
               </CardContent>
               <CardContent>
-                <Typography variant="h4" color="textSecondary" fontWeight={500}>
-                  QA Tester (Health Care)
-                </Typography>
+                
                 <Typography
                   variant="h5"
                   color="primary"
@@ -89,42 +122,58 @@ const JobPost = () => {
                   textAlign="justify"
                   mb={2}
                 >
-                  Category: Front-end
-                </Typography>
-
-                <Chip
-                  icon={<PaidRoundedIcon />}
-                  label="19K"
-                  variant="outlined"
-                  color="success"
-                  sx={{ fontSize: 20 }}
-                />
-              </CardContent>
-              <CardContent>
-                <Stack direction="row" alignItems="center" mb={2}>
-                  <Typography
-                    color="primary"
-                    fontWeight={500}
-                    textAlign="justify"
-                    mr={4}
-                  >
-                    Skills:
-                  </Typography>
-                  
-                  <Stack direction="row" spacing={2}>
-                    {/* ============ Map skills here ============== */}
-                    <Chip
-                      label="JavaScript"
-                      variant="outlined"
-                      color="primary"
-                    />
-                    <Chip label="HTML" variant="outlined" color="primary" />
-                    <Chip label="MySQL" variant="outlined" color="primary" />
+                 {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
                     
-                    {/* End of Map */}
-                  </Stack>
-                </Stack>
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      
+                      <div key={key}>
+                        <p> Skill: {val.skill}</p>
+                      </div>
+
+                    )
+                    })}
+                </Typography>
+                
+
+                <Typography
+                  variant="h4" color="textSecondary" fontWeight={500}
+                >
+                  {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
+                    
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      
+                            <Chip
+                        icon={<PaidRoundedIcon />}
+                        label={val.salary}$
+                        variant="outlined"
+                        color="success"
+                        sx={{ fontSize: 20 }}
+                      />
+
+                    )
+                    })}
+                </Typography>
+                
               </CardContent>
+              
               {/*  */}
                
               <CardActions>
@@ -136,7 +185,7 @@ const JobPost = () => {
                 >
                   Easy Apply
                 </Button>
-                <Button
+                {/* <Button
                   aria-label="message"
                   variant="outlined"
                   size="large"
@@ -144,11 +193,31 @@ const JobPost = () => {
                   startIcon={<TurnedInNotRoundedIcon />}
                 >
                   Save
-                </Button>
+                </Button> */}
               </CardActions>
               <CardContent>
                 <Typography variant="subtitle1" color="primary">
-                  Posted 7 days ago
+                
+                  {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
+                    
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      <div key={key}>
+                        <p> Posted: {val.date}</p>
+                      </div>
+                    
+
+                    )
+                    })}
+                
                 </Typography>
               </CardContent>
             </Box>
@@ -161,19 +230,27 @@ const JobPost = () => {
                 About the Job
               </Typography>
               <Typography variant="subtitle1" color="primary">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam
-                rem, harum assumenda blanditiis ut praesentium, veritatis
-                aliquam, labore qui dolor architecto impedit vero sunt?
-                Obcaecati odio asperiores totam autem eligendi voluptatum
-                provident, rem hic sequi sit consequuntur quia velit quaerat,
-                repellendus minus porro! Vel perferendis id expedita possimus!
-                Repellendus labore illum eum facere tempora quia a, deserunt
-                dignissimos quisquam quam officiis, ratione minima reiciendis.
-                Ipsa sint, similique a amet nesciunt quia vitae voluptas atque
-                maiores unde. Quo, excepturi minus, labore quisquam sapiente,
-                enim inventore porro delectus omnis vero voluptates! Quidem aut
-                est, ipsam molestias reprehenderit obcaecati temporibus harum
-                facilis maxime!
+              
+                  {JobsList2.filter((val) => {
+    
+                      if(val.id === idpost){
+                        return val
+                      } 
+                      
+                    }
+                    
+                  ).map((val,key) => {
+                            
+                    return (
+                    
+                      
+                      <div key={key}>
+                        <p> {val.desc}</p>
+                      </div>
+
+                    )
+                    })}
+                
               </Typography>
             </CardContent>
           </Card>
