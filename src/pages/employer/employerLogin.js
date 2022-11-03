@@ -33,8 +33,8 @@ function Copyright(props) {
   );
 }
 
-let userLoginSession = localStorage.getItem("userInfoSession") 
-? JSON.parse(localStorage.getItem("userInfoSession")) : [];
+let userLoginSession = localStorage.getItem("PHPsession") 
+? JSON.parse(localStorage.getItem("PHPsession")) : [];
 console.log(userLoginSession)
 
 export default function EmployerLogin() {
@@ -62,7 +62,7 @@ export default function EmployerLogin() {
             setUserSession(session);
             userSession.push(session);
             let UserLogin = JSON.stringify(userLoginSession)
-            localStorage.setItem("userInfoSession",UserLogin)
+            localStorage.setItem("PHPsession",UserLogin)
             alert(`You have login successfully!`)
             navigate('/employer/profile/')
             return;
