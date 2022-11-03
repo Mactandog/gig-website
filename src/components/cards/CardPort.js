@@ -16,14 +16,14 @@ let CardPort = (props) => {
       <img src={avatar1} className='avatar'></img>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div" style={{textAlign:'center'}}>
-         {props.name}
+       
         </Typography>
         <Typography variant="body2" color="text.secondary" style={{textAlign:'center'}}>
         FullStack Developer
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: 'center' }}>
-        <Button size="small" variant='contained' color='info'>Check Portfolio</Button>
+        <Button size="small" variant='contained' color='info'><a href ="https://google.com/" target="_blank">Check Portfolio </a></Button>
       </CardActions>
     </Card>
   );

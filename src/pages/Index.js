@@ -16,7 +16,9 @@ import EmployerSignUp from "./employer/signupEmployer";
 import TalentSignUp from "./signupTalent";
 import TalentDashboard from "./talent/talentDashboard";
 import SecondaryNavbar from "../components/navbars/SecondaryNavbar";
+import Jobpostpage from "./jobpostpage";
 import CompanyDashboard from "./employer/CompanyDashboard";
+
 const Index = () => {
   return (
     <ThemeProvider theme={customTheme}>
@@ -44,10 +46,10 @@ const Index = () => {
                 <Route path="/business/signup" element={<EmployerSignUp />} />
               </Route>
               <Route path="/talent/profile/*" element={<TalentDashboard />} />
-              <Route
-                path="/employer/profile/*"
-                element={<CompanyDashboard />}
-              />
+
+              <Route path="/jobpostpage" element={<Jobpostpage />} />
+              <Route path="/employer/profile/*" element={<CompanyDashboard />} />
+
             </Routes>
           </Box>
         </Box>

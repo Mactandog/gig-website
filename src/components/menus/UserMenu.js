@@ -19,10 +19,12 @@ export default function UserMenu({ profilePic }) {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    alert("You have logged out");
+
+  const LagOut = () => {
+    alert('You have sign out successfully')
     localStorage.removeItem("userInfoSession");
-  };
+  }
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -82,10 +84,11 @@ export default function UserMenu({ profilePic }) {
 
         <Divider />
         <MenuItem onClick={logout} component="a" href="/">
+
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+         Logout
         </MenuItem>
       </Menu>
     </React.Fragment>

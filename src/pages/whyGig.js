@@ -8,6 +8,16 @@ import work1 from "../assets/media/images/work1.png";
 import work2 from "../assets/media/images/work2.png";
 import work3 from "../assets/media/images/work3.png";
 // "../assets/media/images/jobsearch.png";
+import CardMedia from '@mui/material/CardMedia';
+import avatar1 from "../assets/media/images/avatar1.png";
+import avatar2 from "../assets/media/images/avatar2.PNG";
+import avatar3 from "../assets/media/images/avatar3.PNG";
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import FooterMain from "../components/footers/FooterMain";
+
+
 import { width } from '@mui/system';
 const WhyGig = () => {
   return (
@@ -78,18 +88,61 @@ const WhyGig = () => {
                 <h1 className="typo-h2">MEET OUR TEAM</h1>
             </Grid>
             <Grid item lg={4} sx={{display:'flex', justifyContent: 'center' }}>
-                <CardPort name='Norman'/>
+            <Card sx={{ width:400, height:400, my:2}}>
+                <CardMedia/>
+                <img src={avatar1} className='avatar'></img>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div" style={{textAlign:'center'}}>
+                        Norman
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" style={{textAlign:'center'}}>
+                    <span style={{fontSize:'17px'}}>FullStack Developer</span>
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center' }}>
+                    <Button size="small" variant='contained' color='info'><a href ="https://normsamorganda.github.io/eportfolio/" target="_blank" style={{textDecoration:'none',color:'white'}}>Check Portfolio </a></Button>
+                </CardActions>
+                </Card>
             </Grid>
             <Grid item lg={4} sx={{ display:'flex', justifyContent: 'center' }}>
-                <CardPort name='Shamuel'/>
+            <Card sx={{ width:400, height:400, my:2}}>
+      <CardMedia/>
+      <img src={avatar3} className='avatar'></img>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div" style={{textAlign:'center'}}>
+        Ryan
+        </Typography>
+        <Typography variant="body2" color="text.secondary" style={{textAlign:'center'}}>
+        <span style={{fontSize:'17px'}}>FullStack Developer</span>
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ justifyContent: 'center' }}>
+        <Button size="small" variant='contained' color='info'><a href ="https://mactandog.github.io/portfolio/" target="_blank" style={{textDecoration:'none',color:'white'}}>Check Portfolio </a></Button>
+      </CardActions>
+    </Card>
             </Grid>
             <Grid item  lg={4} sx={{ display:'flex', justifyContent: 'center' }}>
-                <CardPort name='Ryan'/>
+            <Card sx={{ width:400, height:400, my:2}}>
+      <CardMedia/>
+      <img src={avatar2} className='avatar'></img>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div" style={{textAlign:'center'}}>
+            Shamuel
+        </Typography>
+        <Typography variant="body2" color="text.secondary" style={{textAlign:'center'}}>
+       <span style={{fontSize:'17px'}}>FullStack Developer</span>
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ justifyContent: 'center' }}>
+        <Button size="small" variant='contained' color='info'><a href ="https://azor-gh.github.io/portfolio/" target="_blank" style={{textDecoration:'none',color:'white'}}>Check Portfolio </a></Button>
+      </CardActions>
+    </Card>
+
             </Grid>
         </Grid>
 
         
-      
+        <FooterMain />
         </div>
   )
 }

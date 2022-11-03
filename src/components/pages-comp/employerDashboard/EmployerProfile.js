@@ -17,11 +17,19 @@ import WorkHistoryRoundedIcon from "@mui/icons-material/WorkHistoryRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import PsychologyRoundedIcon from "@mui/icons-material/PsychologyRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
-
+import { useState } from "react";
 const EmployerProfile = () => {
 
+  const companySession = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
+  const userLoginSession = JSON.parse(localStorage.getItem("userInfoSession"));
+  const loginSession  = userLoginSession.map((session) => {
+    return session.id
+  })
 
-  let dbName = JSON.parse(localStorage.getItem("companies"));
+
+  // const  currentSessionID = userLoginSession.map((user) => {
+  //   user.id
+  // })
 
   return (
     <>
@@ -40,40 +48,55 @@ const EmployerProfile = () => {
             </ListItem>
           </Grid>
           <Grid item xs={12} md={10}>
-            <Typography variant="h4" fontWeight={500} color="textPrimary">
-              {dbName.name}
+          {companySession.filter((pas) => {
+                console.log(pas.id == loginSession)
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return <Typography variant="h3" fontWeight={500} color="textPrimary">
+             {pas.companyName}
             </Typography>
+              })}
             <Typography variant="body1" fontWeight={400} color="textPrimary">
-              Human Capital Management Clerk {"("}2017-2019{")"}
+              Lorem Ipsum
             </Typography>
             <Typography variant="body2" color="textPrimary">
-              Marbel Universal Trading Incorporated
+           Neque porro quisquam est, qui dolorem ipsum quia dolor sit
             </Typography>
             <Typography variant="body2" color="textPrimary" mt={1}>
-              <Stack
-                direction={{ xs: "column", md: "row" }}
-                spacing={{ xs: 1, sm: 2, md: 4 }}
-              >
-                <Typography
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <LocalPhoneRoundedIcon sx={{ width: 15, mr: 1, ml: 2 }} />
-                  091234567899{" "}
-                </Typography>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <EmailRoundedIcon sx={{ width: 15, mr: 1, ml: 2 }} />{" "}
-                  ryan123@gmail.com{" "}
-                </Typography>
+              <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 1, sm: 2, md: 4 }}>
+              {companySession.filter((pas) => {
+                console.log(pas.id == loginSession)
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <LocalPhoneRoundedIcon sx={{ width: 15, mr: 1, ml: 2 }} />
+              {pas.companyNumber}{" "}
+            </Typography>
+              })}
+
+              {companySession.filter((pas) => {
+                
+                return pas.id == loginSession;
+              }).map((pas) => {
+              return <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <EmailRoundedIcon sx={{ width: 15, mr: 1, ml: 2 }} />{" "}
+              {pas.companyEmail}{" "}
+            </Typography>
+              })}
+                
+                
                 <Typography
                   sx={{
                     display: "flex",
@@ -82,7 +105,7 @@ const EmployerProfile = () => {
                   }}
                 >
                   <LocationOnRoundedIcon sx={{ width: 15, mr: 1, ml: 2 }} />
-                  Surallah, South Cotabato
+                  minima veniam, quis
                 </Typography>
               </Stack>
             </Typography>
@@ -100,7 +123,7 @@ const EmployerProfile = () => {
               mb: 2,
             }}
           >
-            <WorkHistoryRoundedIcon sx={{ mr: 1 }} /> Experience
+            <WorkHistoryRoundedIcon sx={{ mr: 1 }} /> COMPANY EXPERIENCE
           </Typography>
         </Grid>
         {/* ============== WORK EXPERIENCE ================== */}
@@ -108,91 +131,30 @@ const EmployerProfile = () => {
           {/* Start mapping here */}
           <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              April 2022 - Present
+            Neque porro quisquam
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography variant="h6" color="textPrimary">
-              Amazon Virtual Assistant
+            Molestiae non recusandae. Itaque earum rerum
             </Typography>
             <Typography variant="body1" color="textPrimary">
-              Ecomm Partners Group
+            Itaque earum rerum Consequatur aut perferendis doloribus asperiores repellat. Nam libero tempore, 
+            cum soluta nobis est eligendi optio cumque nihil impedit quo minus 
+            id quod maxime placeat facere possimus
+            blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et 
+            quas molestias excepturi sint occaecati cupiditate non provident
             </Typography>
           </Grid>
           <Grid item xs={0} md={3}></Grid>
           <Grid item xs={12} md={9} sx={{ display: "flex" }}>
             <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Specialization:
-                </Typography>
-              </Grid>
               <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Customer Service
-                </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Role:
-                </Typography>
-              </Grid>
-              <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Customer Service- General
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
           <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item md={3}>
-                <Typography variant="body2" color="textPrimary" mr={2}>
-                  Position Level:
-                </Typography>
-              </Grid>
-              <Grid item md={9}>
-                <Typography
-                  variant="body2"
-                  fontWeight={500}
-                  color="textPrimary"
-                >
-                  Fresh Grad / {"<"} 1 Year Experienced Employee
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={0} md={3}></Grid>
-          <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight={500}
-                  color="textPrimary"
-                  mr={2}
-                  mt={2}
-                >
-                  Responsible for managing and maintaining the Amazon Seller
-                  Central.
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
         {/* END OF WORK EXPERINCE  */}
         <Divider />
@@ -209,25 +171,25 @@ const EmployerProfile = () => {
               mb: 2,
             }}
           >
-            <SchoolRoundedIcon sx={{ mr: 1 }} /> Education
+            <SchoolRoundedIcon sx={{ mr: 1 }} /> HOW OUR COMPANY STARTED
           </Typography>
         </Grid>
         <Grid container my={2}>
           {/* START MAPPING HERE */}
           <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              2017
+            
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography variant="h6" color="textPrimary">
-              Holy Child College of Information Technology, Inc.
+            Debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
             </Typography>
             <Typography variant="body1" color="textPrimary">
-              Bachelor's Degree in Information Technology
+            Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
             </Typography>
             <Typography variant="body1" color="textPrimary">
-              Philippines
+             
             </Typography>
           </Grid>
         </Grid>
@@ -245,14 +207,14 @@ const EmployerProfile = () => {
               mb: 2,
             }}
           >
-            <PsychologyRoundedIcon sx={{ mr: 1 }} /> Skills
+            <PsychologyRoundedIcon sx={{ mr: 1 }} /> OUR PEOPLE
           </Typography>
         </Grid>
         <Grid container my={2}>
           {/* START MAPPING HERE */}
           <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Advanced
+            
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
@@ -261,7 +223,7 @@ const EmployerProfile = () => {
               fontWeight={500}
               color="textPrimary"
             >
-              None {"(If none, then do not display)"}
+        
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -270,7 +232,7 @@ const EmployerProfile = () => {
               fontWeight={500}
               color="textPrimary"
             >
-              Intermediate
+            
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
@@ -279,12 +241,12 @@ const EmployerProfile = () => {
               fontWeight={500}
               color="textPrimary"
             >
-              Administrative Skills, Virtual Assistant, Customer Support
+           
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              Basic
+            
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
@@ -293,89 +255,14 @@ const EmployerProfile = () => {
               fontWeight={500}
               color="textPrimary"
             >
-              Computer Hardware And Software Repair, Graphic Designing,
-              Programming Skills
+            Itaque earum rerum Consequatur aut perferendis doloribus asperiores repellat. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
             </Typography>
           </Grid>
         </Grid>
         {/* END OF SKILLS */}
         <Divider />
         {/* ================ PERSONAL INFORMATION ============= */}
-        <Grid item xs={12} mt={2}>
-          <Typography
-            variant="h6"
-            color="textPrimary"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              mb: 2,
-            }}
-          >
-            <AccountBoxRoundedIcon sx={{ mr: 1 }} /> Personal Information
-          </Typography>
-        </Grid>
-        <Grid container my={2}>
-          {/* START MAPPING HERE */}
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Gender
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography
-              variant="subtitle1"
-              fontWeight={500}
-              color="textPrimary"
-            >
-              Male
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Age
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography
-              variant="subtitle1"
-              fontWeight={500}
-              color="textPrimary"
-            >
-              26 years old
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Status
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography
-              variant="subtitle1"
-              fontWeight={500}
-              color="textPrimary"
-            >
-              Single
-            </Typography>
-          </Grid>
-          <Grid item xs={3} md={3}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Nationality
-            </Typography>
-          </Grid>
-          <Grid item xs={9} md={9}>
-            <Typography
-              variant="subtitle1"
-              fontWeight={500}
-              color="textPrimary"
-            >
-              Filipino
-            </Typography>
-          </Grid>
-
-          {/* END OF PERSONAL INFORMATION */}
-        </Grid>
+        
       </Paper>
     </>
   );
