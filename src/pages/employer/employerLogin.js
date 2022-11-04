@@ -69,7 +69,7 @@ export default function EmployerLogin() {
         }
         
       }
-      console.log(`Incorrect password or email`)
+      alert(`Incorrect password or email`)
     
 
 

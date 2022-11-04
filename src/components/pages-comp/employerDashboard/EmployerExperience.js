@@ -40,7 +40,7 @@ const EmployerExperience = () => {
         <Grid container>
           <Grid item xs={8} md={8}>
             <Typography variant="h4" fontWeight={500} color="textPrimary">
-              <WorkHistoryRoundedIcon /> Work Experince
+              <WorkHistoryRoundedIcon /> Add Job
             </Typography>
           </Grid>
           <Grid item xs={4} md={4} textAlign="right">
@@ -196,12 +196,12 @@ const EmployerExperience = () => {
           {/* Start mapping here */}
           <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="textPrimary">
-              April 2022 - Present
+              Date
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography variant="h6" color="textPrimary">
-              Amazon Virtual Assistant
+              Job Position
             </Typography>
             <Typography variant="body1" color="textPrimary">
               Ecomm Partners Group
