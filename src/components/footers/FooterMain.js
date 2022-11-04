@@ -1,6 +1,19 @@
 import { Box, Grid, Link, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 
+function Copyright(props) {
+  return (
+    <Typography variant="h6" color="text.secondary" align="center" {...props}>
+      {"Copyright © "}
+      <Link color="inherit" href="/">
+        Gig
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
 const FooterMain = () => {
   return (
     <>
@@ -8,8 +21,9 @@ const FooterMain = () => {
         color="primary"
         sx={{ borderRadius: 2, backgroundColor: "primary.main", p: 6 }}
       >
-        <Grid display="flex" justifyContent="space-around">
-          <Box>
+        <Grid display="flex" justifyContent="center">
+          <Copyright />
+          {/* <Box>
             <Typography color="secondary.light" variant="h5" mb={1}>
               Job seekers
             </Typography>
@@ -127,8 +141,8 @@ const FooterMain = () => {
               >
                 Explore careers
               </Link>
-            </Stack>
-          </Box>
+            </Stack> */}
+          {/* </Box> */}
         </Grid>
       </Paper>
     </>

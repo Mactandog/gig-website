@@ -3,14 +3,11 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
   Grid,
   InputLabel,
   MenuItem,
-  Modal,
   Paper,
-  Portal,
   Radio,
   RadioGroup,
   Select,
@@ -25,10 +22,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import Countries from "../../data/Countries";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import { useRef } from "react";
-import TalentEditPersonalInfo from "./talentEditPersonalInfo";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 // let form = document.querySelector("#personalInfo");
 
@@ -36,28 +30,23 @@ let talentPersonalInfo = localStorage.getItem("personalInfoDetails")
   ? JSON.parse(localStorage.getItem("personalInfoDetails"))
   : [];
 
-let userLoginSession = localStorage.getItem("userInfoSession")
-  ? JSON.parse(localStorage.getItem("userInfoSession"))
-  : [];
-
-const TalentPersonalInformation = () => {
+const TalentEditPersonalInfo = ({}) => {
   //////////////////////////////////////////////////
   //Date Picker
   let [birthDateValue, setBirthDateValue] = React.useState(null);
   let selectDate = (newValue) => {
-    // setBirthDateValue(newValue.$d);
     setBirthDateValue(newValue);
   };
 
-  // let formatDateDay = () => {
-  //   const options = {
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //   };
-  //   console.log(birthDateValue);
-  //   return new Date(birthDateValue).toLocaleDateString("en-us", options);
-  // };
+  let formatDateDay = () => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    console.log(birthDateValue);
+    return new Date(birthDateValue).toLocaleDateString("en-us", options);
+  };
 
   //Status Picker
   const [civilStatus, setCivilStatus] = React.useState("");
@@ -81,21 +70,19 @@ const TalentPersonalInformation = () => {
   const [country, setCountry] = useState(null);
   const selectCountry = (event, value) => setCountry(value.label);
 
-  // //Show Edit Personal Info Form
-  // const [showForm, setShowForm] = React.useState(false);
-  // const formContainer = React.useRef(null);
-  // const handleShowForm = () => {
-  //   // setShowForm(!showForm);
-  //   editPersonalInfo();
-  // };
+  //Show Edit Personal Info Form
+  const [showForm, setShowForm] = React.useState(false);
+  const formContainer = React.useRef(null);
+  const handleShowForm = () => {
+    // setShowForm(!showForm);
+    editPersonalInfo();
+  };
 
   // Add Personal Info
   const [talentInfo, setTalentInfo] = useState(talentPersonalInfo);
-  const [userSession, setUserSession] = useState(userLoginSession);
+  const [talentId, setTalentId] = useState();
 
-  const [talentId, setTalentId] = useState(Date.now);
   const navigate = useNavigate();
-
   //////////////////////////////////////////////////////////
 
   // =================================================== //
@@ -196,6 +183,7 @@ const TalentPersonalInformation = () => {
   };
 
   const checkStatus = () => {
+    const civilStatus = document.getElementById("civilStatus").value;
     if (isRequired(civilStatus)) {
       document.getElementById("statusHelper").innerHTML = "Required";
       return false;
@@ -375,9 +363,8 @@ const TalentPersonalInformation = () => {
   // ========== START OF  ADD PERSONAL INFO ============ //
   // =================================================== //
 
-  const currentSessionId = userLoginSession.map((user) => user.id);
-
   let addPersonalInfo = () => {
+    // e.preventDefault();
     // setTalentId(Date.now);
 
     let personalInfoDetails = {
@@ -401,67 +388,34 @@ const TalentPersonalInformation = () => {
       identificationNo: document
         .getElementById("identificationNo")
         .value.trim(),
-      password: document.getElementById("password").innerHTML,
-      userType: document.getElementById("userType").innerHTML,
     };
 
-    //   let matchId = talentInfo.filter((talent) => {
-    //     return talent.talentId === personalInfoDetails.talentId;
-    //   });
+    let matchId = talentInfo.filter((talent) => {
+      return talent.talentId === personalInfoDetails.talentId;
+    });
 
-    //   if (matchId.length == 0) {
-    //     setTalentInfo([...talentInfo, personalInfoDetails]);
-    //     document.forms[0].reset();
-    //   } else {
-    //     talentInfo.map((talent, index) => {
-    //       if (talent.talentId === personalInfoDetails.talentId) {
-    //         talentInfo.splice(index, 1, talent);
-    //         setTalentInfo(talentInfo);
-    //         document.forms[0].reset();
-    //       }
-    //     });
-    //   }
-    // };
-
-    const newInfo = () =>
+    if (matchId.length == 0) {
+      setTalentInfo([...talentInfo, personalInfoDetails]);
+      document.forms[0].reset();
+    } else {
       talentInfo.map((talent, index) => {
-        if (talent.talentId == personalInfoDetails.talentId) {
-          talentInfo.splice(index, 1, personalInfoDetails);
-          // let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
-          // localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
+        if (talent.talentId === personalInfoDetails.talentId) {
+          talentInfo.splice(index, 1, talent);
+          setTalentInfo(talentInfo);
           document.forms[0].reset();
         }
-        return setTalentInfo(talentInfo);
       });
-
-    return newInfo();
-  };
-
-  let submitPersonalInfo = (event) => {
-    event.preventDefault();
-    if (
-      checkFirstName() == true &&
-      checkMiddleName() == true &&
-      checkLastName() == true &&
-      checkBirthDate() == true &&
-      checkAge() == true &&
-      checkStatus() == true &&
-      checkGender() == true &&
-      checkEmail() == true &&
-      checkPhoneNo() == true &&
-      checkNationality() == true &&
-      checkCountry() == true &&
-      checkState() == true &&
-      checkAddress() == true &&
-      checkCity() == true &&
-      checkPostal() == true &&
-      checkIdentification() == true &&
-      checkIdentificationNo()
-    ) {
-      alert("success");
-      navigate("/talent/profile");
-      addPersonalInfo();
     }
+
+    // talentInfo.map((talent, index) => {
+    //   console.log(talent.talentId === personalInfoDetails.talentId);
+    //   if (talent.talentId === personalInfoDetails.talentId) {
+    //     talentInfo.splice(index, 1, personalInfoDetails);
+    //     let talentPersonalInfoList = JSON.stringify(talentPersonalInfo);
+    //     localStorage.setItem("personalInfoDetails", talentPersonalInfoList);
+    //   }
+    //   return setTalentInfo(talentInfo);
+    // });
   };
 
   // =================================================== //
@@ -474,29 +428,19 @@ const TalentPersonalInformation = () => {
 
   useEffect(() => {
     localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
-  }, []);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfoSession"));
-    if (userSession) {
-      setUserSession(user);
-    }
-  }, []);
+  }, [talentInfo]);
 
   let editPersonalInfo = (e) => {
     // e.preventDefault();
+    let num = parseInt(e.target.talentId);
+    // let num = 1667372736746;
 
-    // let sessionId = parseInt(e.target.value);
-    // console.log(sessionId);
-    let num = parseInt(currentSessionId);
-    console.log(num);
     talentInfo
       .filter((talent) => {
-        console.log(talent.talentId === num ? true : false);
-        console.log(num);
         return talent.talentId === num;
       })
       .map((talent) => {
+        document.getElementById("talentId").innerHTML = talent.talentId;
         document.getElementById("firstName").value = talent.firstName;
         document.getElementById("middleName").value = talent.middleName;
         document.getElementById("lastName").value = talent.lastName;
@@ -504,6 +448,7 @@ const TalentPersonalInformation = () => {
         document.getElementById("age").value = talent.age;
         document.getElementById("civilStatus").value = talent.status;
         document.getElementById("gender").value = talent.gender;
+        // console.log(selectedGender(talent.gender)),
         document.getElementById("email").value = talent.email;
         document.getElementById("phoneNo").value = talent.phoneNo;
         document.getElementById("nationality").value = talent.nationality;
@@ -515,13 +460,37 @@ const TalentPersonalInformation = () => {
         document.getElementById("identification").value = talent.identification;
         document.getElementById("identificationNo").value =
           talent.identificationNo;
-        document.getElementById("userType").innerHTML = talent.userType;
-        document.getElementById("password").innerHTML = talent.password;
-        console.log(talent.talentId);
-        return setTalentId(num);
+        console.log("Fetch Id of logged in user " + talent.talentId);
+        return setTalentId(talent.talentId);
       });
   };
 
+  let submitPersonalInfo = (event) => {
+    event.preventDefault();
+    if (
+      checkFirstName() === true &&
+      checkMiddleName() === true &&
+      checkLastName() === true &&
+      checkBirthDate() === true &&
+      checkAge() === true &&
+      checkStatus() === true &&
+      checkGender() === true &&
+      checkEmail() === true &&
+      checkPhoneNo() === true &&
+      checkNationality() === true &&
+      checkCountry() === true &&
+      checkState() === true &&
+      checkAddress() === true &&
+      checkCity() === true &&
+      checkPostal() === true &&
+      checkIdentification() === true &&
+      checkIdentificationNo()
+    ) {
+      addPersonalInfo();
+      alert("success");
+      navigate("/talent/profile/personal-info");
+    }
+  };
   return (
     <>
       <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
@@ -531,197 +500,35 @@ const TalentPersonalInformation = () => {
               <AccountBoxRoundedIcon /> Personal Information
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4} textAlign="right">
-            <Tooltip title="Edit Personal Information">
-              {/* <Link to="edit"> */}
-              <Button
-                id="1667290249787"
-                type="button"
-                variant="outlined"
-                // disabled={showForm}
-                startIcon={<EditRoundedIcon />}
-                // onClick={handleShowForm}
-                onClick={editPersonalInfo}
-              >
-                Edit
-              </Button>
-              {/* </Link> */}
-            </Tooltip>
-          </Grid>
         </Grid>
+        <Grid item xs={4} md={4} textAlign="right">
+          <Tooltip title="Edit Personal Information">
+            <Button
+              id="1667290249787"
+              type="button"
+              variant="outlined"
+              // disabled={showForm}
+              startIcon={<EditRoundedIcon />}
+              // onClick={handleShowForm}
+              onClick={editPersonalInfo}
+            >
+              Edit
+            </Button>
+          </Tooltip>
+        </Grid>
+        <h4 id="talentId">id</h4>
 
-        {/* <Box ref={formContainer} /> */}
-        {/* START MAPPING HERE */}
-        {talentPersonalInfo
-          .filter((talent) => {
-            return talent.talentId == currentSessionId;
-          })
-          .map((talent) => (
-            <Grid container my={2} alignItems="center" key={talent.talentId}>
-              <Grid item xs={3} md={3}>
-                <Typography
-                  variant="subtitle2"
-                  color="textPrimary"
-                  id="talentId"
-                >
-                  {talent.talentId}
-                </Typography>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Full Name
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.firstName} {talent.middleName} {talent.lastName}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Date of Birth
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.birthDate}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Age
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.age}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Status
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.status}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Gender
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.gender}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Email
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.email}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Phone Number
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.phoneNo}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Nationality
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.nationality}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Country
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.country}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  State/Region
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.state}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Address
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.address}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  City/Municipality
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.city}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  Postal Code
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.postal}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} md={3}>
-                <Typography variant="subtitle2" color="textPrimary">
-                  {talent.identification}
-                </Typography>
-              </Grid>
-              <Grid item xs={9} md={9}>
-                <Typography variant="h6" fontWeight={500} color="textPrimary">
-                  {talent.identificationNo}
-                </Typography>
-              </Grid>
-            </Grid>
-          ))}
-        {/* <TalentEditPersonalInfo /> */}
         {/* ====================== FORM ======================*/}
         <Box
           component="form"
-          noValidate
+          // noValidate
           autoComplete="off"
-          sx={{ flexGrow: 1, mt: 20 }}
+          sx={{ flexGrow: 1, mt: 4 }}
           id="personalInfo"
           name="formInfo"
           onSubmit={submitPersonalInfo}
         >
           <Grid container spacing={2} alignItems="center">
-            <small id="userType" hidden></small>
-            <small id="password" hidden></small>
             <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
@@ -1009,22 +816,24 @@ const TalentPersonalInformation = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
+                // onClick={handleShowForm}
+                // onClick={submitForm}
+                // onClick={submitPersonalInfo}
               >
                 Save
               </Button>
             </Grid>
             <Grid item xs={12} md={2}>
-              <Button
-                type="button"
-                component="a"
-                href="/talent/profile/"
-                variant="contained"
-                color="error"
-                fullWidth
-                // onClick={handleShowForm}
-              >
-                Cancel
-              </Button>
+              <Link to="/talent/profile/personal-info">
+                <Button
+                  variant="contained"
+                  color="error"
+                  fullWidth
+                  // onClick={handleShowForm}
+                >
+                  Cancel
+                </Button>
+              </Link>
             </Grid>
           </Grid>
         </Box>
@@ -1033,4 +842,4 @@ const TalentPersonalInformation = () => {
   );
 };
 
-export default TalentPersonalInformation;
+export default TalentEditPersonalInfo;

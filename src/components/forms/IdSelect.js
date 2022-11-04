@@ -5,10 +5,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function IdSelect() {
+const IdSelect = React.forwardRef((props, ref) => {
   const [idNo, setIdNo] = React.useState("");
 
-  const handleChange = (event) => {
+  const selectIdentification = (event) => {
     setIdNo(event.target.value);
   };
 
@@ -21,7 +21,9 @@ export default function IdSelect() {
           id="idNo"
           value={idNo}
           label="Age"
-          onChange={handleChange}
+          onChange={selectIdentification}
+          ref={ref}
+          {...props}
         >
           <MenuItem value="" disabled>
             Select Identification
@@ -35,4 +37,6 @@ export default function IdSelect() {
       </FormControl>
     </Box>
   );
-}
+});
+
+export default IdSelect;

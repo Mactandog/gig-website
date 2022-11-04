@@ -40,10 +40,22 @@ import TalentProfile from "../../components/pages-comp/talentDashboard/TalentPro
 import TalentUploadResume from "../../components/pages-comp/talentDashboard/TalentUploadResume";
 import TalentHome from "../../components/pages-comp/talentDashboard/TalentHome";
 import TalentMyJobs from "../../components/pages-comp/talentDashboard/TalentMyJobs";
+import TalentEditPersonalInfo from "../../components/pages-comp/talentDashboard/talentEditPersonalInfo";
+import TalentEditWorkExp from "../../components/pages-comp/talentDashboard/talentEditWorkExp";
+import TalentEditEducation from "../../components/pages-comp/talentDashboard/talentEditEducation";
+import TalentChangePassword from "../../components/pages-comp/talentDashboard/talentChangePass";
+import { useState, useEffect } from "react";
 
+let userLoginSession = localStorage.getItem("userInfoSession")
+  ? JSON.parse(localStorage.getItem("userInfoSession"))
+  : [];
+
+let talentPersonalInfo = localStorage.getItem("personalInfoDetails")
+  ? JSON.parse(localStorage.getItem("personalInfoDetails"))
+  : [];
 const drawerWidth = 240;
 
-function ResponsiveDrawer(props) {
+function TalentDashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -63,6 +75,22 @@ function ResponsiveDrawer(props) {
       </li>
     );
   };
+
+  const [talentInfo, setTalentInfo] = useState(talentPersonalInfo);
+  const [userSession, setUserSession] = useState(userLoginSession);
+  const currentSessionId = userLoginSession.map((user) => user.id);
+  // setTalentInfo(talentPersonalInfo);
+  useEffect(() => {
+    localStorage.setItem("personalInfoDetails", JSON.stringify(talentInfo));
+  }, [talentInfo]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfoSession"));
+    if (userSession) {
+      setUserSession(user);
+    }
+  }, []);
+
   const drawer = (
     <div>
       <Toolbar />
@@ -75,11 +103,30 @@ function ResponsiveDrawer(props) {
               <ListItemAvatar>
                 <Avatar alt="User Picture" variant="square" src={profilePic} />
               </ListItemAvatar>
-              <ListItemText primary="Ryan Mark" secondary="View My Profile" />
+              {talentPersonalInfo
+                .filter((talent) => {
+                  return talent.talentId == currentSessionId;
+                })
+                .map((talent) => (
+                  <ListItemText
+                    primary={talent.firstName}
+                    secondary="View My Profile"
+                  />
+                ))}
             </ListItemButton>
           </ListItem>
         </Link>
         {/* //// */}
+        {/* {
+            icon: <WysiwygRoundedIcon />,
+            name: "Portfolio",
+            path: "/my-portfolio",
+          }, */}
+        {/* {
+            icon: <AttachmentRoundedIcon />,
+            name: "Upload Resume",
+            path: "/upload-resume",
+          }, */}
         {[
           {
             icon: <HomeRoundedIcon />,
@@ -97,29 +144,16 @@ function ResponsiveDrawer(props) {
             path: "/work-experience",
           },
           { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/skills" },
-          {
-            icon: <WysiwygRoundedIcon />,
-            name: "Portfolio",
-            path: "/my-portfolio",
-          },
+
           {
             icon: <SchoolRoundedIcon />,
             name: "Education",
             path: "/education",
           },
-          {
-            icon: <AttachmentRoundedIcon />,
-            name: "Upload Resume",
-            path: "/upload-resume",
-          },
         ].map((tab, index) => (
-          <CustomLink
-            key={index}
-            className="sidebarLink"
-            to={`/talent/profile${tab.path}`}
-          >
+          <CustomLink className="sidebarLink" to={`/talent/profile${tab.path}`}>
             {/* <Link className="sidebarLink" to={`/talent/profile${tab.path}`}> */}
-            <ListItem disablePadding>
+            <ListItem disablePadding key={tab.path}>
               <ListItemButton>
                 <ListItemIcon>{tab.icon}</ListItemIcon>
                 <ListItemText primary={tab.name} />
@@ -256,6 +290,19 @@ function ResponsiveDrawer(props) {
             <Route path="upload-resume" element={<TalentUploadResume />} />
             <Route path="account-settings" element={<TalentMyAccount />} />
             <Route path="my-jobs" element={<TalentMyJobs />} />
+            <Route
+              path="personal-info/edit"
+              element={<TalentEditPersonalInfo />}
+            />{" "}
+            <Route
+              path="work-experience/edit"
+              element={<TalentEditWorkExp />}
+            />
+            <Route path="education/add" element={<TalentEditEducation />} />
+            <Route
+              path="/account-settings/change-password"
+              element={<TalentChangePassword />}
+            />
           </Routes>
         </Box>
       </Box>
@@ -263,4 +310,4 @@ function ResponsiveDrawer(props) {
   );
 }
 
-export default ResponsiveDrawer;
+export default TalentDashboard;

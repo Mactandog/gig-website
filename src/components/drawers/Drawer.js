@@ -15,6 +15,7 @@ import logoWhite from "../../assets/media/logo/gig-white-icon.svg";
 import Logo from "../../assets/media/logo/gig-white-icon.svg";
 import { Link } from "react-router-dom";
 import LoginButton from "../buttons/loginButton";
+import SignUpButton from "../buttons/signupButton";
 
 const DrawerComp = ({ links }) => {
   const [open, setOpen] = useState(false);
@@ -54,7 +55,9 @@ const DrawerComp = ({ links }) => {
         <Button color="secondary" variant="contained" sx={{ m: 1 }}>
           Sign Up
         </Button> */}
-        <LoginButton />
+
+        <LoginButton mx={4} my={2} />
+        <SignUpButton mt={2} />
       </Drawer>
 
       <Toolbar

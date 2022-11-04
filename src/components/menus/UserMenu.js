@@ -19,6 +19,7 @@ export default function UserMenu({ profilePic }) {
     setAnchorEl(null);
   };
 
+
   const LagOut = () => {
     alert('You have sign out successfully')
     localStorage.removeItem("PHPsession");
@@ -82,8 +83,8 @@ export default function UserMenu({ profilePic }) {
         </MenuItem>
 
         <Divider />
-       
-        <MenuItem component="a" href="/companies" onClick={LagOut}>
+        <MenuItem onClick={Logout} component="a" href="/">
+
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
