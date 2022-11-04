@@ -21,15 +21,10 @@ import { useState } from "react";
 const EmployerProfile = () => {
 
   const companySession = localStorage.getItem("company") ? JSON.parse(localStorage.getItem("company")): [];
-  const userLoginSession = JSON.parse(localStorage.getItem("userInfoSession"));
+  const userLoginSession = JSON.parse(localStorage.getItem("PHPsession"));
   const loginSession  = userLoginSession.map((session) => {
     return session.id
   })
-
-
-  // const  currentSessionID = userLoginSession.map((user) => {
-  //   user.id
-  // })
 
   return (
     <>

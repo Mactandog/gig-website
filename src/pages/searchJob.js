@@ -17,11 +17,10 @@ import {
   Link
 } from "react-router-dom";
 import JobsList from "../components/data/jobs/jobsList";
-import Addjob from "./addJob.js";
+import Addjob from "../components/pages-comp/employerDashboard/addJob";
 
 const SearchJob = () => {
  
-
     const [searchTerm, setSearchTerm] = useState("");
     const [searchBy,setSearchBy] = useState("title");
     
@@ -47,7 +46,7 @@ const SearchJob = () => {
 
 
 
-          <Card sx={{ p: 5, position: "static" }}>
+          {/* <Card sx={{ p: 5, position: "static" }}> */}
                         {/* <Typography variant="h4" color="primary" mb={2}>
                           A completely new kind of office experience
                         </Typography> */}
@@ -75,7 +74,7 @@ const SearchJob = () => {
                             alert(searchTerm);
                           }}>search</button>
                         </form> */}
-                       <Typography variant="h2" color="primary" mb={2}>
+                       {/* <Typography variant="h2" color="primary" mb={2}>
                           Search for a Job
                         </Typography>
                       <form >
@@ -89,12 +88,12 @@ const SearchJob = () => {
                             setSearchTerm(event.target.value);
                           }} />
                           
-                          </Grid>
-                          </div>
+                          </Grid> */}
+                          {/* </div>
                       </form>
 
                      
-                      </Card>
+                      </Card> */}
                       
           <Grid item xs={12}>
             <Paper variant="outlined">
@@ -108,7 +107,7 @@ const SearchJob = () => {
               >
                 <Grid item xs={12}>
                   {/*  */}
-                  {alert(searchTerm)}
+                 
                   <JobsListCard />
                   {/*  */}
                 </Grid>
@@ -140,4 +139,5 @@ const SearchJob = () => {
 };
 
 export default SearchJob;
+
 

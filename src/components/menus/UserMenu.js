@@ -22,7 +22,7 @@ export default function UserMenu({ profilePic }) {
 
   const LagOut = () => {
     alert('You have sign out successfully')
-    localStorage.removeItem("userInfoSession");
+    localStorage.removeItem("PHPsession");
   }
 
   return (

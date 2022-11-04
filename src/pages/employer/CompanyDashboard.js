@@ -31,7 +31,7 @@ import {
   useResolvedPath,
   useMatch,
 } from "react-router-dom";
-// import EmployerPersonalInformation from "../../components/pages-comp/employerDashboard/EmployerPersonalInformation";
+import EmployerPersonalInformation from "../../components/pages-comp/employerDashboard/EmployerPersonalInformation";
 import EmployerExperience from "../../components/pages-comp/employerDashboard/EmployerExperience";
 import EmployerSkills from "../../components/pages-comp/employerDashboard/EmployerSkills";
 import EmployerEducation from "../../components/pages-comp/employerDashboard/EmployerEducation";
@@ -57,17 +57,6 @@ function ResponsiveDrawer(props) {
   const loginSession  = userLoginSession.map((session) => {
     return session.id
   })
-
-
- 
-
-  // console.log( typeof currentSessionID)
-//   const compani = currentCompany.map((log) => {
-//     return log.id
-// })
-
-// console.log(compani)
-  // console.log(currentSessionID)
 
   // ACTIVE LINK
   let CustomLink = ({ to, children, ...props }) => {
@@ -121,18 +110,23 @@ function ResponsiveDrawer(props) {
             name: "Add Job Post",
             path: "/employer-experience",
           },
-          { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/employer-skills" },
-        
           {
-            icon: <SchoolRoundedIcon />,
-            name: "Education",
-            path: "/employer-education",
+            icon: <WorkHistoryRoundedIcon />,
+            name: "Jobs",
+            path: "/employer-skills",
           },
+          // { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/employer-skills" },
+        
+          // {
+          //   icon: <SchoolRoundedIcon />,
+          //   name: "Education",
+          //   path: "/employer-education",
+          // },
         ].map((tab, index) => (
           <CustomLink
             key={index}
             className="sidebarLink"
-            to={`/Employer/profile${tab.path}`}
+            to={`/employer/profile${tab.path}`}
           >
             {/* <Link className="sidebarLink" to={`/Employer/profile${tab.path}`}> */}
             <ListItem disablePadding>
@@ -262,7 +256,7 @@ function ResponsiveDrawer(props) {
           <Routes>
             <Route index element={<EmployerHome />} />
             <Route path="employer-profile" element={<EmployerProfile />} />
-            {/* <Route path="employer-info" element={<EmployerPersonalInformation />}/> */}
+            <Route path="employer-info" element={<EmployerPersonalInformation />}/>
             <Route path="employer-experience" element={<EmployerExperience />} />
             <Route path="employer-skills" element={<EmployerSkills />} />
             <Route path="employer-education" element={<EmployerEducation />} />
