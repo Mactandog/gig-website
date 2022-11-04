@@ -110,6 +110,11 @@ function ResponsiveDrawer(props) {
             name: "Add Job Post",
             path: "/employer-experience",
           },
+          {
+            icon: <WorkHistoryRoundedIcon />,
+            name: "Jobs",
+            path: "/employer-skills",
+          },
           // { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/employer-skills" },
         
           // {
