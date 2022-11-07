@@ -61,7 +61,7 @@ export default function TalentLogin() {
         userLoginSession.push(session);
         let userLogin = JSON.stringify(userLoginSession);
         localStorage.setItem("userInfoSession", userLogin);
-        alert("Logged in successful!");
+        alert("Logged in successfully!");
         navigate("/talent/profile");
         setTimeout(() => {
           window.location.reload(true);

@@ -4,6 +4,7 @@ import React from "react";
 import Search1 from "../../searchBars/Search1";
 import JobsListCard from "../../cards/JobsListCard";
 import DynamicFeedRoundedIcon from "@mui/icons-material/DynamicFeedRounded";
+import JobPost from "./jobpost";
 
 const TalentHome = () => {
   return (
@@ -21,17 +22,17 @@ const TalentHome = () => {
         >
           <Grid container justifyContent="center">
             <Grid item xs={12} md={8}>
-              <Search1 />
+              <JobsListCard />
             </Grid>
           </Grid>
         </Box>
         {/* end of container */}
       </Paper>
-      <Grid container>
+      {/* <Grid container>
         <Grid item xs={12} md={12}>
           <JobsListCard />
         </Grid>
-      </Grid>
+      </Grid> */}
     </>
   );
 };

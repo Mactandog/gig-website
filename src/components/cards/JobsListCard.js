@@ -20,7 +20,6 @@ import JobsList from "../data/jobs/jobsList";
 import KeyboardReturnRoundedIcon from "@mui/icons-material/KeyboardReturnRounded";
 
 export default function JobsListCard() {
-  
   const [state, setState] = React.useState({ right: false });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -65,95 +64,101 @@ export default function JobsListCard() {
   // =================== Jobs List ==================
   const jobsCard = () => {
     return (
-      <Container >
+      <Container>
         <Grid container alignItems="center">
           {/* ======== START MAPPING HERE ============= */}
           {JobsList.map((job) => (
-              
             <Grid item xs={12} key={job.id} my={1}>
-              <button  type="button" id={job.id} onClick={(e) => {
-                        e.preventDefault();
-                        
-                        
-                        
-                        localStorage.setItem("jobpostIDselected", JSON.stringify(job.id))
-                       
-                      }}>
-              <Card  sx={{ width: "100%", height: "282px" }} variant="outlined">
-                <CardActionArea
-                  onClick={toggleDrawer("right", true)}
-                  sx={{ display: "flex" }}
+              <button
+                type="button"
+                id={job.id}
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  localStorage.setItem(
+                    "jobpostIDselected",
+                    JSON.stringify(job.id)
+                  );
+                }}
+              >
+                <Card
+                  sx={{ width: "100%", height: "282px" }}
+                  variant="outlined"
                 >
-                  <Stack direction="row" alignItems="center" pl={2}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      variant="rounded"
-                      src={job.logo}
-                      sx={{ width: 100, height: 100 }}
-                    />
-                    
-                    <CardContent>
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          overflow: "hidden",
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: "vertical",
-                          display: "-webkit-box",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                      {/* {alert(job.id)} */}
-                        {job.title}
-                      </Typography>
-                      <Typography
-                        gutterBottom
-                        variant="body2"
-                        color="primary"
-                        component="div"
-                        sx={{
-                          overflow: "hidden",
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: "vertical",
-                          display: "-webkit-box",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {job.company}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="primary"
-                        fontWeight={500}
-                        mb={2}
-                      >
-                        <Stack direction="row" alignItems="center">
-                          <PaidRoundedIcon /> {job.salary}
-                        </Stack>
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                          overflow: "hidden",
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: "vertical",
-                          display: "-webkit-box",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {job.desc}
-                      </Typography>
-                      <Box mt={2}>
-                        <Typography variant="caption" color="primary">
-                          Posted {job.date}
+                  <CardActionArea
+                    onClick={toggleDrawer("right", true)}
+                    sx={{ display: "flex" }}
+                  >
+                    <Stack direction="row" alignItems="center" pl={2}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        variant="rounded"
+                        src={job.logo}
+                        sx={{ width: 100, height: 100 }}
+                      />
+
+                      <CardContent>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            overflow: "hidden",
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: "vertical",
+                            display: "-webkit-box",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {/* {alert(job.id)} */}
+                          {job.title}
                         </Typography>
-                      </Box>
-                    </CardContent>
-                  </Stack>
-                </CardActionArea>
-                <CardActions sx={{ ml: 1 }}>
-                  {/* <Button
+                        <Typography
+                          gutterBottom
+                          variant="body2"
+                          color="primary"
+                          component="div"
+                          sx={{
+                            overflow: "hidden",
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: "vertical",
+                            display: "-webkit-box",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {job.company}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="primary"
+                          fontWeight={500}
+                          mb={2}
+                        >
+                          <Stack direction="row" alignItems="center">
+                            <PaidRoundedIcon /> {job.salary}
+                          </Stack>
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{
+                            overflow: "hidden",
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: "vertical",
+                            display: "-webkit-box",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {job.desc}
+                        </Typography>
+                        <Box mt={2}>
+                          <Typography variant="caption" color="primary">
+                            Posted {job.date} days ago
+                          </Typography>
+                        </Box>
+                      </CardContent>
+                    </Stack>
+                  </CardActionArea>
+                  <CardActions sx={{ ml: 1 }}>
+                    {/* <Button
                     aria-label="message"
                     variant="outlined"
                     size="small"
@@ -162,12 +167,11 @@ export default function JobsListCard() {
                   >
                     Save
                   </Button> */}
-                </CardActions>
-              </Card>
+                  </CardActions>
+                </Card>
               </button>
             </Grid>
           ))}
-          
         </Grid>
       </Container>
 
@@ -177,7 +181,6 @@ export default function JobsListCard() {
   return (
     <div>
       <Drawer
-        
         anchor="right"
         open={state["right"]}
         onClose={toggleDrawer("right", false)}

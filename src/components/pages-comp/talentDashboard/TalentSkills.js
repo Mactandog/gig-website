@@ -95,7 +95,7 @@ const TalentSkills = () => {
     event.preventDefault();
     if (checkSkill() === true && checkProficiency()) {
       addSkill();
-      alert("success");
+      // alert("success");
       setProficiency("");
       document.forms[0].reset();
     }

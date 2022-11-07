@@ -111,57 +111,61 @@ function TalentDashboard(props) {
                   <ListItemText
                     primary={talent.firstName}
                     secondary="View My Profile"
+                    key={talent.talentId}
                   />
                 ))}
             </ListItemButton>
           </ListItem>
         </Link>
-        {/* //// */}
-        {/* {
+      </List>
+      {/* //// */}
+      {/* {
             icon: <WysiwygRoundedIcon />,
             name: "Portfolio",
             path: "/my-portfolio",
           }, */}
-        {/* {
+      {/* {
             icon: <AttachmentRoundedIcon />,
             name: "Upload Resume",
             path: "/upload-resume",
           }, */}
-        {[
-          {
-            icon: <HomeRoundedIcon />,
-            name: "Home",
-            path: "/",
-          },
-          {
-            icon: <AccountBoxRoundedIcon />,
-            name: "Personal Information",
-            path: "/personal-info",
-          },
-          {
-            icon: <WorkHistoryRoundedIcon />,
-            name: "Experience",
-            path: "/work-experience",
-          },
-          { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/skills" },
+      {[
+        {
+          icon: <HomeRoundedIcon />,
+          name: "Home",
+          path: "/",
+        },
+        {
+          icon: <AccountBoxRoundedIcon />,
+          name: "Personal Information",
+          path: "/personal-info",
+        },
+        {
+          icon: <WorkHistoryRoundedIcon />,
+          name: "Experience",
+          path: "/work-experience",
+        },
+        { icon: <PsychologyRoundedIcon />, name: "Skills", path: "/skills" },
 
-          {
-            icon: <SchoolRoundedIcon />,
-            name: "Education",
-            path: "/education",
-          },
-        ].map((tab, index) => (
+        {
+          icon: <SchoolRoundedIcon />,
+          name: "Education",
+          path: "/education",
+        },
+      ].map((tab, index) => (
+        <List>
           <CustomLink className="sidebarLink" to={`/talent/profile${tab.path}`}>
             {/* <Link className="sidebarLink" to={`/talent/profile${tab.path}`}> */}
-            <ListItem disablePadding key={tab.path}>
+            <ListItem disablePadding key={index}>
               <ListItemButton>
                 <ListItemIcon>{tab.icon}</ListItemIcon>
                 <ListItemText primary={tab.name} />
               </ListItemButton>
             </ListItem>
           </CustomLink>
-        ))}
-      </List>
+        </List>
+      ))}
+
       <Divider />
       <List>
         <Link className="sidebarLink" to="/talent/profile/my-jobs">
@@ -209,8 +213,6 @@ function TalentDashboard(props) {
           </IconButton>
           <Grid item xs={2}>
             <Button
-              component="a"
-              href="/"
               disableRipple
               sx={{ width: 5, display: "flex", alignItems: "center" }}
             >
