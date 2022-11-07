@@ -1,9 +1,0 @@
-@use '../customTheme' as *;
-
-.footerLinks {
-    text-decoration: none;
-    color: #ffffff;
-    &:hover {
-        text-decoration: underline;
-    }
-}
